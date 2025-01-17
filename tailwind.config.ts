@@ -1,8 +1,12 @@
 import type { Config } from "tailwindcss";
+const flowbite = require("flowbite-react/tailwind");
 
 export default {
   // Limit Tailwind to only your own files
-  content: ["./app/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx}",
+    flowbite.content(),
+  ],
 
   // Turn off preflight so Tailwind doesn't inject its base styles
   corePlugins: {
@@ -43,5 +47,7 @@ export default {
     /* ...add anything else you want, but remove everything else from default. */
   },
 
-  plugins: [],
+  plugins: [
+    flowbite.plugin(),
+  ],
 } satisfies Config;
