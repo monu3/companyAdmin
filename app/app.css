@@ -68,6 +68,7 @@ td {
   border: 0;
   vertical-align: baseline;
   background: transparent;
+  list-style: none;
 }
 
 /* Light mode color variables (default) */
@@ -96,7 +97,7 @@ td {
 /* Dark mode color variables (default for dark preference) */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #181818;
+    --color-bg: #494242;
     --color-text: #ffffff;
 
     --color-primary: #ff8f00; /* Deeper orange for dark mode */
