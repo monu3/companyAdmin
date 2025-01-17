@@ -43,18 +43,18 @@ export function meta() {
   ];
 }
 
-export default function Home() {
-  // The slice is already injected, so we can read from Redux
-  // or run further queries in the client if needed.
-  return (
-    <main className="p-4">
-      <h1 className="text-primary text-2xl">SSR Home</h1>
-      <p className="text-secondary mt-2">
-        Data loaded on the server. Open DevTools to see the SSR state.
-      </p>
-    </main>
-  );
-}
+// export default function Home() {
+//   // The slice is already injected, so we can read from Redux
+//   // or run further queries in the client if needed.
+//   return (
+//     <main className="p-4">
+//       <h1 className="text-primary text-2xl">SSR Home</h1>
+//       <p className="text-secondary mt-2">
+//         Data loaded on the server. Open DevTools to see the SSR state.
+//       </p>
+//     </main>
+//   );
+// }
 
 export function ErrorBoundary({ error }: { error: unknown }) {
   let message = "Something went wrong!";

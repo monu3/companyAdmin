@@ -44,6 +44,10 @@ export default {
       current: "currentColor",
     },
 
+    boxShadow: {
+      custom: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;"
+    }
+
     /* ...add anything else you want, but remove everything else from default. */
   },
 
