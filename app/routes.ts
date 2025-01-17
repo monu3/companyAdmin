@@ -8,7 +8,8 @@ import {
 
 export default [
   layout("features/home/pages/HomePage.tsx",[
-    index("features/dashboard/pages/dashboardPage.tsx")
+    index("features/dashboard/pages/dashboardPage.tsx"),
+    route("projects", "features/project/pages/ProjectPage.tsx")
   ]),
   // Home route (root/index route it will be SSR)
 

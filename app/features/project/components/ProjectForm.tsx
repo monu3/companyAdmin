@@ -12,14 +12,14 @@ const ProjectForm = () => {
     console.log(data);
   };
   return (
-    <div className='flex justify-center items-center min-h-screen'>
-      <form onSubmit={handleSubmit(onSubmit)} className='w-3/4 shadow-custom p-10'>
+    <div className='flex justify-center items-center min-h-screen fixed inset-0 bg-black bg-opacity-75 z-50'>
+      <form onSubmit={handleSubmit(onSubmit)} className='relative flex flex-col gap-3 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg'>
         <div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3'>
           <div className="form-control flex flex-col">
             <label>Project Title</label>
             <input
               type="text"
-              className='h-7'
+              className='h-6'
               {...register("title", {
                 required: "Title is required.",
 
@@ -31,7 +31,7 @@ const ProjectForm = () => {
             <label>Category</label>
             <input
               type="text"
-              className='h-7'
+              className='h-6'
               {...register("category", {
                 required: "Category is required.",
               })}
@@ -44,7 +44,7 @@ const ProjectForm = () => {
             <label>Price</label>
             <input
               type="number"
-              className='h-7'
+              className='h-6'
               {...register("price", {
                 required: "Price is required.",
               })}
@@ -58,7 +58,7 @@ const ProjectForm = () => {
             <label>Start Date</label>
             <input
               type="date"
-              className='h-7'
+              className='h-6'
               {...register("date", {
                 required: "Start-Date is required.",
 
@@ -70,7 +70,7 @@ const ProjectForm = () => {
             <label>Due Date</label>
             <input
               type="date"
-              className='h-7'
+              className='h-6'
               {...register("date", {
                 required: "End-Date is required.",
               })}
@@ -81,7 +81,7 @@ const ProjectForm = () => {
           </div>
           <div className="form-control flex flex-col">
             <label>Lead</label>
-            <select id="lead" className='h-8' {...register("lead", {
+            <select id="lead" className='h-10' {...register("lead", {
                 required: "Select team-lead",
               })}>
               <option value="team-lead" selected>Select Team Lead</option>
@@ -96,7 +96,7 @@ const ProjectForm = () => {
           </div>
           <div className="form-control flex flex-col">
             <label>Client</label>
-            <select id="client" className='h-8' {...register("client", {
+            <select id="client" className='h-10' {...register("client", {
                 required: "Select Client",
               })}>
               <option value="client" selected>Select Client</option>
@@ -113,7 +113,7 @@ const ProjectForm = () => {
             <label>Employee</label>
             <input
               type="number"
-              className='h-7'
+              className='h-6'
               {...register("employee", {
                 required: "Number of employee is required.",
               })}
@@ -124,7 +124,7 @@ const ProjectForm = () => {
           </div>
           <div className="form-control flex flex-col">
             <label>Client</label>
-            <select id="status" className='h-8' {...register("status", {
+            <select id="status" className='h-10' {...register("status", {
                 required: "Select Status",
               })}>
               <option value="status" selected>Select status</option>
@@ -137,9 +137,13 @@ const ProjectForm = () => {
               <p className="errorMsg">{errors.lead.message as string}</p>
             )}
           </div>
+          <div className=' flex flex-col lg:col-span-3 md:col-span-2 sm:col-span-1'>
+          <label>Description</label>
+          <textarea name="" id="message"  className=" border rounded" rows={5}></textarea>
+          </div>
+
         </div>
-        <label>Description</label>
-        <textarea name="" id="message"  className="w-full border rounded" rows={5}></textarea>
+ 
         <div className='flex gap-2 justify-end mt-5'>
         <div className="form-control">
             <label></label>
@@ -147,7 +151,7 @@ const ProjectForm = () => {
         </div>
         <div className="form-control">
             <label></label>
-            <button type="submit" className='p-3 border-none bg-info lg:rounded-lg sm:rounde-sm'>Close</button>
+            <button type="button" className='p-3 border-none bg-info lg:rounded-lg sm:rounde-sm'>Close</button>
         </div>
         </div>
       </form>
