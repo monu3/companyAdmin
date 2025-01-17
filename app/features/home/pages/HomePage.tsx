@@ -1,18 +1,29 @@
 import React from "react";
+import { Outlet } from "react-router";
+import { RxDashboard } from "react-icons/rx";
+import { IoPerson } from "react-icons/io5";
+import { BsFillAwardFill } from "react-icons/bs";
+import { VscGitPullRequest } from "react-icons/vsc";
+import { VscChecklist } from "react-icons/vsc";
+import { TbReport } from "react-icons/tb";
+import logo from "public/assets/logo.png";
+import MainNavbar from "../components/mainNavbar";
 
-/**
- * This is our HomePage component within the 'home' feature.
- * Eventually, you'll import custom hooks, helpers, and types
- * from the sibling folders (hooks, helpers, types).
- */
+const navItems = [
+  { to: "", label: "Dashboard", icon: RxDashboard },
+  { to: "/employee", label: "Employee", icon: IoPerson },
+  { to: "/client", label: "Client", icon: BsFillAwardFill },
+  { to: "/projects", label: "Project", icon: VscGitPullRequest },
+  { to: "/tasks", label: "Task", icon: VscChecklist },
+  { to: "/projectReport", label: "Project Report", icon: TbReport },
+];
+
 export function HomePage() {
   return (
-    <main className="flex bg-bg flex-col items-center  justify-center min-h-screen py-8 px-4">
-      <h1 className="text-4xl font-bold text-primary ">Home Feature</h1>
-      <p className="text-lg mt-4 max-w-xl text-primary">
-        This is the new HomePage component in our feature-based structure.
-      </p>
-    </main>
+    <MainNavbar items={navItems} logo={logo}>
+      {/* Dynamic Content Area */}
+      <Outlet />
+    </MainNavbar>
   );
 }
 

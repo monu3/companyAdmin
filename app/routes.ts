@@ -1,7 +1,17 @@
 // app/routes.ts
-import { type RouteConfig, index, route } from "@react-router/dev/routes";
+import {
+  type RouteConfig,
+  index,
+  route,
+  layout,
+} from "@react-router/dev/routes";
 
 export default [
-  index("routes/home.tsx"), // Home route (root/index route it will be SSR)
-  route("test", "routes/test.tsx"), // Test  route it will be CSR
+  layout("features/home/pages/HomePage.tsx",[
+    index("features/dashboard/pages/dashboardPage.tsx")
+  ]),
+  // Home route (root/index route it will be SSR)
+
+  // index("routes/home.tsx"), // Home route (root/index route it will be SSR)
+  // route("test", "routes/test.tsx"), // Test  route it will be CSR
 ] satisfies RouteConfig;
