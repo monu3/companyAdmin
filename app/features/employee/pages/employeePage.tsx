@@ -23,7 +23,7 @@ const employeePage = () => {
           </button>
         </div>
       </div>
-      {isOpen && <AddEmployee />}
+      {isOpen && <AddEmployee onClose={()=>setIsOpen(false)} />}
     </div>
   );
 };
