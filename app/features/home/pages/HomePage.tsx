@@ -8,6 +8,9 @@ import { VscChecklist } from "react-icons/vsc";
 import { TbReport } from "react-icons/tb";
 import logo from "public/assets/logo.png";
 import MainNavbar from "../components/mainNavbar";
+import CompanyProfile from "../components/companyProfile";
+import Chat from "../components/chat";
+import LanguageSelect from "../components/languageSelect";
 
 const navItems = [
   { to: "", label: "Dashboard", icon: RxDashboard },
@@ -20,10 +23,17 @@ const navItems = [
 
 export function HomePage() {
   return (
-    <MainNavbar items={navItems} logo={logo}>
-      {/* Dynamic Content Area */}
-      <Outlet />
-    </MainNavbar>
+    <>
+      <div className="flex justify-end ml-10 gap-6 mt-3">
+        <LanguageSelect />
+        <Chat />
+        <CompanyProfile />
+      </div>
+      <MainNavbar items={navItems} logo={logo}>
+        {/* Dynamic Content Area */}
+        <Outlet />
+      </MainNavbar>
+    </>
   );
 }
 
