@@ -1,7 +1,11 @@
-import {useRef} from 'react'
+import {useContext, useRef, useState} from 'react'
 import { useForm } from 'react-hook-form';
+import { ProjectContext, useProjectContext } from '../store/context';
+
 
 const ProjectForm = () => {
+  const { setIsOpen, setData } = useProjectContext();
+
   const {
     register,
     handleSubmit,
@@ -10,6 +14,8 @@ const ProjectForm = () => {
 
   const onSubmit = (data: any) => {
     console.log(data);
+    setData((prevData) => [...prevData, data]);
+    setIsOpen(false);
   };
   return (
     <div className='flex justify-center items-center min-h-screen fixed inset-0 bg-black bg-opacity-75 z-50'>
@@ -25,7 +31,7 @@ const ProjectForm = () => {
 
               })}
             />
-            {errors.title && <p className="errorMsg">{errors.title.message as string}</p>}
+            {errors.title && <p className="errorMsg text-error">{errors.title.message as string}</p>}
           </div>
           <div className="form-control flex flex-col">
             <label>Category</label>
@@ -37,7 +43,7 @@ const ProjectForm = () => {
               })}
             />
             {errors.category && (
-              <p className="errorMsg">{errors.category.message as string}</p>
+              <p className="errorMsg text-error">{errors.category.message as string}</p>
             )}
           </div>
           <div className="form-control flex flex-col">
@@ -50,7 +56,7 @@ const ProjectForm = () => {
               })}
             />
             {errors.price && (
-              <p className="errorMsg">{errors.price.message as string}</p>
+              <p className="errorMsg text-error">{errors.price.message as string}</p>
             )}
           </div>
 
@@ -59,24 +65,24 @@ const ProjectForm = () => {
             <input
               type="date"
               className='h-6'
-              {...register("date", {
+              {...register("startDate", {
                 required: "Start-Date is required.",
 
               })}
             />
-            {errors.date && <p className="errorMsg">{errors.date.message as string}</p>}
+            {errors.startDate && <p className="errorMsg text-error">{errors.startDate.message as string}</p>}
           </div>
           <div className="form-control flex flex-col">
             <label>Due Date</label>
             <input
               type="date"
               className='h-6'
-              {...register("date", {
+              {...register("endDate", {
                 required: "End-Date is required.",
               })}
             />
-            {errors.date && (
-              <p className="errorMsg">{errors.date.message as string}</p>
+            {errors.endDate && (
+              <p className="errorMsg text-error">{errors.endDate.message as string}</p>
             )}
           </div>
           <div className="form-control flex flex-col">
@@ -91,7 +97,7 @@ const ProjectForm = () => {
               <option value="diwash">Diwash</option>
             </select>
             {errors.lead && (
-              <p className="errorMsg">{errors.lead.message as string}</p>
+              <p className="errorMsg text-error">{errors.lead.message as string}</p>
             )}
           </div>
           <div className="form-control flex flex-col">
@@ -106,7 +112,7 @@ const ProjectForm = () => {
               <option value="client4">client4</option>
             </select>
             {errors.lead && (
-              <p className="errorMsg">{errors.lead.message as string}</p>
+              <p className="errorMsg text-error">{errors.lead.message as string}</p>
             )}
           </div>
           <div className="form-control flex flex-col">
@@ -119,11 +125,11 @@ const ProjectForm = () => {
               })}
             />
             {errors.employee && (
-              <p className="errorMsg">{errors.employee.message as string}</p>
+              <p className="errorMsg text-error">{errors.employee.message as string}</p>
             )}
           </div>
           <div className="form-control flex flex-col">
-            <label>Client</label>
+            <label>Status</label>
             <select id="status" className='h-10' {...register("status", {
                 required: "Select Status",
               })}>
@@ -134,7 +140,7 @@ const ProjectForm = () => {
               <option value="completed">Completed</option>
             </select>
             {errors.lead && (
-              <p className="errorMsg">{errors.lead.message as string}</p>
+              <p className="errorMsg text-error">{errors.lead.message as string}</p>
             )}
           </div>
           <div className=' flex flex-col lg:col-span-3 md:col-span-2 sm:col-span-1'>
@@ -151,7 +157,9 @@ const ProjectForm = () => {
         </div>
         <div className="form-control">
             <label></label>
-            <button type="button" className='p-3 border-none bg-info lg:rounded-lg sm:rounde-sm'>Close</button>
+            <button type="button" className='p-3 border-none bg-info lg:rounded-lg sm:rounde-sm'
+            onClick={() => setIsOpen(false)}
+            >Close</button>
         </div>
         </div>
       </form>

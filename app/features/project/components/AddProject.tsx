@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { RiAddBoxFill } from "react-icons/ri";
 import ProjectForm from "./ProjectForm";
+import { ProjectContext, useProjectContext } from "../store/context";
 
 
 const AddProject = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const {isOpen, setIsOpen} = useProjectContext();
 
   return (
     <div className="relative flex justify-end ">
