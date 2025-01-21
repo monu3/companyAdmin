@@ -1,51 +1,128 @@
-'use client'
-
-import React, { useState } from 'react'
-import { DragDropContext, Droppable, Draggable, type DropResult } from "react-beautiful-dnd";
-
-interface Task {
-  id: string
-  content: string
-  status: string
-}
+import React, { useMemo } from "react";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { format } from "date-fns";
+import { CalendarIcon, GripVertical } from "lucide-react";
+import type { Task } from "../Types/types";
+import { statusData } from "../data/statusDumy";
 
 interface KanbanBoardProps {
-  tasks: Task[]
-  onTaskMove: (result: DropResult) => void
+  tasks: Task[];
+  onTaskMove: (taskId: string, newStatus: string) => void;
 }
 
 const KanbanBoard: React.FC<KanbanBoardProps> = ({ tasks, onTaskMove }) => {
-  const columns = ['To-Do', 'In Progress', 'Bug', 'Done', 'Completed']
+  const columns = useMemo(() => {
+    return statusData.map((status) => ({
+      id: status.id,
+      title: status.name,
+      tasks: tasks.filter((task) => task.status === status.name),
+    }));
+  }, [tasks]);
+
+  const handleDragEnd = (result: any) => {
+    const { destination, source, draggableId } = result;
+
+    if (!destination) return;
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    )
+      return;
+
+    const newStatus = statusData.find(
+      (status) => status.id === destination.droppableId
+    )?.name;
+    if (newStatus) {
+      onTaskMove(draggableId, newStatus);
+    }
+  };
+
+  const getPriorityColor = (priority: string) => {
+    switch (priority.toLowerCase()) {
+      case "high":
+        return "bg-red-100 text-red-800";
+      case "medium":
+        return "bg-yellow-100 text-yellow-800";
+      case "low":
+        return "bg-green-100 text-green-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
+  };
 
   return (
-    <DragDropContext onDragEnd={onTaskMove}>
-      <div className="flex space-x-4 overflow-x-auto p-4">
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <div className="flex overflow-x-auto space-x-4 p-4">
         {columns.map((column) => (
-          <div key={column} className="flex-shrink-0 w-72">
-            <h2 className="font-bold mb-2">{column}</h2>
-            <Droppable droppableId={column}>
-              {(provided) => (
+          <div key={column.id} className="flex-none w-80">
+            <h3 className="text-lg font-semibold mb-4">{column.title}</h3>
+            <Droppable droppableId={column.id}>
+              {(provided, snapshot) => (
                 <div
-                  {...provided.droppableProps}
                   ref={provided.innerRef}
-                  className="bg-gray-100 p-2 rounded-md min-h-[200px]"
+                  {...provided.droppableProps}
+                  className={`p-4 rounded-lg min-h-[500px] ${
+                    snapshot.isDraggingOver ? "bg-gray-50" : "bg-gray-100"
+                  }`}
                 >
-                  {tasks
-                    .filter((task) => task.status === column)
-                    .map((task, index) => (
-                      <Draggable key={task.id} draggableId={task.id} index={index}>
-                        {(provided) => (
-                          <div
+                  {column.tasks.length === 0 ? (
+                    <div className="flex items-center justify-center text-sm text-gray-500">
+                      Drag tasks here
+                    </div>
+                  ) : (
+                    column.tasks.map((task, index) => (
+                      <Draggable
+                        key={task.id}
+                        draggableId={task.id}
+                        index={index}
+                      >
+                        {(provided, snapshot) => (
+                          <Card
                             ref={provided.innerRef}
                             {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            className="bg-white p-2 mb-2 rounded shadow"
+                            className={`mb-3 ${
+                              snapshot.isDragging ? "rotate-3 shadow-lg" : ""
+                            }`}
                           >
-                            {task.content}
-                          </div>
+                            <CardContent className="p-4">
+                              <div className="flex items-center justify-between mb-2">
+                                <div
+                                  {...provided.dragHandleProps}
+                                  className="cursor-grab"
+                                >
+                                  <GripVertical className="h-5 w-5 text-gray-500" />
+                                </div>
+                                <Badge
+                                  className={`${getPriorityColor(
+                                    task.priority
+                                  )}`}
+                                >
+                                  {task.priority}
+                                </Badge>
+                              </div>
+                              <h4 className="font-medium mb-2">
+                                {task.content}
+                              </h4>
+                              <div className="flex items-center text-sm text-gray-500">
+                                <CalendarIcon className="h-4 w-4 mr-1" />
+                                <span>
+                                  {format(
+                                    new Date(task.dueDate),
+                                    "MMM d, yyyy"
+                                  )}
+                                </span>
+                              </div>
+                              <Badge className="mt-2 bg-blue-100 text-blue-800">
+                                {task.project}
+                              </Badge>
+                            </CardContent>
+                          </Card>
                         )}
                       </Draggable>
-                    ))}
+                    ))
+                  )}
                   {provided.placeholder}
                 </div>
               )}
@@ -54,8 +131,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ tasks, onTaskMove }) => {
         ))}
       </div>
     </DragDropContext>
-  )
-}
+  );
+};
 
-export default KanbanBoard
-
+export default KanbanBoard;
