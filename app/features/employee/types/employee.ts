@@ -1,8 +1,9 @@
-export interface Employee{
-    id:string,
-    name: string,
-    position:string,
-    department:string,
-    salary:string,
-    joined:Date
-}
+export interface Employee {
+    id: string;
+    name: string;
+    position: string;
+    email: string;
+    department: string;
+    salary: string;
+    joinDate: string;
+  }
