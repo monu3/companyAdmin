@@ -1,25 +1,51 @@
-import {useContext, useRef, useState} from 'react'
+import {useContext, useRef, useState, useEffect} from 'react'
 import { useForm } from 'react-hook-form';
 import { ProjectContext, useProjectContext } from '../store/context';
+import { nanoid } from "nanoid";
+import type { projectDetails } from '../types';
 
-
-const ProjectForm = () => {
-  const { setIsOpen, setData } = useProjectContext();
-
+const ProjectForm = ({ selectedProject }: { selectedProject?: projectDetails | null }) => {
+  const { setIsOpen, setData, data} = useProjectContext();
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    setData((prevData) => [...prevData, data]);
-    setIsOpen(false);
-  };
+// Pre-populate the form when selectedProject changes (only if it's in edit mode)
+useEffect(() => {
+  if (selectedProject) {
+    reset(selectedProject);  // Reset the form with the selectedProject data
+  }
+}, [selectedProject, reset]);  // Only re-run when selectedProject changes
+
+const onSubmit = (formData: any) => {
+  console.log("Form submitted with selectedId:", selectedProject?.id);  // Log the selectedProject ID
+  console.log("Form data:", formData);
+
+  if (selectedProject) {
+    // Update existing project with the new form data
+    const updatedData = { ...formData, id: selectedProject.id };
+
+    const updatedDataList = data.map(item =>
+      item.id === selectedProject.id ? { ...item, ...updatedData } : item
+    );
+    setData(updatedDataList);
+  } else {
+    // If no selectedProject, create a new one
+    const dataWithId = { ...formData, id: nanoid() };
+    setData(prevData => [...prevData, dataWithId]);
+  }
+
+  setIsOpen(false);  // Close the modal after saving
+};
+
+
+
   return (
     <div className='flex justify-center items-center min-h-screen fixed inset-0 bg-black bg-opacity-75 z-50'>
-      <form onSubmit={handleSubmit(onSubmit)} className='relative flex flex-col gap-3 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg'>
+      <form onSubmit={handleSubmit(onSubmit)} className='relative flex flex-col gap-3 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg overflow-y-scroll max-h-[515px] scrollbar-hidden' >
         <div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3'>
           <div className="form-control flex flex-col">
             <label>Project Title</label>
@@ -129,6 +155,19 @@ const ProjectForm = () => {
             )}
           </div>
           <div className="form-control flex flex-col">
+            <label>Progress</label>
+            <input
+              type="number"
+              className='h-6'
+              {...register("progress", {
+                required: "Progress is required.",
+              })}
+            />
+            {errors.progress && (
+              <p className="errorMsg text-error">{errors.progress.message as string}</p>
+            )}
+          </div>
+          <div className="form-control flex flex-col">
             <label>Status</label>
             <select id="status" className='h-10' {...register("status", {
                 required: "Select Status",
@@ -153,7 +192,7 @@ const ProjectForm = () => {
         <div className='flex gap-2 justify-end mt-5'>
         <div className="form-control">
             <label></label>
-            <button type="submit" className='p-3 bg-info border-none lg:rounded-lg sm:rounde-sm'>Create</button>
+            <button type="submit" className='p-3 bg-info border-none lg:rounded-lg sm:rounde-sm'>{selectedProject ? "Save Changes" : "Create"}</button>
         </div>
         <div className="form-control">
             <label></label>
