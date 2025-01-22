@@ -4,13 +4,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { CalendarIcon, GripVertical } from "lucide-react";
-import type { Task } from "../Types/types";
+import type { KanbanBoardProps } from "../Types/types";
 import { statusData } from "../data/statusDumy";
+import { getPriorityColor } from "../../../common/utils/taskPriorityColor";
 
-interface KanbanBoardProps {
-  tasks: Task[];
-  onTaskMove: (taskId: string, newStatus: string) => void;
-}
 
 const KanbanBoard: React.FC<KanbanBoardProps> = ({ tasks, onTaskMove }) => {
   const columns = useMemo(() => {
@@ -39,26 +36,13 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ tasks, onTaskMove }) => {
     }
   };
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority.toLowerCase()) {
-      case "high":
-        return "bg-red-100 text-red-800";
-      case "medium":
-        return "bg-yellow-100 text-yellow-800";
-      case "low":
-        return "bg-green-100 text-green-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
-
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
       <div className="flex overflow-x-auto space-x-4 p-4">
         {columns.map((column) => (
           <div key={column.id} className="flex-none w-80">
             <h3 className="text-lg font-semibold mb-4">{column.title}</h3>
-            <Droppable droppableId={column.id}>
+            <Droppable droppableId={column.id} isDropDisabled={false}>
               {(provided, snapshot) => (
                 <div
                   ref={provided.innerRef}
