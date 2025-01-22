@@ -130,6 +130,10 @@ body {
   padding: 16px;
   color: var(--color-text);
 }
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
 @layer base {
   :root {
     --background: 0 0% 100%;
