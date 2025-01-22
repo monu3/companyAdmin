@@ -136,7 +136,6 @@ const MainNavbarLayout: React.FC<MainNavbarLayoutProps> = ({
               "
       >
         <div className="flex items-center h-full px-4">
-
           {/* Navigation Items */}
           <div className="flex flex-1 justify-around items-center">
             {items.map((item) => (
