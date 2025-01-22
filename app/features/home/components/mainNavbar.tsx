@@ -1,20 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Sidebar } from "flowbite-react";
 import { NavLink, useLocation } from "react-router";
-
-
-interface NavItem {
-  to: string;
-  label: string;
-  icon?: React.ElementType;
-}
-
-interface MainNavbarLayoutProps {
-  items: NavItem[];
-  children: React.ReactNode;
-  logo?: string;
-  className?: string;
-}
+import type { MainNavbarLayoutProps, NavItem } from "../types";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 const MainNavbarLayout: React.FC<MainNavbarLayoutProps> = ({
   items,
@@ -22,55 +14,7 @@ const MainNavbarLayout: React.FC<MainNavbarLayoutProps> = ({
   logo,
   className,
 }) => {
-//   const [theme, setTheme] = useState<"light" | "dark">(() =>
-//     window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
-//   );
-
-
-//   useEffect(() => {
-//     const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-//       .matches
-//       ? "dark"
-//       : "light";
-//     setTheme(systemTheme);
-
-//     // Add or remove dark mode class from the <html> tag
-//     if (systemTheme === "dark") {
-//       document.documentElement.classList.add("dark");
-//     } else {
-//       document.documentElement.classList.remove("dark");
-//     }
-
-//     const themeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-//     const handleThemeChange = (e: MediaQueryListEvent) => {
-//       const newTheme = e.matches ? "dark" : "light";
-//       setTheme(newTheme);
-//       if (newTheme === "dark") {
-//         document.documentElement.classList.add("dark");
-//       } else {
-//         document.documentElement.classList.remove("dark");
-//       }
-//     };
-
-//     themeMediaQuery.addEventListener("change", handleThemeChange);
-
-//     return () =>
-//       themeMediaQuery.removeEventListener("change", handleThemeChange);
-//   }, []);
-
-//   // Theme detection
-//   useEffect(() => {
-//     const themeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-//     const handleThemeChange = (e: MediaQueryListEvent | MediaQueryList) => {
-//       setTheme(e.matches ? "dark" : "light");
-//     };
-
-//     themeMediaQuery.addEventListener("change", handleThemeChange);
-//     return () =>
-//       themeMediaQuery.removeEventListener("change", handleThemeChange);
-//   }, []);
-
-    const location = useLocation();
+  const location = useLocation();
 
   const isActive = (item: NavItem) => {
     return (
@@ -136,14 +80,14 @@ const MainNavbarLayout: React.FC<MainNavbarLayoutProps> = ({
               "
       >
         <div className="flex items-center h-full px-4">
-
           {/* Navigation Items */}
           <div className="flex flex-1 justify-around items-center">
             {items.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={`
+              <HoverCard>
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={`
                         flex items-center justify-center
                         ${
                           isActive(item)
@@ -151,9 +95,16 @@ const MainNavbarLayout: React.FC<MainNavbarLayoutProps> = ({
                             : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-300"
                         }
                       `}
-              >
-                {item.icon && <item.icon className="w-6 h-6" />}
-              </NavLink>
+                >
+                  <HoverCardTrigger className="transition-colors duration-100">
+                    {" "}
+                    {item.icon && <item.icon className="w-6 h-6" />}
+                  </HoverCardTrigger>
+                  <HoverCardContent className="w-auto">
+                    {item.label}
+                  </HoverCardContent>
+                </NavLink>
+              </HoverCard>
             ))}
           </div>
         </div>

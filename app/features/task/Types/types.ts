@@ -21,3 +21,13 @@ export interface KanbanBoardProps {
   tasks: Task[];
   onTaskMove: (taskId: string, newStatus: string) => void;
 }
+
+export interface TaskListProps {
+  tasks: Task[];
+  onClose: () => void;
+}
+
+export interface ModalProps {
+  task: Task;
+  onClose: () => void;
+}

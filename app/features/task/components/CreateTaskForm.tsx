@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { projectData } from "../data/projectDumy";
-import { statusData } from "../data/statusDumy";
 import { priorityData } from "../data/ priorityDumy";
 import {
   Select,
@@ -50,7 +49,7 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({ onAddTask }) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-blue-600 hover:bg-blue-700">Create Task</Button>
+        <Button variant={"outline"}>Create Task</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -119,7 +118,7 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({ onAddTask }) => {
               }
             />
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
             Create Task
           </Button>
         </form>
