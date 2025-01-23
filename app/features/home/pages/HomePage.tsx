@@ -13,7 +13,7 @@ import Chat from "../components/chat";
 import LanguageSelect from "../components/languageSelect";
 
 const navItems = [
-  { to: "", label: "Dashboard", icon: RxDashboard },
+  { to: "/", label: "Dashboard", icon: RxDashboard },
   { to: "/employee", label: "Employee", icon: IoPerson },
   { to: "/client", label: "Client", icon: BsFillAwardFill },
   { to: "/projects", label: "Project", icon: VscGitPullRequest },
