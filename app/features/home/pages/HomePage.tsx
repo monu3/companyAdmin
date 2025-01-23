@@ -24,7 +24,7 @@ const navItems = [
 export function HomePage() {
   return (
     <>
-      <div className="flex justify-end ml-10 gap-6 mt-3">
+      <div className="flex justify-end ml-10 gap-6 mt-3 mb-3 mr-6 pb-2 " >
         <LanguageSelect />
         <Chat />
         <CompanyProfile />

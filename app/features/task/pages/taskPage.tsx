@@ -43,7 +43,7 @@ const TaskPage: React.FC = () => {
 
   return (
     <>
-      <section className="h-auto px-4 md:px-6 dark:bg-[#494242] mt-20">
+      <section className="h-auto px-4 md:px-6 dark:bg-[#494242]">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Tasks</h2>
           <Link to="list">
