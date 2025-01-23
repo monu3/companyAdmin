@@ -37,16 +37,7 @@ import EmployeeCard from '../components/EmployeeCard';
 import NoEmployee from '../components/NoEmployee';
 import { Button } from '@/components/ui/button';
 import { PlusCircle, Grid, List, Pencil, Trash } from 'lucide-react';
-
-interface Employee {
-  id: string;
-  name: string;
-  position: string;
-  email: string;
-  department: string;
-  salary: string;
-  joinDate: string;
-}
+import type{Employee} from '../types/employee'
 
 const EmployeePage = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
@@ -64,7 +55,9 @@ const EmployeePage = () => {
 
   // Save employees to localStorage when they change
   useEffect(() => {
+    if(employees.length>0){
     localStorage.setItem('employeeList', JSON.stringify(employees));
+    }
   }, [employees]);
 
   const addEmployee = (data: Omit<Employee, 'id'>) => {
@@ -96,7 +89,7 @@ const EmployeePage = () => {
   };
 
   return (
-    <div className="mx-auto p-4 space-y-6">
+    <div className="mx-auto p-4">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold">Employees</h1>
@@ -127,7 +120,7 @@ const EmployeePage = () => {
       {employees.length === 0 ? (
         <NoEmployee />
       ) : (
-        <div className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4' : 'space-y-4'}>
+        <div className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-5 gap-4' : 'space-y-4'}>
           {employees.map((employee) => (
             <div key={employee.id} className="relative group">
               <div className="absolute right-2 bottom-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">

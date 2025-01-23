@@ -13,6 +13,7 @@ export default [
     route("tasks/list", "features/task/components/listTasks.tsx"),
     route("employee", "features/employee/pages/employeePage.tsx"),
     route("tasks", "features/task/pages/taskPage.tsx"),
+    route("client","features/client/pages/clientPage.tsx")
   ]),
 
 ] satisfies RouteConfig;

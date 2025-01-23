@@ -2,25 +2,25 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { AiOutlineClose } from "react-icons/ai";
-import type { Employee } from "../types/employee";
+import type { Client } from "../types/client";
 
-interface EmployeeFormProps {
+interface ClientFormProps {
   onClose: () => void;
-  onSubmit: (data: Employee) => void;
-  employee?: Employee;
+  onSubmit: (data: Client) => void;
+  client?: Client;
 }
 
-export const EmployeeForm: React.FC<EmployeeFormProps> = ({
+export const AddClient: React.FC<ClientFormProps> = ({
   onClose,
   onSubmit,
-  employee,
+  client,
 }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Employee>({
-    defaultValues: employee,
+  } = useForm<Client>({
+    defaultValues: client,
   });
 
   return (
@@ -34,7 +34,7 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
           onClick={onClose}
         />
         <h2 className="text-xl font-semibold">
-          {employee ? "Edit Employee" : "Add Employee"}
+          {client ? "Edit Client" : "Add Client"}
         </h2>
         <div className="grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
           <div>
@@ -48,18 +48,6 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
               />
               {errors.name && (
                 <p className="errorMsg">{errors.name.message as string}</p>
-              )}
-            </div>
-            <div className="form-control flex flex-col">
-              <label>Position</label>
-              <input
-                type="text"
-                {...register("position", {
-                  required: "Position is required.",
-                })}
-              />
-              {errors.position && (
-                <p className="errorMsg">{errors.position.message as string}</p>
               )}
             </div>
             <div className="form-control flex flex-col">
@@ -95,31 +83,31 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
               )}
             </div> */}
             <div className="form-control flex flex-col">
-              <label>Department</label>
+              <label>Budget</label>
               <input
                 type="text"
-                {...register("department", {
-                  required: "Department is required.",
+                {...register("budget", {
+                  required: "Budget is required.",
                 })}
               />
-              {errors.department && (
+              {errors.budget && (
                 <p className="errorMsg">
-                  {errors.department.message as string}
+                  {errors.budget.message as string}
                 </p>
               )}
             </div>
           </div>
           <div>
             <div className="form-control flex flex-col">
-              <label>Salary</label>
+              <label>Project Name</label>
               <input
                 type="text"
-                {...register("salary", {
-                  required: "Salary is required.",
+                {...register("projectName", {
+                  required: "Project is required.",
                 })}
               />
-              {errors.salary && (
-                <p className="errorMsg">{errors.salary.message as string}</p>
+              {errors.projectName && (
+                <p className="errorMsg">{errors.projectName.message as string}</p>
               )}
             </div>
             <div className="form-control flex flex-col">
@@ -142,7 +130,7 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
             Cancel
           </Button>
           <Button type="submit">
-            {employee ? "Update Employee" : "Add Employee"}
+            {client ? "Update Client" : "Add Client"}
           </Button>
         </div>
       </form>
