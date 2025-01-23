@@ -12,8 +12,8 @@ import {
 const CompanyProfile = () => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Avatar>
+      <DropdownMenuTrigger className="bg-transparent p-0 border-none">
+        <Avatar className="inline-block size-6 flex items-center">
           <AvatarImage src="https://github.com/shadcn.png" />
           <AvatarFallback>C</AvatarFallback>
         </Avatar>
