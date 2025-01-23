@@ -29,8 +29,46 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({ onAddTask }) => {
     dueDate: new Date().toISOString().split("T")[0],
   });
 
+  const [descriptionError, setdescriptionError] = useState("");
+  const [dateError, setDateError] = useState("");
+
+  // Validate description
+  const validateDescription = () => {
+    const description = taskData.content.trim();
+    if (!description) return "Task description is required.";
+    if (description.length < 3)
+      return "Description must be at least 3 characters.";
+    if (description.length > 50)
+      return "Description must not exceed 50 characters.";
+    return "";
+  };
+
+  // Validate due date
+  const validateDate = () => {
+    const selectedDate = new Date(taskData.dueDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (selectedDate < today) {
+      return "Due date cannot be before today.";
+    }
+    return "";
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const validationError = validateDescription();
+    const dateError = validateDate();
+
+    if (validationError) {
+      setdescriptionError(validationError);
+      return;
+    }
+
+    if (dateError) {
+      setDateError(dateError);
+      return;
+    }
+
     const newTask: Task = {
       id: Date.now().toString(),
       status: "To-Do",
@@ -44,6 +82,8 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({ onAddTask }) => {
       project: "project1",
       dueDate: new Date().toISOString().split("T")[0],
     });
+    setDateError("");
+    setdescriptionError("");
   };
 
   return (
@@ -64,8 +104,11 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({ onAddTask }) => {
               onChange={(e) =>
                 setTaskData({ ...taskData, content: e.target.value })
               }
-              required
+              className={descriptionError ? "border-red-500" : ""}
             />
+            {descriptionError && (
+              <p className="text-red-500 text-sm">{descriptionError}</p>
+            )}
           </div>
           <div>
             <Label htmlFor="priority">Priority</Label>
@@ -116,7 +159,9 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({ onAddTask }) => {
               onChange={(e) =>
                 setTaskData({ ...taskData, dueDate: e.target.value })
               }
+              className={dateError ? "border-red-500" : ""}
             />
+            {dateError && <p className="text-red-500 text-sm">{dateError}</p>}
           </div>
           <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
             Create Task

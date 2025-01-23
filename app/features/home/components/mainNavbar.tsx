@@ -3,10 +3,11 @@ import { Sidebar } from "flowbite-react";
 import { NavLink, useLocation } from "react-router";
 import type { MainNavbarLayoutProps, NavItem } from "../types";
 import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const MainNavbarLayout: React.FC<MainNavbarLayoutProps> = ({
   items,
@@ -32,7 +33,7 @@ const MainNavbarLayout: React.FC<MainNavbarLayoutProps> = ({
           aria-label="Main navigation"
           className="h-screen fixed top-0 left-0 z-10 w-64 "
         >
-            {logo && (
+          {logo && (
             <div className="flex items-center justify-center p-4 mb-6 px-2">
               <img src={logo} alt="Logo" className="h-12 w-auto" />
             </div>
@@ -84,28 +85,26 @@ const MainNavbarLayout: React.FC<MainNavbarLayoutProps> = ({
           {/* Navigation Items */}
           <div className="flex flex-1 justify-around items-center">
             {items.map((item) => (
-              <HoverCard>
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  className={`
-                        flex items-center justify-center
-                        ${
-                          isActive(item)
-                            ? "text-blue-600 dark:text-blue-500"
-                            : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-300"
-                        }
-                      `}
-                >
-                  <HoverCardTrigger className="transition-colors duration-100">
-                    {" "}
-                    {item.icon && <item.icon className="w-6 h-6" />}
-                  </HoverCardTrigger>
-                  <HoverCardContent className="w-auto">
-                    {item.label}
-                  </HoverCardContent>
-                </NavLink>
-              </HoverCard>
+              <TooltipProvider key={item.to}>
+                <Tooltip>
+                  <TooltipTrigger className="bg-transparent p-0 border-none">
+                    <NavLink
+                      to={item.to}
+                      className={`
+                      flex items-center justify-center
+                      ${
+                        isActive(item)
+                          ? "text-blue-600 dark:text-blue-500"
+                          : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-300"
+                      }
+                    `}
+                    >
+                      {item.icon && <item.icon className="w-6 h-6" />}
+                    </NavLink>
+                  </TooltipTrigger>
+                  <TooltipContent>{item.label}</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             ))}
           </div>
         </div>
