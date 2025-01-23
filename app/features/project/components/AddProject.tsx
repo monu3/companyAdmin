@@ -2,9 +2,8 @@ import React, { useContext, useState } from "react";
 import { RiAddBoxFill } from "react-icons/ri";
 import ProjectForm from "./ProjectForm";
 import { ProjectContext, useProjectContext } from "../store/context";
-import { FaTable } from "react-icons/fa";
-import { PiCardsFill } from "react-icons/pi";
-
+import { Button } from '@/components/ui/button';
+import { Grid, List } from 'lucide-react';
 const AddProject = () => {
   const {isOpen, setIsOpen, view, setView, selectedProject, setSelectedProject} = useProjectContext();
 
@@ -14,17 +13,24 @@ const AddProject = () => {
   }
   return (
     <div className="relative flex justify-end items-center">
+      
        {view === "card" && (
-        <FaTable
-          className="text-4xl cursor-pointer text-orange-500"
-          onClick={() => setView("table")}
-        />
+        <Button
+        variant="outline"
+        size="icon"
+        onClick={() => setView('table')}
+      >
+        <Grid />
+      </Button>
       )}
       {view === "table" && (
-        <PiCardsFill
-          className="text-5xl cursor-pointer text-orange-400"
-          onClick={() => setView("card")}
-        />
+        <Button
+        variant="outline"
+        size="icon"
+        onClick={() => setView('card')}
+      >
+        <List/>
+      </Button>
       )}
       {/* Icon Button to Open Form */}
       <button  className="shadow-custom text-2xl border-none m-2 rounded-lg px-2cursor-pointer hover:text-gray-500 transition-colors"

@@ -15,6 +15,7 @@ const MainNavbarLayout: React.FC<MainNavbarLayoutProps> = ({
   logo,
   className,
 }) => {
+  
   const location = useLocation();
 
   const isActive = (item: NavItem) => {
@@ -50,8 +51,8 @@ const MainNavbarLayout: React.FC<MainNavbarLayoutProps> = ({
                     no-underline text-base
                     ${
                       isActive(item)
-                        ? "bg-gray-600 text-white hover:bg-gray-200 hover:text-white" //paxi theme change gardha change garnuu hai
-                        : "text-gray-600 hover:bg-gray-200 hover:text-gray-900"
+                        ?"bg-orange-400 text-white hover:bg-orange-100 hover:text-white" : 
+      "text-gray-600 hover:bg-orange-200 hover:text-white-900"
                     }
                     dark:${
                       isActive(item)
