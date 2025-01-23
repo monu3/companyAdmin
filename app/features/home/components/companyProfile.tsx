@@ -15,17 +15,16 @@ const CompanyProfile = () => {
       <DropdownMenuTrigger>
         <Avatar>
           <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>Company</AvatarFallback>
+          <AvatarFallback>C</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
+      <DropdownMenuContent className="w-48">
         <DropdownMenuSeparator />
         <DropdownMenuItem>Profile</DropdownMenuItem>
         <DropdownMenuItem>Billing</DropdownMenuItem>
         <DropdownMenuItem>Team</DropdownMenuItem>
         <DropdownMenuItem>Subscription</DropdownMenuItem>
-        <DropdownMenuItem>Setting</DropdownMenuItem>
+        <DropdownMenuItem>Settings</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
