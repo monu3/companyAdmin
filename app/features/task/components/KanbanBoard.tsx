@@ -8,7 +8,6 @@ import type { KanbanBoardProps } from "../Types/types";
 import { statusData } from "../data/statusDumy";
 import { getPriorityColor } from "../../../common/utils/taskPriorityColor";
 
-
 const KanbanBoard: React.FC<KanbanBoardProps> = ({ tasks, onTaskMove }) => {
   const columns = useMemo(() => {
     return statusData.map((status) => ({
@@ -38,21 +37,23 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ tasks, onTaskMove }) => {
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="flex overflow-x-auto space-x-4 p-4">
+      <div className="flex min-h-screen overflow-x-auto space-x-6 p-4 scrollbar-hidden">
         {columns.map((column) => (
           <div key={column.id} className="flex-none w-80">
-            <h3 className="text-lg font-semibold mb-4">{column.title}</h3>
-            <Droppable droppableId={column.id} isDropDisabled={false}>
+            <h3 className="text-lg font-semibold mb-4 text-center">
+              {column.title}
+            </h3>
+            <Droppable droppableId={column.id}>
               {(provided, snapshot) => (
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className={`p-4 rounded-lg min-h-[500px] ${
-                    snapshot.isDraggingOver ? "bg-gray-50" : "bg-gray-100"
+                  className={`p-4 rounded-lg  transition-colors ${
+                    snapshot.isDraggingOver ? "bg-gray-200" : "bg-gray-100"
                   }`}
                 >
                   {column.tasks.length === 0 ? (
-                    <div className="flex items-center justify-center text-sm text-gray-500">
+                    <div className="flex items-center justify-center text-sm text-gray-500 h-full">
                       Drag tasks here
                     </div>
                   ) : (
@@ -66,9 +67,17 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ tasks, onTaskMove }) => {
                           <Card
                             ref={provided.innerRef}
                             {...provided.draggableProps}
-                            className={`mb-3 ${
-                              snapshot.isDragging ? "rotate-3 shadow-lg" : ""
+                            className={`mb-4 ${
+                              snapshot.isDragging
+                                ? "rotate-3 shadow-xl bg-white"
+                                : "shadow-sm"
                             }`}
+                            style={{
+                              ...provided.draggableProps.style,
+                              transform: snapshot.isDragging
+                                ? `${provided.draggableProps.style?.transform}`
+                                : "none",
+                            }}
                           >
                             <CardContent className="p-4">
                               <div className="flex items-center justify-between mb-2">
