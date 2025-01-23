@@ -83,21 +83,19 @@ const MainNavbarLayout: React.FC<MainNavbarLayoutProps> = ({
           {/* Navigation Items */}
           <div className="flex flex-1 justify-around items-center">
             {items.map((item) => (
-              <HoverCard>
+              <HoverCard key={item.to}>
                 <NavLink
-                  key={item.to}
                   to={item.to}
                   className={`
-                        flex items-center justify-center
-                        ${
-                          isActive(item)
-                            ? "text-blue-600 dark:text-blue-500"
-                            : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-300"
-                        }
-                      `}
+        flex items-center justify-center
+        ${
+          isActive(item)
+            ? "text-blue-600 dark:text-blue-500"
+            : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-300"
+        }
+      `}
                 >
                   <HoverCardTrigger className="transition-colors duration-100">
-                    {" "}
                     {item.icon && <item.icon className="w-6 h-6" />}
                   </HoverCardTrigger>
                   <HoverCardContent className="w-auto">
