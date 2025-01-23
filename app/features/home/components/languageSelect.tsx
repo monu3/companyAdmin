@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FaGlobe } from "react-icons/fa";
 import {
   DropdownMenu,
@@ -8,6 +8,23 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const LanguageSelect = () => {
+  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedLanguage = localStorage.getItem("selectedLanguage");
+    if (storedLanguage) {
+      setSelectedLanguage(storedLanguage);
+    } else {
+      setSelectedLanguage("EN");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (selectedLanguage !== null) {
+      localStorage.setItem("selectedLanguage", selectedLanguage);
+    }
+  }, [selectedLanguage]);
+
   const languages = [
     { code: "EN", label: "English" },
     { code: "NP", label: "Nepali" },
@@ -29,10 +46,10 @@ const LanguageSelect = () => {
   return (
     <DropdownMenu>
       {/* Dropdown Trigger */}
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger className="bg-transparent p-0 border-none">
         <div className="flex items-center gap-2 cursor-pointer">
           <FaGlobe className="text-xl" />
-          <span>EN</span> {/* Default language */}
+          <span>{selectedLanguage}</span>
         </div>
       </DropdownMenuTrigger>
 
@@ -42,6 +59,7 @@ const LanguageSelect = () => {
           <DropdownMenuItem
             key={lang.code}
             className="cursor-pointer hover:bg-blue-100 rounded px-2 py-1"
+            onClick={() => setSelectedLanguage(lang.code)}
           >
             {lang.label}
           </DropdownMenuItem>
