@@ -1,8 +1,11 @@
 import {useContext, useRef, useState, useEffect} from 'react'
 import { useForm } from 'react-hook-form';
-import { ProjectContext, useProjectContext } from '../store/context';
+import { useProjectContext } from '../store/context';
 import { nanoid } from "nanoid";
 import type { projectDetails } from '../types';
+import { clientOptions } from '../dummyData/client';
+import { lead } from '../dummyData/lead';
+import { statusOptions } from '../dummyData/status';
 
 const ProjectForm = ({ selectedProject }: { selectedProject?: projectDetails | null }) => {
   const { setIsOpen, setData, data} = useProjectContext();
@@ -116,11 +119,12 @@ const onSubmit = (formData: any) => {
             <select id="lead" className='h-10' {...register("lead", {
                 required: "Select team-lead",
               })}>
-              <option value="team-lead" selected>Select Team Lead</option>
-              <option value="sujita">Sujita</option>
-              <option value="sumit">Sumit</option>
-              <option value="monu">Monu</option>
-              <option value="diwash">Diwash</option>
+              <option value="">Select Lead</option> {/* Default option */}
+        {lead.map((option:any) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
             </select>
             {errors.lead && (
               <p className="errorMsg text-error">{errors.lead.message as string}</p>
@@ -131,11 +135,12 @@ const onSubmit = (formData: any) => {
             <select id="client" className='h-10' {...register("client", {
                 required: "Select Client",
               })}>
-              <option value="client" selected>Select Client</option>
-              <option value="client1">client1</option>
-              <option value="client2">client2</option>
-              <option value="client3">client3</option>
-              <option value="client4">client4</option>
+                <option value="">Select Client</option> {/* Default option */}
+        {clientOptions.map((option:any) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
             </select>
             {errors.lead && (
               <p className="errorMsg text-error">{errors.lead.message as string}</p>
@@ -172,11 +177,12 @@ const onSubmit = (formData: any) => {
             <select id="status" className='h-10' {...register("status", {
                 required: "Select Status",
               })}>
-              <option value="status" selected>Select status</option>
-              <option value="started">Started</option>
-              <option value="not-started">Not Started</option>
-              <option value="pending">Pending</option>
-              <option value="completed">Completed</option>
+              <option value="">Select Status</option> {/* Default option */}
+        {statusOptions.map((option:any) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
             </select>
             {errors.lead && (
               <p className="errorMsg text-error">{errors.lead.message as string}</p>
