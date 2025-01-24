@@ -7,8 +7,9 @@ import {
 } from "@react-router/dev/routes";
 
 export default [
+  index("features/signIn/signIn.tsx"),
   layout("features/home/pages/HomePage.tsx", [
-    index("features/dashboard/pages/dashboardPage.tsx"),
+    route("dashboard", "D:\companyAdmin\app\features\dashboard"),
     route("projects", "features/project/pages/ProjectPage.tsx"),
     route("tasks/list", "features/task/components/listTasks.tsx"),
     route("employee", "features/employee/pages/employeePage.tsx"),
