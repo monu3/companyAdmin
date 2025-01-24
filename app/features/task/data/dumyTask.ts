@@ -1,3 +1,11 @@
+/**
+ * dumyTask.ts
+ * Created On : 2025-24-01 12
+ * Author : Diwash Pokhrel
+ * Description : This module exports an array of dummy tasks for use in the task management application.
+ */
+
+// Array of dummy tasks, each represented by an object with various properties.
 export const dummyTasks = [
   {
     id: "task-1",
