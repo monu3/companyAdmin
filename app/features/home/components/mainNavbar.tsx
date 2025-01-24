@@ -28,13 +28,13 @@ const MainNavbarLayout: React.FC<MainNavbarLayoutProps> = ({
   return (
     <div className={`flex ${className || ""}`}>
       {/* Desktop Sidebar */}
-      <div className="hidden md:block w-64 h-screen fixed top-0 left-0 z-10">
+      <div className="hidden md:block sm:w-14 lg:w-64 h-screen fixed top-0 left-0 z-10">
         <Sidebar
           aria-label="Main navigation"
           className="h-screen fixed top-0 left-0 z-10 w-64 "
         >
           {logo && (
-            <div className="flex items-center justify-center p-4 mb-6 px-2">
+            <div className="mb-6">
               <img src={logo} alt="Logo" className="h-12 w-auto" />
             </div>
           )}
@@ -57,7 +57,7 @@ const MainNavbarLayout: React.FC<MainNavbarLayoutProps> = ({
                     dark:${
                       isActive(item)
                         ? "bg-gray-600 text-black hover:bg-text-600 hover:text-black"
-                        : "text-gray-300 hover:bg-gray-700 hover:text-white"
+                        : "text-gray-300 hover:bg-orange-200 hover:text-white"
                     }
                     transition-colors duration-200
                   `}
