@@ -1,3 +1,11 @@
+/**
+ * taskPage.tsx
+ * Created On : 2025-24-01 12
+ * Author : Diwash Pokhrel
+ * Description : This component serves as the main page for managing tasks,
+ * featuring a Kanban board, task creation form, and search functionality.
+ */
+
 import React, { useState, useEffect } from "react";
 import CreateTaskForm from "../components/CreateTaskForm";
 import KanbanBoard from "../components/KanbanBoard";
@@ -12,6 +20,9 @@ const TaskPage: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
 
+  /**
+   * Effect hook to load tasks from local storage when the component mounts.
+   */
   useEffect(() => {
     const storedTasks = localStorage.getItem("tasks");
     if (storedTasks) {
@@ -19,10 +30,14 @@ const TaskPage: React.FC = () => {
       setTasks(parsedTasks);
       setFilteredTasks([...dummyTasks, ...parsedTasks]);
     } else {
-      setFilteredTasks(dummyTasks);
+      setFilteredTasks(dummyTasks); // If no stored tasks, set filtered tasks to dummy tasks
     }
   }, []);
 
+  /**
+   * Handles adding a new task.
+   * @param {Task} newTask - The new task to be added.
+   */
   const handleAddTask = (newTask: Task) => {
     const updatedTasks = [...tasks, newTask];
     setTasks(updatedTasks);
@@ -30,6 +45,11 @@ const TaskPage: React.FC = () => {
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   };
 
+  /**
+   * Handles moving a task to a new status.
+   * @param {string} taskId - The ID of the task to move.
+   * @param {string} newStatus - The new status for the task.
+   */
   const handleTaskMove = (taskId: string, newStatus: string) => {
     const updatedTasks = tasks.map((task) =>
       task.id === taskId ? { ...task, status: newStatus } : task
