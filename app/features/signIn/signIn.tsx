@@ -31,7 +31,7 @@ function SignIn() {
     if (user) {
       console.log("Login successful");
       localStorage.setItem("isAuthenticated", "true");
-      navigate("/dashboard");
+      navigate("/");
     } else {
       setError("Invalid username or password");
     }
