@@ -63,7 +63,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ tasks, onTaskMove }) => {
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
       {/* Main container for the Kanban board */}
-      <div className="flex min-h-screen overflow-x-auto space-x-6 p-4 scrollbar-hidden">
+      <div className="flex overflow-x-auto space-x-6 p-4">
         {/* Render each column */}
         {columns.map((column) => (
           <div key={column.id} className="flex-none w-80">
