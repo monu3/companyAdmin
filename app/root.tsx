@@ -9,8 +9,6 @@ import {
 
 import type { Route } from "./+types/root";
 import stylesheet from "./app.css?url";
-import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import { Provider } from "react-redux";
 import { store } from "./store/store";
