@@ -71,15 +71,15 @@ export default function SearchForm({
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
+    <div className="bg-[var(--color-bg)] text-[var(--color-text)] p-6 rounded-lg shadow-md">
       {/* Form layout using grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         {/* Project Filter Dropdown */}
         <Select value={selectedProject} onValueChange={setSelectedProject}>
-          <SelectTrigger>
+          <SelectTrigger className="bg-[var(--color-bg)] text-[var(--color-text)]">
             <SelectValue placeholder="Select Project" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-[var(--color-bg)] text-[var(--color-text)]">
             {projectData.map((project) => (
               <SelectItem key={project.id} value={project.id}>
                 {project.name} {/* Display project name */}
@@ -90,10 +90,10 @@ export default function SearchForm({
 
         {/* Status Filter Dropdown */}
         <Select value={selectedStatus} onValueChange={setSelectedStatus}>
-          <SelectTrigger>
+          <SelectTrigger className="bg-[var(--color-bg)] text-[var(--color-text)]">
             <SelectValue placeholder="Select Status" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-[var(--color-bg)] text-[var(--color-text)]">
             {statusData.map((status) => (
               <SelectItem key={status.id} value={status.id}>
                 {status.name} {/* Display status name */}
@@ -104,10 +104,10 @@ export default function SearchForm({
 
         {/* Priority Filter Dropdown */}
         <Select value={selectedPriority} onValueChange={setSelectedPriority}>
-          <SelectTrigger>
+          <SelectTrigger className="bg-[var(--color-bg)] text-[var(--color-text)]">
             <SelectValue placeholder="Select Priority" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-[var(--color-bg)] text-[var(--color-text)]">
             {priorityData.map((priority) => (
               <SelectItem key={priority.id} value={priority.id}>
                 {priority.name} {/* Display priority name */}
@@ -117,7 +117,7 @@ export default function SearchForm({
         </Select>
 
         {/* Search and Reset Buttons */}
-        <div className="flex justify-end space-x-4 mb-6">
+        <div className="flex justify-end space-x-4">
           {/* Search Button */}
           <Button
             className="bg-teal-500 text-white hover:bg-teal-600"

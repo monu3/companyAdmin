@@ -68,7 +68,7 @@ const TaskPage: React.FC = () => {
           <h2 className="text-2xl font-bold">Tasks</h2>
           <Link to="list">
             {/* Added the link to the ListTasks page */}
-            <Button variant={"link"}>Show Task List</Button>
+            <Button variant={"outline"}>Show Task List</Button>
           </Link>
 
           <CreateTaskForm onAddTask={handleAddTask} />
