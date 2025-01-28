@@ -1,8 +1,6 @@
 "use client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -22,33 +20,33 @@ export default function LoginForm() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email" className="text-sm font-medium">
+          <div className="space-y-2 flex flex-col">
+            <label htmlFor="email" className="text-sm font-medium">
               Email
-            </Label>
-            <Input
+            </label>
+            <input
               id="email"
               type="email"
               placeholder="name@example.com"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              
+              className="rounded"
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="password" className="text-sm font-medium">
+          <div className="space-y-2 flex flex-col">
+            <label htmlFor="password" className="text-sm font-medium">
               Password
-            </Label>
-            <Input
+            </label>
+            <input
               id="password"
               type="password"
               placeholder="Enter your password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              
+              className="rounded"
             />
           </div>
           <div className="flex justify-center items-center ">
