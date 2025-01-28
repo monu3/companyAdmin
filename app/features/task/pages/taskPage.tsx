@@ -19,6 +19,8 @@ import { Button } from "~/components/ui/button";
 const TaskPage: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
+  const [isCreateTaskModalOpen, setIsCreateTaskModalOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   /**
    * Effect hook to load tasks from local storage when the component mounts.
@@ -35,14 +37,25 @@ const TaskPage: React.FC = () => {
   }, []);
 
   /**
-   * Handles adding a new task.
-   * @param {Task} newTask - The new task to be added.
+   * Handles adding or updating a task.
+   * @param {Task} task - The task to be added or updated.
    */
-  const handleAddTask = (newTask: Task) => {
-    const updatedTasks = [...tasks, newTask];
-    setTasks(updatedTasks);
-    setFilteredTasks([...dummyTasks, ...updatedTasks]);
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  const handleAddTask = (task: Task) => {
+    if (selectedTask) {
+      // Update existing task
+      const updatedTasks = tasks.map((t) => (t.id === task.id ? task : t));
+      setTasks(updatedTasks);
+      setFilteredTasks([...dummyTasks, ...updatedTasks]);
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    } else {
+      // Add new task
+      const updatedTasks = [...tasks, task];
+      setTasks(updatedTasks);
+      setFilteredTasks([...dummyTasks, ...updatedTasks]);
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    }
+    setSelectedTask(null); // Reset selected task
+    setIsCreateTaskModalOpen(false); // Close the modal
   };
 
   /**
@@ -59,6 +72,15 @@ const TaskPage: React.FC = () => {
     localStorage.setItem("tasks", JSON.stringify(updatedTasks)); // Persist to localStorage
   };
 
+  /**
+   * Handles editing a task.
+   * @param {Task} task - The task to be edited.
+   */
+  const handleEditTask = (task: Task) => {
+    setSelectedTask(task);
+    setIsCreateTaskModalOpen(true);
+  };
+
   const allTasks = [...dummyTasks, ...tasks];
 
   return (
@@ -71,8 +93,26 @@ const TaskPage: React.FC = () => {
             <Button variant={"outline"}>Show Task List</Button>
           </Link>
 
-          <CreateTaskForm onAddTask={handleAddTask} />
+          {/* <CreateTaskForm onAddTask={handleAddTask} /> */}
+          <Button
+            variant={"outline"}
+            onClick={() => {
+              setSelectedTask(null); // Ensure no task is selected when creating a new one
+              setIsCreateTaskModalOpen(true);
+            }}
+          >
+            Create Task
+          </Button>
         </div>
+        {/* Create Task Form Modal */}
+        {isCreateTaskModalOpen && (
+          <CreateTaskForm
+            onAddTask={handleAddTask}
+            selectedTask={selectedTask}
+            setIsOpen={setIsCreateTaskModalOpen}
+          />
+        )}
+
         <SearchForm setFilteredTasks={setFilteredTasks} allTasks={allTasks} />
         <KanbanBoard tasks={filteredTasks} onTaskMove={handleTaskMove} />
         <Outlet />
