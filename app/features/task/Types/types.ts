@@ -35,7 +35,9 @@ export interface Column {
  * Props for the CreateTaskForm component.
  */
 export interface CreateTaskFormProps {
-  onAddTask: (task: Task) => void; // Callback function to handle adding a new task
+  onAddTask: (task: Task) => void; // Callback function to handle adding or updating a task
+  selectedTask?: Task | null; // Optional: The task being edited (if in edit mode)
+  setIsOpen: (isOpen: boolean) => void; // Function to control the visibility of the form modal
 }
 
 /**
