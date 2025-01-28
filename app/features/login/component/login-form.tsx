@@ -1,16 +1,39 @@
-"use client";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { useNavigate } from "react-router";
+import { login } from "../service/authService";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login attempted with:", { email, password });
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const result = await login(email, password);
+
+      if (result === "Login successful") {
+        localStorage.setItem("userEmail", email);
+
+        navigate("/");
+      } else {
+        setError(result);
+      }
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Failed to connect to server"
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -21,11 +44,11 @@ export default function LoginForm() {
           <p className="mt-2 text-sm text-gray-600">Access your account</p>
         </div>
 
+        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-sm font-medium">
-              Email
-            </Label>
+            <Label htmlFor="email">Email</Label>
             <Input
               id="email"
               type="email"
@@ -33,14 +56,12 @@ export default function LoginForm() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              
+              disabled={isLoading}
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password" className="text-sm font-medium">
-              Password
-            </Label>
+            <Label htmlFor="password">Password</Label>
             <Input
               id="password"
               type="password"
@@ -48,14 +69,13 @@ export default function LoginForm() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              
+              disabled={isLoading}
             />
           </div>
-          <div className="flex justify-center items-center ">
-            <Button type="submit" className="w-full">
-              Sign in
-            </Button>
-          </div>
+
+          <Button type="submit" className="w-full" disabled={isLoading}>
+            {isLoading ? "Authenticating..." : "Sign in"}
+          </Button>
         </form>
       </div>
     </div>
