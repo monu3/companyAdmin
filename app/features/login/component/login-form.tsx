@@ -9,7 +9,7 @@
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { login } from "../service/authService"; // Import the login function from authService
+import { login } from "../service/loginAuthService"; // Import the login function from authService
 import { Label } from "@/components/ui/label"; // UI component for labeling inputs
 import { Button } from "@/components/ui/button"; // UI component for the button
 
