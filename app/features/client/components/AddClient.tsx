@@ -4,6 +4,13 @@ import { Button } from "@/components/ui/button";
 import { AiOutlineClose } from "react-icons/ai";
 import type { Client } from "../types/client";
 
+/**
+ * AddClient.tsx
+ * Created On : 2025-29-01 11
+ * Author : Sumit Kumar Shrestha
+ * Description : 
+ */
+
 interface ClientFormProps {
   onClose: () => void;
   onSubmit: (data: Client) => void;
@@ -37,36 +44,35 @@ export const AddClient: React.FC<ClientFormProps> = ({
           {client ? "Edit Client" : "Add Client"}
         </h2>
         <div className="grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
-          <div>
-            <div className="form-control flex flex-col">
-              <label>Name</label>
-              <input
-                type="text"
-                {...register("name", {
-                  required: "Name is required.",
-                })}
-              />
-              {errors.name && (
-                <p className="errorMsg">{errors.name.message as string}</p>
-              )}
-            </div>
-            <div className="form-control flex flex-col">
-              <label>Email</label>
-              <input
-                type="text"
-                {...register("email", {
-                  required: "Email is required.",
-                  pattern: {
-                    value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
-                    message: "Email is not valid.",
-                  },
-                })}
-              />
-              {errors.email && (
-                <p className="errorMsg">{errors.email.message as string}</p>
-              )}
-            </div>
-            {/* <div className="form-control flex flex-col">
+          <div className="form-control flex flex-col">
+            <label>Name</label>
+            <input
+              type="text"
+              {...register("name", {
+                required: "Name is required.",
+              })}
+            />
+            {errors.name && (
+              <p className="errorMsg">{errors.name.message as string}</p>
+            )}
+          </div>
+          <div className="form-control flex flex-col">
+            <label>Email</label>
+            <input
+              type="text"
+              {...register("email", {
+                required: "Email is required.",
+                pattern: {
+                  value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                  message: "Email is not valid.",
+                },
+              })}
+            />
+            {errors.email && (
+              <p className="errorMsg">{errors.email.message as string}</p>
+            )}
+          </div>
+          {/* <div className="form-control flex flex-col">
               <label>Password</label>
               <input
                 type="password"
@@ -82,49 +88,43 @@ export const AddClient: React.FC<ClientFormProps> = ({
                 <p className="errorMsg">{errors.password.message as string}</p>
               )}
             </div> */}
-            <div className="form-control flex flex-col">
-              <label>Budget</label>
-              <input
-                type="text"
-                {...register("budget", {
-                  required: "Budget is required.",
-                })}
-              />
-              {errors.budget && (
-                <p className="errorMsg">
-                  {errors.budget.message as string}
-                </p>
-              )}
-            </div>
+          <div className="form-control flex flex-col">
+            <label>Budget</label>
+            <input
+              type="text"
+              {...register("budget", {
+                required: "Budget is required.",
+              })}
+            />
+            {errors.budget && (
+              <p className="errorMsg">{errors.budget.message as string}</p>
+            )}
           </div>
-          <div>
-            <div className="form-control flex flex-col">
-              <label>Project Name</label>
-              <input
-                type="text"
-                {...register("projectName", {
-                  required: "Project is required.",
-                })}
-              />
-              {errors.projectName && (
-                <p className="errorMsg">{errors.projectName.message as string}</p>
-              )}
-            </div>
-            <div className="form-control flex flex-col">
-              <label>Enroll Date</label>
-              <input
-                type="date"
-                {...register("joinDate", {
-                  required: "Date is required.",
-                })}
-              />
-              {errors.joinDate && (
-                <p className="errorMsg">{errors.joinDate.message as string}</p>
-              )}
-            </div>
+          <div className="form-control flex flex-col">
+            <label>Project Name</label>
+            <input
+              type="text"
+              {...register("projectName", {
+                required: "Project is required.",
+              })}
+            />
+            {errors.projectName && (
+              <p className="errorMsg">{errors.projectName.message as string}</p>
+            )}
+          </div>
+          <div className="form-control flex flex-col">
+            <label>Enroll Date</label>
+            <input
+              type="date"
+              {...register("joinDate", {
+                required: "Date is required.",
+              })}
+            />
+            {errors.joinDate && (
+              <p className="errorMsg">{errors.joinDate.message as string}</p>
+            )}
           </div>
         </div>
-
         <div className="flex justify-end space-x-2 pt-4">
           <Button variant="outline" type="button" onClick={onClose}>
             Cancel
