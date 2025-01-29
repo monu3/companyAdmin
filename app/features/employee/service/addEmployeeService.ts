@@ -2,7 +2,11 @@
  * addEmployeeService.ts
  * Created On : 2025-29-01
  * Author : Diwash Pokhrel
- * Description : Service to add an employee by making an API request to the backend.
+ * Description :
+ * This service is responsible for adding a new employee to the system.
+ * It accepts an `Employee` object and a `userEmail` to identify the user making the request.
+ * The function sends a POST request to the `/employee` endpoint with the employee data and user email.
+ * Returns a promise that resolves to the newly created `Employee` object.
  */
 
 import { apiRequest } from "../../../common/api/backendApi";
