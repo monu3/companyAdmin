@@ -11,7 +11,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { login } from "../service/authService"; // Import the login function from authService
 import { Label } from "@/components/ui/label"; // UI component for labeling inputs
-import { Input } from "@/components/ui/input"; // UI component for input fields
 import { Button } from "@/components/ui/button"; // UI component for the button
 
 export default function LoginForm() {
@@ -54,12 +53,13 @@ export default function LoginForm() {
         {error && <p className="text-red-500 text-sm text-center">{error}</p>}{" "}
         {/* Show error if exists */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
+          <div className="space-y-2 flex flex-col">
             <Label htmlFor="email">Email</Label> {/* Label for email input */}
-            <Input
+            <input
               id="email"
               type="email"
               placeholder="name@example.com"
+              className="rounded"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)} // Update email state on change
@@ -67,12 +67,13 @@ export default function LoginForm() {
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 flex flex-col">
             <Label htmlFor="password">Password</Label>{" "}
             {/* Label for password input */}
-            <Input
+            <input
               id="password"
               type="password"
+              className="rounded"
               placeholder="Enter your password"
               required
               value={password}
