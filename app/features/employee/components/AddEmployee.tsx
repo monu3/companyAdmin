@@ -4,6 +4,13 @@ import { Button } from "@/components/ui/button";
 import { AiOutlineClose } from "react-icons/ai";
 import type { Employee } from "../types/employee";
 
+/**
+ * AddEmployee.tsx
+ * Created On : 2025-29-01 11
+ * Author : Sumit Kumar Shrestha
+ * Description : 
+ */
+
 interface EmployeeFormProps {
   onClose: () => void;
   onSubmit: (data: Employee) => void;
@@ -37,7 +44,6 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
           {employee ? "Edit Employee" : "Add Employee"}
         </h2>
         <div className="grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
-          <div>
             <div className="form-control flex flex-col">
               <label>Name</label>
               <input
@@ -108,8 +114,6 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
                 </p>
               )}
             </div>
-          </div>
-          <div>
             <div className="form-control flex flex-col">
               <label>Salary</label>
               <input
@@ -135,7 +139,6 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
               )}
             </div>
           </div>
-        </div>
 
         <div className="flex justify-end space-x-2 pt-4">
           <Button variant="outline" type="button" onClick={onClose}>
