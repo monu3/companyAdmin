@@ -7,7 +7,7 @@
  * It handles the login process, including error handling, loading state, and redirects upon successful login.
  */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { login } from "../service/authService"; // Import the login function from authService
 import { Label } from "@/components/ui/label"; // UI component for labeling inputs
@@ -19,6 +19,13 @@ export default function LoginForm() {
   const [error, setError] = useState(""); // State to store any error messages
   const [isLoading, setIsLoading] = useState(false); // State to indicate if login is in progress
   const navigate = useNavigate(); // Hook for navigation after successful login
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("userEmail");
+    if (storedEmail) {
+      navigate("/"); // Redirect to the homepage if userEmail is already set
+    }
+  }, [navigate]); // Run this effect once when the component mounts
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Prevent form submission from reloading the page
