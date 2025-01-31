@@ -198,11 +198,11 @@ const onSubmit = (formData: any) => {
         <div className='flex gap-2 justify-end mt-5'>
         <div className="form-control">
             <label></label>
-            <button type="submit" className='p-3 bg-info border-none lg:rounded-lg sm:rounde-sm'>{selectedProject ? "Save Changes" : "Create"}</button>
+            <button type="submit" className='p-3 bg-orange-400 border-none lg:rounded-lg sm:rounde-sm'>{selectedProject ? "Save Changes" : "Create"}</button>
         </div>
         <div className="form-control">
             <label></label>
-            <button type="button" className='p-3 border-none bg-info lg:rounded-lg sm:rounde-sm'
+            <button type="button" className='p-3 border-none bg-orange-400 lg:rounded-lg sm:rounde-sm'
             onClick={() => setIsOpen(false)}
             >Close</button>
         </div>

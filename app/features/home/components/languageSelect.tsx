@@ -48,8 +48,8 @@ const LanguageSelect = () => {
       {/* Dropdown Trigger */}
       <DropdownMenuTrigger className="bg-transparent p-0 border-none">
         <div className="flex items-center gap-2 cursor-pointer">
-          <FaGlobe className="text-xl" />
-          <span>{selectedLanguage}</span>
+          <FaGlobe className="text-xl dark:text-text" />
+          <span className="dark:text-text">{selectedLanguage}</span>
         </div>
       </DropdownMenuTrigger>
 

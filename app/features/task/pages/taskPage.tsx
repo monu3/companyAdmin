@@ -85,12 +85,12 @@ const TaskPage: React.FC = () => {
 
   return (
     <>
-      <section className="h-auto px-4 md:px-6 dark:bg-[#494242]">
+      <section className="h-auto p-4 md:px-6 dark:bg-[#121212]">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Tasks</h2>
           <Link to="list">
             {/* Added the link to the ListTasks page */}
-            <Button variant={"outline"}>Show Task List</Button>
+            <Button variant={"outline"} className="text-gray-800 dark:bg-orange-400 dark:text-white dark:hover:bg-orange-300 hover:bg-gray-200 transition-colors">Show Task List</Button>
           </Link>
 
           {/* <CreateTaskForm onAddTask={handleAddTask} /> */}
@@ -100,6 +100,7 @@ const TaskPage: React.FC = () => {
               setSelectedTask(null); // Ensure no task is selected when creating a new one
               setIsCreateTaskModalOpen(true);
             }}
+            className="text-gray-800 dark:text-white dark:bg-orange-400 dark:hover:bg-orange-300 hover:bg-gray-200 transition-colors"
           >
             Create Task
           </Button>
