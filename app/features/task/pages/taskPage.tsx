@@ -8,7 +8,7 @@
 
 import React, { useState, useEffect } from "react";
 import CreateTaskForm from "../components/CreateTaskForm";
-import KanbanBoard from "../components/KanbanBoard";
+import KanbanBoard from "../components/kanbanAndDnd/KanbanBoard";
 import { dummyTasks } from "../data/dumyTask";
 import SearchForm from "../components/searchForm";
 import type { Task } from "../Types/types";
