@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import Spinner from "~/common/utils/Spinner";
 
 // Create a context for theme management
 const ThemeContext = createContext({
@@ -61,7 +62,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
   // If theme is not determined yet, render a loading state (to avoid flash of light theme)
   if (isDarkMode === null) {
-    return <div>Loading...</div>; // Or a loading spinner if you prefer
+    return <Spinner />;
   }
 
   return (
