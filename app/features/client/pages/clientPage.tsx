@@ -68,6 +68,7 @@ const ClientPage = () => {
             variant="outline"
             size="icon"
             onClick={() => setViewMode('list')}
+            className='dark:text-text'
           >
             <List className={viewMode === 'list' ? 'text-primary' : ''} />
           </Button>
@@ -78,7 +79,7 @@ const ClientPage = () => {
           >
             <Grid className={viewMode === 'grid' ? 'text-primary' : ''} />
           </Button>
-          <Button onClick={() => setIsOpen(true)} variant={'outline'}>
+          <Button onClick={() => setIsOpen(true)} variant={'outline'} className='dark:text-text'>
             <PlusCircle/>
           </Button>
         </div>

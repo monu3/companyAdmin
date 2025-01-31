@@ -126,10 +126,10 @@ export const AddClient: React.FC<ClientFormProps> = ({
           </div>
         </div>
         <div className="flex justify-end space-x-2 pt-4">
-          <Button variant="outline" type="button" onClick={onClose}>
+          <Button variant="outline" type="button" onClick={onClose}  className="bg-orange-400">
             Cancel
           </Button>
-          <Button type="submit">
+          <Button type="submit" variant="outline" className="bg-orange-400">
             {client ? "Update Client" : "Add Client"}
           </Button>
         </div>

@@ -19,6 +19,7 @@ const AddProject = () => {
         variant="outline"
         size="icon"
         onClick={() => setView('table')}
+        className="text-gray-800 dark:text-white dark:hover:bg-gray-700 hover:bg-gray-200 transition-colors"
       >
         <Grid />
       </Button>
@@ -28,12 +29,13 @@ const AddProject = () => {
         variant="outline"
         size="icon"
         onClick={() => setView('card')}
+        className="text-gray-800 dark:text-white dark:hover:bg-gray-700 hover:bg-gray-200 transition-colors"
       >
         <List/>
       </Button>
       )}
       {/* Icon Button to Open Form */}
-      <button  className="shadow-custom text-2xl border-none m-2 rounded-lg px-2cursor-pointer hover:text-gray-500 transition-colors"
+      <button  className="shadow-custom text-2xl border-none m-2 rounded-lg px-2cursor-pointer dark:bg-orange-400 hover:text-gray-500 transition-colors"
         onClick={handleCreate}>Create</button>
 
       {/* Popup Form */}

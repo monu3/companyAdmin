@@ -46,12 +46,12 @@ const DisplayTable = () => {
           <Table.Cell>{data.progress}</Table.Cell>
           <Table.Cell>{data.status}</Table.Cell>
           <Table.Cell>
-              <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500" onClick={() => handleEdit(data.id)}>
+              <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-text" onClick={() => handleEdit(data.id)}>
                 Edit
               </a>
           </Table.Cell>
           <Table.Cell>
-              <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500" onClick={() => handleDelete(data.id)}>
+              <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-text" onClick={() => handleDelete(data.id)}>
                 Delete
               </a>
           </Table.Cell>

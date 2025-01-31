@@ -15,6 +15,8 @@ import { store } from "./store/store";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ProjectContextProvider from "./features/project/store/context";
+import { ThemeProvider } from "./common/theme/context/ThemeContext";
+//import { ThemeProvider } from "./common/theme/context/themeContext";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -51,11 +53,15 @@ const queryClient = new QueryClient();
 export default function App() {
   return (
     <Provider store={store}>
-      <ProjectContextProvider>
-        <QueryClientProvider client={queryClient}>
-          <Outlet />
-        </QueryClientProvider>
-      </ProjectContextProvider>
+      <ThemeProvider>
+        <ProjectContextProvider>
+            <QueryClientProvider client={queryClient}>
+              <Outlet />
+            </QueryClientProvider>
+          </ProjectContextProvider>
+  
+      </ThemeProvider>
+       
     </Provider>
   );
 }
