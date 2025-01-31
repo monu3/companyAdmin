@@ -15,6 +15,7 @@ import { store } from "./store/store";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ProjectContextProvider from "./features/project/store/context";
+import { EmployeeProvider } from "./features/employee/context/EmployeeContext";
 import { ThemeProvider } from "./common/theme/context/ThemeContext";
 //import { ThemeProvider } from "./common/theme/context/themeContext";
 
@@ -54,13 +55,15 @@ export default function App() {
   return (
     <Provider store={store}>
       <ThemeProvider>
+      <EmployeeProvider>
         <ProjectContextProvider>
             <QueryClientProvider client={queryClient}>
               <Outlet />
             </QueryClientProvider>
           </ProjectContextProvider>
-  
+      </EmployeeProvider>
       </ThemeProvider>
+  
        
     </Provider>
   );

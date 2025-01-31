@@ -1,43 +1,65 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { getStoredEmployees, saveEmployeesToStorage } from '../utils/storage';
-import type { Employee } from '../types/employee';
+import type {EmployeeContextProps,Employee } from '../types/employee';
 
-interface EmployeeContextProps {
-  employees: Employee[];
-  addEmployee: (employee: Employee) => void;
-  updateEmployee: (employee: Employee) => void;
-  deleteEmployee: (id: string) => void;
-}
+
 
 const EmployeeContext = createContext<EmployeeContextProps | undefined>(undefined);
 
 export const EmployeeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [employees, setEmployees] = useState<Employee[]>([]);
-
-  useEffect(() => {
-    setEmployees(getStoredEmployees());
-  }, []);
-
-  useEffect(() => {
-    saveEmployeesToStorage(employees);
-  }, [employees]);
-
-  const addEmployee = (newEmployee: Employee) => {
-    setEmployees(prev => [...prev, newEmployee]);
-  };
-
-  const updateEmployee = (updatedEmployee: Employee) => {
-    setEmployees(prev =>
-      prev.map(emp => (emp.id === updatedEmployee.id ? updatedEmployee : emp))
-    );
+  const defaultEmployeeDetails:Employee[]=[];
+  const [employees, setEmployees] = useState<Employee[]>(defaultEmployeeDetails);
+  const [selectedEmployee,setSelectedEmployee]=useState<Employee|null>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [view, setView] = useState<"table" | "card">("table");
+  const updateEmployee = (selectedId: string) => {
+    // Find the empolyee you want to edit based on the selectedId
+    const employeeToEdit = employees.find(item => item.id === selectedId);
+    
+    // If employee is found, set it as selectedEmployee and open the modal for editing
+    if (employeeToEdit) {
+      setSelectedEmployee(employeeToEdit);
+      setIsOpen(true);  // Open the form for editing
+    }
   };
 
   const deleteEmployee = (id: string) => {
-    setEmployees(prev => prev.filter(emp => emp.id !== id));
+    console.log("Data before delete:", employees);
+  
+    const filteredData = employees.filter(item => item.id !== id);
+    
+    if (filteredData.length === employees.length) {
+      console.warn(`No item found with id: ${id}`);
+      return; // Exit if no item is deleted
+    }
+  
+    setEmployees(filteredData);
+  
+    console.log("Selected ID:", id);
+    console.log("Data after delete:", filteredData);
   };
+  useEffect(() => {
+    if (typeof window !== "undefined" && employees.length > 0) {
+      localStorage.setItem("employees", JSON.stringify(employees));
+    }
+  }, [employees]);
+
+useEffect(() => {
+  if (typeof window !== "undefined") {
+    // Ensure localStorage is accessed only in the browser
+    const storedData = localStorage.getItem("employees");
+    if (storedData) {
+      try {
+        setEmployees(JSON.parse(storedData));
+      } catch (error) {
+        console.error("Failed to parse localStorage data:", error);
+      }
+    }
+  }
+}, []);
 
   return (
-    <EmployeeContext.Provider value={{ employees, addEmployee, updateEmployee, deleteEmployee }}>
+    <EmployeeContext.Provider value={{ employees, setEmployees,isOpen,setIsOpen,view,setView, updateEmployee, deleteEmployee,selectedEmployee,setSelectedEmployee }}>
       {children}
     </EmployeeContext.Provider>
   );
