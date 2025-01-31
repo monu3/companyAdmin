@@ -7,11 +7,10 @@
  * It handles the login process, including error handling, loading state, and redirects upon successful login.
  */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { login } from "../service/authService"; // Import the login function from authService
+import { login } from "../service/loginAuthService"; // Import the login function from authService
 import { Label } from "@/components/ui/label"; // UI component for labeling inputs
-import { Input } from "@/components/ui/input"; // UI component for input fields
 import { Button } from "@/components/ui/button"; // UI component for the button
 
 export default function LoginForm() {
@@ -20,6 +19,13 @@ export default function LoginForm() {
   const [error, setError] = useState(""); // State to store any error messages
   const [isLoading, setIsLoading] = useState(false); // State to indicate if login is in progress
   const navigate = useNavigate(); // Hook for navigation after successful login
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("userEmail");
+    if (storedEmail) {
+      navigate("/"); // Redirect to the homepage if userEmail is already set
+    }
+  }, [navigate]); // Run this effect once when the component mounts
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Prevent form submission from reloading the page
@@ -54,12 +60,13 @@ export default function LoginForm() {
         {error && <p className="text-red-500 text-sm text-center">{error}</p>}{" "}
         {/* Show error if exists */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
+          <div className="space-y-2 flex flex-col">
             <Label htmlFor="email">Email</Label> {/* Label for email input */}
-            <Input
+            <input
               id="email"
               type="email"
               placeholder="name@example.com"
+              className="rounded"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)} // Update email state on change
@@ -67,12 +74,13 @@ export default function LoginForm() {
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 flex flex-col">
             <Label htmlFor="password">Password</Label>{" "}
             {/* Label for password input */}
-            <Input
+            <input
               id="password"
               type="password"
+              className="rounded"
               placeholder="Enter your password"
               required
               value={password}
