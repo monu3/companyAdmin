@@ -37,7 +37,7 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
         className="relative flex flex-col gap-3 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg"
       >
         <AiOutlineClose
-          className="absolute top-2 right-2 text-xl cursor-pointer hover:text-indigo-500 dark:hover:text-indigo-400"
+          className="absolute top-2 right-2 text-xl cursor-pointer hover:text-orange-400 dark:hover:text-orange-400"
           onClick={onClose}
         />
         <h2 className="text-xl font-semibold">
@@ -141,10 +141,10 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
           </div>
 
         <div className="flex justify-end space-x-2 pt-4">
-          <Button variant="outline" type="button" onClick={onClose}>
+          <Button variant="outline" type="button" onClick={onClose} className="bg-orange-400">
             Cancel
           </Button>
-          <Button type="submit">
+          <Button type="submit" variant="outline" className="bg-orange-400">
             {employee ? "Update Employee" : "Add Employee"}
           </Button>
         </div>

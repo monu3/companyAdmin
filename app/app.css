@@ -97,7 +97,8 @@ td {
 /* Dark mode color variables (default for dark preference) */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #494242;
+    --color-bg: #12202e;
+    ;
     --color-text: #ffffff;
 
     --color-primary: #ff8f00; /* Deeper orange for dark mode */

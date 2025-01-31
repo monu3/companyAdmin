@@ -55,13 +55,13 @@ const ListTasks: React.FC = () => {
   };
 
   return (
-    <div className="h-auto px-2 md:px-4 dark:bg-[#494242]">
+    <div className="h-auto p-2 md:px-4 dark:bg-[#121212]">
       {/* Header section with title and navigation button */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold mb-4">Task List</h2>
         {/* Button to navigate to the tasks page */}
         <Link to="/tasks">
-          <Button variant={"secondary"}>Go to Tasks</Button>
+          <Button variant={"secondary"} className="dark:bg-orange-400">Go to Tasks</Button>
         </Link>
       </div>
 

@@ -51,13 +51,8 @@ const MainNavbarLayout: React.FC<MainNavbarLayoutProps> = ({
                     no-underline text-base
                     ${
                       isActive(item)
-                        ?"bg-orange-400 text-white hover:bg-orange-100 hover:text-white" : 
-      "text-gray-600 hover:bg-orange-200 hover:text-white-900"
-                    }
-                    dark:${
-                      isActive(item)
-                        ? "bg-gray-600 text-black hover:bg-text-600 hover:text-black"
-                        : "text-gray-300 hover:bg-orange-200 hover:text-white"
+                        ?"bg-orange-400 text-white hover:bg-orange-100 dark:hover:bg-orange-200 hover:text-bg" : 
+      "text-gray-600 hover:bg-orange-200 hover:text-white-900 dark:hover:bg-orange-200 dark:hover:text-bg"
                     }
                     transition-colors duration-200
                   `}

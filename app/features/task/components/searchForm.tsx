@@ -71,7 +71,7 @@ export default function SearchForm({
   };
 
   return (
-    <div className="bg-[var(--color-bg)] text-[var(--color-text)] p-6 rounded-lg shadow-md">
+    <div className="text-[var(--color-text)] p-6 rounded-lg shadow-md">
       {/* Form layout using grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         {/* Project Filter Dropdown */}
