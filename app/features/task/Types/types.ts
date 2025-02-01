@@ -12,11 +12,25 @@
  */
 export interface Task {
   id: string; // Unique identifier for the task (may change to a different type, e.g., number)
-  content: string; // Description of the task
+  title: string;
+  description: string; // Description of the task
   status: string; // Current status of the task (e.g., To-Do, In Progress)
   priority: string; // Priority level of the task (e.g., High, Medium, Low)
   dueDate: string; // Due date for the task in YYYY-MM-DD format
-  project: string; // Associated project for the task
+}
+
+export enum TaskStatus {
+  TO_DO = "TO_DO",
+  IN_PROGRESS = "IN_PROGRESS",
+  TESTING = "TESTING",
+  BUG = "BUG",
+  COMPLETED = "COMPLETED",
+}
+
+export enum Priority {
+  LOW = "LOW",
+  MEDIUM = "MEDIUM",
+  HIGH = "HIGH",
 }
 
 /**
@@ -65,4 +79,28 @@ export interface TaskListProps {
 export interface ModalProps {
   task: Task; // The task object to display in the modal
   onClose: () => void; // Callback function to close the modal
+}
+
+/**
+ * Props for the SortableTask component.
+ * @interface SortableTaskProps
+ * @property {Task} task - The task object containing details like id, content, priority, dueDate, and project.
+ */
+export interface SortableTaskProps {
+  task: Task;
+}
+
+/**
+ * Props for the DroppableColumn component.
+ * @interface DroppableColumnProps
+ * @property {string} id - A unique identifier for the droppable column.
+ * @property {string} title - The title of the column (e.g., "To Do", "In Progress").
+ * @property {React.ReactNode} children - The content (tasks) to be rendered inside the column.
+ * @property {boolean} isDropTarget - Indicates whether the column is currently a drop target.
+ */
+export interface DroppableColumnProps {
+  id: string;
+  title: string;
+  children: React.ReactNode;
+  isDropTarget: boolean;
 }

@@ -16,26 +16,33 @@ import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import type { Task } from "../Types/types";
-import { dummyTasks } from "../data/dumyTask"; // Import dummy tasks
 import TaskDetailModal from "./TaskDetailModal"; // Import TaskDetailModal
 import { getPriorityColor } from "../../../common/utils/taskPriorityColor";
 import { Link } from "react-router";
 import { Button } from "@/components/ui/button";
+import { fetchTasks } from "../service/taskService";
 
 const ListTasks: React.FC = () => {
-  const [tasks, setTasks] = useState<Task[]>(dummyTasks); // State to hold the list of tasks
+  const [tasks, setTasks] = useState<Task[]>([]); // State to hold the list of tasks
   const [selectedTask, setSelectedTask] = useState<Task | null>(null); // State to track the selected task
   const [showModal, setShowModal] = useState(false); // State to control modal visibility
 
   /**
-   * Effect hook to fetch tasks from local storage when the component mounts.
-   * Combines dummy tasks with fetched tasks.
+   * Effect hook to fetch tasks from the backend when the component mounts.
+   * Fetches tasks for the logged-in user and updates state.
    */
   useEffect(() => {
-    const storedTasks = localStorage.getItem("tasks"); // Retrieve tasks from local storage
-    const fetchedTasks = storedTasks ? JSON.parse(storedTasks) : []; // Parse stored tasks or set to empty array if none found
-    setTasks([...dummyTasks, ...fetchedTasks]); // Combine dummy and fetched tasks into state
-  }, []);
+    const fetchData = async () => {
+      try {
+        const data = await fetchTasks(); // Fetch tasks using the service
+        setTasks(data); // Update tasks state with fetched data
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
+
+    fetchData(); // Fetch tasks from backend
+  }, []); // Empty dependency array ensures this runs only once when component mounts
 
   /**
    * Handles the click event on a task card.
@@ -61,42 +68,51 @@ const ListTasks: React.FC = () => {
         <h2 className="text-2xl font-bold mb-4">Task List</h2>
         {/* Button to navigate to the tasks page */}
         <Link to="/tasks">
-          <Button variant={"secondary"} className="dark:bg-orange-400">Go to Tasks</Button>
+          <Button variant={"secondary"} className="dark:bg-orange-400">
+            Go to Tasks
+          </Button>
         </Link>
       </div>
 
       {/* Grid layout for displaying task cards */}
       <div className="px-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {tasks.map((task) => (
-          <Card
-            key={task.id} // Unique key for each card based on task ID
-            className="mb-4 shadow-md cursor-pointer" // Styling for card appearance
-            onClick={() => handleTaskClick(task)} // Open modal on card click
-          >
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between mb-2">
-                {/* Display priority badge */}
-                <Badge className={`${getPriorityColor(task.priority)}`}>
-                  {task.priority}
-                </Badge>
-              </div>
-              {/* Task content */}
-              <h4 className="font-medium mb-2">{task.content}</h4>
-              {/* Due date display with calendar icon */}
-              <div className="flex items-center text-sm text-gray-500 mb-2">
-                <CalendarIcon className="h-4 w-4 mr-1" />
-                <span>
-                  {format(new Date(task.dueDate), "MMM d, yyyy")}
-                </span>{" "}
-                {/* Format due date */}
-              </div>
-              {/* Project badge */}
-              <Badge className="bg-blue-100 text-blue-800">
-                {task.project}
-              </Badge>
-            </CardContent>
-          </Card>
-        ))}
+        {tasks.length === 0 ? (
+          <div className="col-span-full text-center text-lg text-gray-500">
+            No tasks found
+          </div>
+        ) : (
+          tasks.map((task) => (
+            <Card
+              key={task.id} // Unique key for each card based on task ID
+              className="mb-4 shadow-md cursor-pointer" // Styling for card appearance
+              onClick={() => handleTaskClick(task)} // Open modal on card click
+            >
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  {/* Display priority badge */}
+                  <Badge className={`${getPriorityColor(task.priority)}`}>
+                    {task.priority}
+                  </Badge>
+                </div>
+                {/* Task content */}
+                <h4 className="font-medium mb-2">Tasks: {task.title}</h4>
+                <h4 className="font-medium mb-2">{task.description}</h4>
+                {/* Due date display with calendar icon */}
+                <div className="flex items-center text-sm text-gray-500 mb-2">
+                  <CalendarIcon className="h-4 w-4 mr-1" />
+                  <span>
+                    {format(new Date(task.dueDate), "MMM d, yyyy")}
+                  </span>{" "}
+                  {/* Format due date */}
+                </div>
+                {/* Project badge */}
+                {/* <Badge className="bg-blue-100 text-blue-800">
+                  {task.project}
+                </Badge> */}
+              </CardContent>
+            </Card>
+          ))
+        )}
       </div>
 
       {/* Modal for displaying selected task details */}
