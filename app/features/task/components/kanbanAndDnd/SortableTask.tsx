@@ -13,17 +13,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { CalendarIcon, GripVertical } from "lucide-react";
-import type { Task } from "../../Types/types";
+import type { SortableTaskProps, Task } from "../../Types/types";
 import { getPriorityColor } from "../../../../common/utils/taskPriorityColor";
-
-/**
- * Props for the SortableTask component.
- * @interface SortableTaskProps
- * @property {Task} task - The task object containing details like id, content, priority, dueDate, and project.
- */
-interface SortableTaskProps {
-  task: Task;
-}
 
 /**
  * SortableTask Component
@@ -75,9 +66,9 @@ export const SortableTask: React.FC<SortableTaskProps> = ({ task }) => {
         {/* Drag Handle and Priority Badge */}
         <div className="flex items-center justify-between mb-2">
           {/* Project Badge */}
-          <Badge className="mt-2 bg-blue-100 text-blue-800">
+          {/* <Badge className="mt-2 bg-blue-100 text-blue-800">
             {task.project}
-          </Badge>
+          </Badge> */}
           {/* Priority Badge */}
           <Badge className={getPriorityColor(task.priority)}>
             {task.priority}
@@ -85,7 +76,8 @@ export const SortableTask: React.FC<SortableTaskProps> = ({ task }) => {
         </div>
 
         {/* Task Content */}
-        <h4 className="font-medium mb-2">{task.content}</h4>
+        <h4 className="font-medium mb-2">{task.title}</h4>
+        <h4 className="font-medium mb-2">{task.description}</h4>
 
         {/* Due Date */}
         <div className="flex items-center text-sm text-gray-500">
