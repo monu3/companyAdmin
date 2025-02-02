@@ -18,6 +18,8 @@ import ProjectContextProvider from "./features/project/store/context";
 import { EmployeeProvider } from "./features/employee/context/EmployeeContext";
 import { ThemeProvider } from "./common/theme/context/ThemeContext";
 import { ToastContainer } from "react-toastify";
+import { TaskProvider } from "./features/task/context/TaskContext";
+import TaskPage from "./features/task/pages/taskPage";
 //import { ThemeProvider } from "./common/theme/context/themeContext";
 import {ClientProvider} from "./features/client/context/ClientContext"
 
@@ -59,17 +61,19 @@ export default function App() {
       <ToastContainer />
       <ThemeProvider>
       <ClientProvider>  
-      <EmployeeProvider>
-        <ProjectContextProvider>
-            <QueryClientProvider client={queryClient}>
-              <Outlet />
-            </QueryClientProvider>
+        {/* <TaskProvider> */}
+        <EmployeeProvider>
+          <ProjectContextProvider>
+            <TaskProvider>
+              <QueryClientProvider client={queryClient}>
+                <Outlet />
+              </QueryClientProvider>
+            </TaskProvider>
           </ProjectContextProvider>
-      </EmployeeProvider>
+        </EmployeeProvider>
       </ClientProvider>
+        {/* </TaskProvider> */}
       </ThemeProvider>
-  
-       
     </Provider>
   );
 }
