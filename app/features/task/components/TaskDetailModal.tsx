@@ -11,6 +11,7 @@ import type { ModalProps } from "../Types/types";
 import { getPriorityColor } from "../../../common/utils/taskPriorityColor"; // Import the utility function
 import { Button } from "~/components/ui/button";
 import { deleteTask } from "../service/taskService";
+import ToastService from "~/common/utils/toastService";
 
 /**
  * TaskDetailModal Component
@@ -25,7 +26,7 @@ const TaskDetailModal: React.FC<ModalProps> = ({ task, onClose }) => {
     try {
       setIsDeleting(true); // Disable delete button while deleting
       await deleteTask(task.id); // Call deleteTask with the task ID
-
+      ToastService.warning("Taks deleted successfully");
       onClose(); // Close the modal after deletion
     } catch (error) {
       setDeleteError("Failed to delete task. Please try again.");
@@ -34,7 +35,6 @@ const TaskDetailModal: React.FC<ModalProps> = ({ task, onClose }) => {
     }
   };
 
-  
   return (
     <div
       className="fixed inset-0 bg-gray-500 bg-opacity-75 z-50 flex justify-center items-center p-4"
@@ -101,12 +101,9 @@ const TaskDetailModal: React.FC<ModalProps> = ({ task, onClose }) => {
               {/* Format and display due date */}
             </p>
           </div>
-           {/* Delete Button */}
-           <div className="mt-6 flex justify-end gap-2">
-            <Button
-              variant={"outline"}
-              onClick={onClose}
-            >
+          {/* Delete Button */}
+          <div className="mt-6 flex justify-end gap-2">
+            <Button variant={"outline"} onClick={onClose}>
               Cancel
             </Button>
             <Button
