@@ -9,6 +9,7 @@ import {
 } from "../Types/types";
 import { nanoid } from "nanoid";
 import { saveTask } from "../service/taskService";
+import ToastService from "~/common/utils/toastService";
 
 const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
   onAddTask,
@@ -43,10 +44,12 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
       if (selectedTask) {
         const updatedTask = { ...formData, id: selectedTask.id }; // Include ID only when updating
         await saveTask(updatedTask);
+        ToastService.success("Taks updated successfully");
       } else {
         // Don't include the ID when creating a new task, since the backend will handle it
         const newTask = { ...formData };
         await saveTask(newTask);
+        ToastService.success("Task added successfully");
       }
 
       setIsOpen(false);
