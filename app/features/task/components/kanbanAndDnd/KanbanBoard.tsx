@@ -220,7 +220,6 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ tasks, onTaskMove }) => {
               </div>
               <h4 className="font-medium mb-2">{activeTask.title}</h4>
               <h4 className="font-medium mb-2">{activeTask.description}</h4>
-
               <div className="flex items-center text-sm text-gray-500">
                 <CalendarIcon className="h-4 w-4 mr-1" />
                 <span>
