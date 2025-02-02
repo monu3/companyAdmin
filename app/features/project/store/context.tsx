@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import type { ProjectContextType, projectDetails } from "../types";
+import ToastService from "~/common/utils/toastService";
 
 export const ProjectContext = createContext<ProjectContextType | undefined>(undefined);
 
@@ -10,6 +11,7 @@ const ProjectContextProvider = ({ children }: { children: React.ReactNode }) => 
   const [view, setView] = useState<"table" | "card">("table");
   const [selectedProject, setSelectedProject] = useState<projectDetails | null>(null); // Track selected project
   const handleDelete = (selectedId: number) => {
+    ToastService.success('This is a success message!');
     console.log("Data before delete:", data);
   
     const filteredData = data.filter(item => item.id !== selectedId);

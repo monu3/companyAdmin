@@ -16,6 +16,7 @@ import { store } from "./store/store";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ProjectContextProvider from "./features/project/store/context";
 import { ThemeProvider } from "./common/theme/context/ThemeContext";
+import { ToastContainer } from "react-toastify";
 //import { ThemeProvider } from "./common/theme/context/themeContext";
 
 export const links: Route.LinksFunction = () => [
@@ -53,6 +54,7 @@ const queryClient = new QueryClient();
 export default function App() {
   return (
     <Provider store={store}>
+      <ToastContainer />
       <ThemeProvider>
         <ProjectContextProvider>
             <QueryClientProvider client={queryClient}>
