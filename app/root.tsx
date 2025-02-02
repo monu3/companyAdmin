@@ -18,6 +18,7 @@ import ProjectContextProvider from "./features/project/store/context";
 import { EmployeeProvider } from "./features/employee/context/EmployeeContext";
 import { ThemeProvider } from "./common/theme/context/ThemeContext";
 //import { ThemeProvider } from "./common/theme/context/themeContext";
+import {ClientProvider} from "./features/client/context/ClientContext"
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -55,6 +56,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <ThemeProvider>
+      <ClientProvider>  
       <EmployeeProvider>
         <ProjectContextProvider>
             <QueryClientProvider client={queryClient}>
@@ -62,6 +64,7 @@ export default function App() {
             </QueryClientProvider>
           </ProjectContextProvider>
       </EmployeeProvider>
+      </ClientProvider>
       </ThemeProvider>
   
        
