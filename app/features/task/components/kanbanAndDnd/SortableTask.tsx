@@ -62,7 +62,7 @@ export const SortableTask: React.FC<SortableTaskProps> = ({ task }) => {
       style={style} // Applies dynamic styles for dragging
       className={`mb-4 ${isDragging ? "shadow-xl" : "shadow-sm"} cursor-grab`} // Adds shadow effect during dragging
     >
-      <CardContent className="p-4">
+      <CardContent className="p-4 break-words">
         {/* Drag Handle and Priority Badge */}
         <div className="flex items-center justify-between mb-2">
           {/* Project Badge */}

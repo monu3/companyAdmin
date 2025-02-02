@@ -5,11 +5,12 @@
  * Description : A modal component for displaying detailed information about a specific task.
  */
 
-import React from "react";
+import React, { useState } from "react";
 import { format } from "date-fns";
 import type { ModalProps } from "../Types/types";
 import { getPriorityColor } from "../../../common/utils/taskPriorityColor"; // Import the utility function
 import { Button } from "~/components/ui/button";
+import { deleteTask } from "../service/taskService";
 
 /**
  * TaskDetailModal Component
@@ -17,6 +18,23 @@ import { Button } from "~/components/ui/button";
  * @param {ModalProps} props - The props object containing the task details and onClose function.
  */
 const TaskDetailModal: React.FC<ModalProps> = ({ task, onClose }) => {
+  const [isDeleting, setIsDeleting] = useState(false); // State to track the deletion process
+  const [deleteError, setDeleteError] = useState<string | null>(null); // State to hold any error during deletion
+
+  const handleDeleteTask = async () => {
+    try {
+      setIsDeleting(true); // Disable delete button while deleting
+      await deleteTask(task.id); // Call deleteTask with the task ID
+
+      onClose(); // Close the modal after deletion
+    } catch (error) {
+      setDeleteError("Failed to delete task. Please try again.");
+    } finally {
+      setIsDeleting(false); // Re-enable the button
+    }
+  };
+
+  
   return (
     <div
       className="fixed inset-0 bg-gray-500 bg-opacity-75 z-50 flex justify-center items-center p-4"
@@ -45,7 +63,7 @@ const TaskDetailModal: React.FC<ModalProps> = ({ task, onClose }) => {
           </div>
 
           {/* Description Section */}
-          <div className="flex items-center gap-2">
+          <div className="break-words">
             <h4 className="font-medium text-lg text-gray-800">Description:</h4>{" "}
             {/* Label for title */}
             <p className="text-gray-700">{task.description}</p>{" "}
@@ -82,6 +100,22 @@ const TaskDetailModal: React.FC<ModalProps> = ({ task, onClose }) => {
               {format(new Date(task.dueDate), "MMM d, yyyy")}{" "}
               {/* Format and display due date */}
             </p>
+          </div>
+           {/* Delete Button */}
+           <div className="mt-6 flex justify-end gap-2">
+            <Button
+              variant={"outline"}
+              onClick={onClose}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant={"destructive"}
+              onClick={handleDeleteTask}
+              disabled={isDeleting} // Disable button while deleting
+            >
+              {isDeleting ? "Deleting..." : "Delete Task"}
+            </Button>
           </div>
         </div>
       </div>

@@ -43,7 +43,7 @@ export const updateTaskStatus = async (taskId: string, newStatus: string) => {
     // Make the API request to update the task status in the backend
     const response = await apiRequest(`/tasks/${taskIdAsNumber}/status`, {
       method: "PUT",
-      body: JSON.stringify({ status: newStatus }),
+      body: { status: newStatus },
     });
 
     // Return the updated task (optional, depending on your backend)
@@ -51,5 +51,22 @@ export const updateTaskStatus = async (taskId: string, newStatus: string) => {
   } catch (error) {
     console.error("Error updating task status:", error);
     throw error;
+  }
+};
+
+// Delete a task by its ID
+export const deleteTask = async (taskId: string): Promise<any> => {
+  if (!taskId) {
+    throw new Error("Task ID is required for deletion.");
+  }
+
+  const endpoint = `/tasks/${taskId}`;
+
+  try {
+    return await apiRequest(endpoint, {
+      method: "DELETE",
+    });
+  } catch (error) {
+    throw new Error(`Error deleting task: ${error}`);
   }
 };
