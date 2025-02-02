@@ -2,22 +2,14 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { AiOutlineClose } from "react-icons/ai";
-import type { Employee } from "../types/employee";
-import { useEmployeeContext } from "../context/EmployeeContext";
+import type { Client} from "../types/client";
+import { useClientContext } from "../context/ClientContext";
 import { nanoid } from "nanoid";
 
-/**
- * AddEmployee.tsx
- * Created On : 2025-29-01 11
- * Author : Sumit Kumar Shrestha
- * Description : 
- */
-
-
-export const EmployeeForm = ({
-selectedEmployee
-}:{selectedEmployee?:Employee | null}) => {
-  const {setIsOpen,setEmployees,employees}=useEmployeeContext();
+export const ClientForm = ({
+selectedClient
+}:{selectedClient?:Client | null}) => {
+  const {setIsOpen,setClients,clients}=useClientContext();
   const {
     register,
     handleSubmit,
@@ -26,27 +18,27 @@ selectedEmployee
   } = useForm();
 
   useEffect(() =>{
-    if(selectedEmployee){
-      reset(selectedEmployee);
+    if(selectedClient){
+      reset(selectedClient);
     }
-  },[selectedEmployee,reset]);
+  },[selectedClient,reset]);
 
   const onSubmit = (formData: any) => {
-    console.log("Form submitted with selectedId:", selectedEmployee?.id);  // Log the selectedProject ID
+    console.log("Form submitted with selectedId:", selectedClient?.id);  // Log the selectedClient ID
     console.log("Form data:", formData);
   
-    if (selectedEmployee) {
-      // Update existing employee with the new form data
-      const updatedData = { ...formData, id: selectedEmployee.id };
+    if (selectedClient) {
+      // Update existing clinet with the new form data
+      const updatedData = { ...formData, id: selectedClient.id };
   
-      const updatedDataList = employees.map(item =>
-        item.id === selectedEmployee.id ? { ...item, ...updatedData } : item
+      const updatedDataList = clients.map(item =>
+        item.id === selectedClient.id ? { ...item, ...updatedData } : item
       );
-      setEmployees(updatedDataList);
+      setClients(updatedDataList);
     } else {
-      // If no selectedEmployee, create a new one
+      // If no selectedClient, create a new one
       const dataWithId = { ...formData, id: nanoid() };
-      setEmployees(prevData => [...prevData, dataWithId]);
+      setClients(prevData => [...prevData, dataWithId]);
     }
   
     setIsOpen(false);  // Close the modal after saving
@@ -62,7 +54,7 @@ selectedEmployee
           onClick={()=>setIsOpen(false)}
         />
         <h2 className="text-xl font-semibold">
-          {selectedEmployee ? "Edit Employee" : "Add Employee"}
+          {selectedClient ? "Edit Client" : "Add Client"}
         </h2>
         <div className="grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
             <div className="form-control flex flex-col">
@@ -75,18 +67,6 @@ selectedEmployee
               />
               {errors.name && (
                 <p className="errorMsg">{errors.name.message as string}</p>
-              )}
-            </div>
-            <div className="form-control flex flex-col">
-              <label>Position</label>
-              <input
-                type="text"
-                {...register("position", {
-                  required: "Position is required.",
-                })}
-              />
-              {errors.position && (
-                <p className="errorMsg">{errors.position.message as string}</p>
               )}
             </div>
             <div className="form-control flex flex-col">
@@ -122,29 +102,29 @@ selectedEmployee
               )}
             </div> */}
             <div className="form-control flex flex-col">
-              <label>Department</label>
+              <label>Budget</label>
               <input
                 type="text"
-                {...register("department", {
-                  required: "Department is required.",
+                {...register("budget", {
+                  required: "Budget is required.",
                 })}
               />
-              {errors.department && (
+              {errors.budget && (
                 <p className="errorMsg">
-                  {errors.department.message as string}
+                  {errors.budget.message as string}
                 </p>
               )}
             </div>
             <div className="form-control flex flex-col">
-              <label>Salary</label>
+              <label>Project Name</label>
               <input
                 type="text"
-                {...register("salary", {
-                  required: "Salary is required.",
+                {...register("projectName", {
+                  required: "Project is required.",
                 })}
               />
-              {errors.salary && (
-                <p className="errorMsg">{errors.salary.message as string}</p>
+              {errors.projectName && (
+                <p className="errorMsg">{errors.projectName.message as string}</p>
               )}
             </div>
             <div className="form-control flex flex-col">
@@ -169,7 +149,7 @@ selectedEmployee
           </div>
           <div className="form-control">
           <Button type="submit">
-            {selectedEmployee ? "Update Employee" : "Add Employee"}
+            {selectedClient ? "Update Client" : "Add Client"}
           </Button>
           </div>
         </div>
