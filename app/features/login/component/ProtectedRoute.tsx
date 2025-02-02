@@ -9,6 +9,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Outlet } from "react-router";
 import { useAuth } from "./authContext";
+import Spinner from "~/common/utils/Spinner";
 
 const ProtectedRoute = () => {
   const { isAuthenticated } = useAuth(); // Access authentication state from context
@@ -29,12 +30,7 @@ const ProtectedRoute = () => {
 
   // Show a spinner while checking authentication
   if (isCheckingAuth) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        {/* Spinner for loading state */}
-        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    );
+    return <Spinner />;
   }
 
   // Render child components once authentication is verified

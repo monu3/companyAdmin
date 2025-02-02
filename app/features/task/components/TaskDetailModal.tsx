@@ -40,7 +40,15 @@ const TaskDetailModal: React.FC<ModalProps> = ({ task, onClose }) => {
           <div className="flex items-center gap-2">
             <h4 className="font-medium text-lg text-gray-800">Title:</h4>{" "}
             {/* Label for title */}
-            <p className="text-gray-700">{task.content}</p>{" "}
+            <p className="text-gray-700">{task.title}</p>{" "}
+            {/* Display task content */}
+          </div>
+
+          {/* Description Section */}
+          <div className="flex items-center gap-2">
+            <h4 className="font-medium text-lg text-gray-800">Description:</h4>{" "}
+            {/* Label for title */}
+            <p className="text-gray-700">{task.description}</p>{" "}
             {/* Display task content */}
           </div>
 
@@ -59,12 +67,12 @@ const TaskDetailModal: React.FC<ModalProps> = ({ task, onClose }) => {
           </div>
 
           {/* Project Section */}
-          <div className="flex items-center gap-2">
-            <h4 className="font-medium text-lg text-gray-800">Project:</h4>{" "}
-            {/* Label for project */}
-            <p className="text-gray-700">{task.project}</p>{" "}
-            {/* Display project name */}
-          </div>
+          {/* <div className="flex items-center gap-2"> */}
+          {/* <h4 className="font-medium text-lg text-gray-800">Project:</h4>{" "} */}
+          {/* Label for project */}
+          {/* <p className="text-gray-700">{task.project}</p>{" "} */}
+          {/* Display project name */}
+          {/* </div> */}
 
           {/* Due Date Section */}
           <div className="flex items-center gap-2">

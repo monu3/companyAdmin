@@ -15,9 +15,11 @@ import { store } from "./store/store";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ProjectContextProvider from "./features/project/store/context";
+import { EmployeeProvider } from "./features/employee/context/EmployeeContext";
 import { ThemeProvider } from "./common/theme/context/ThemeContext";
 import { ToastContainer } from "react-toastify";
 //import { ThemeProvider } from "./common/theme/context/themeContext";
+import {ClientProvider} from "./features/client/context/ClientContext"
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -56,13 +58,17 @@ export default function App() {
     <Provider store={store}>
       <ToastContainer />
       <ThemeProvider>
+      <ClientProvider>  
+      <EmployeeProvider>
         <ProjectContextProvider>
             <QueryClientProvider client={queryClient}>
               <Outlet />
             </QueryClientProvider>
           </ProjectContextProvider>
-  
+      </EmployeeProvider>
+      </ClientProvider>
       </ThemeProvider>
+  
        
     </Provider>
   );

@@ -1,20 +1,18 @@
 /**
  * taskPage.tsx
- * Created On : 2025-24-01 12
- * Author : Diwash Pokhrel
- * Description : This component serves as the main page for managing tasks,
+ * Created On: 2025-24-01 12
+ * Author: Diwash Pokhrel
+ * Description: This component serves as the main page for managing tasks,
  * featuring a Kanban board, task creation form, and search functionality.
  */
-
 import React, { useState, useEffect } from "react";
 import CreateTaskForm from "../components/CreateTaskForm";
 import KanbanBoard from "../components/kanbanAndDnd/KanbanBoard";
-import { dummyTasks } from "../data/dumyTask";
 import SearchForm from "../components/searchForm";
 import type { Task } from "../Types/types";
 import { Link, Outlet } from "react-router";
-import { ImageOff } from "lucide-react";
 import { Button } from "~/components/ui/button";
+import { fetchTasks, updateTaskStatus } from "../service/taskService";
 
 const TaskPage: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -22,66 +20,60 @@ const TaskPage: React.FC = () => {
   const [isCreateTaskModalOpen, setIsCreateTaskModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
-  /**
-   * Effect hook to load tasks from local storage when the component mounts.
-   */
   useEffect(() => {
-    const storedTasks = localStorage.getItem("tasks");
-    if (storedTasks) {
-      const parsedTasks = JSON.parse(storedTasks);
-      setTasks(parsedTasks);
-      setFilteredTasks([...dummyTasks, ...parsedTasks]);
-    } else {
-      setFilteredTasks(dummyTasks); // If no stored tasks, set filtered tasks to dummy tasks
-    }
+    const loadTasks = async () => {
+      try {
+        // Fetch tasks from the backend
+        const tasksFromBackend = await fetchTasks();
+        setTasks(tasksFromBackend); // Set the fetched tasks to state
+        setFilteredTasks(tasksFromBackend); // Initialize filtered tasks with all tasks
+      } catch (error) {
+        console.error("Error loading tasks:", error);
+      }
+    };
+    loadTasks(); // Call the function to load tasks
   }, []);
 
-  /**
-   * Handles adding or updating a task.
-   * @param {Task} task - The task to be added or updated.
-   */
   const handleAddTask = (task: Task) => {
     if (selectedTask) {
       // Update existing task
       const updatedTasks = tasks.map((t) => (t.id === task.id ? task : t));
       setTasks(updatedTasks);
-      setFilteredTasks([...dummyTasks, ...updatedTasks]);
-      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
     } else {
       // Add new task
       const updatedTasks = [...tasks, task];
       setTasks(updatedTasks);
-      setFilteredTasks([...dummyTasks, ...updatedTasks]);
-      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
     }
     setSelectedTask(null); // Reset selected task
     setIsCreateTaskModalOpen(false); // Close the modal
   };
 
-  /**
-   * Handles moving a task to a new status.
-   * @param {string} taskId - The ID of the task to move.
-   * @param {string} newStatus - The new status for the task.
-   */
-  const handleTaskMove = (taskId: string, newStatus: string) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === taskId ? { ...task, status: newStatus } : task
-    );
-    setTasks(updatedTasks);
-    setFilteredTasks([...dummyTasks, ...updatedTasks]);
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks)); // Persist to localStorage
+
+  const handleTaskMove = async (taskId: string, newStatus: string) => {
+    try {
+      await updateTaskStatus(taskId, newStatus);
+      const updatedTasks = tasks.map((task) =>
+        task.id === taskId ? { ...task, status: newStatus } : task
+      );
+      setTasks(updatedTasks);
+      setFilteredTasks(updatedTasks); // Update filtered tasks as well
+    } catch (error) {
+      console.error("Error updating task status:", error);
+      throw error; // Rethrow the error to handle it in the KanbanBoard component
+    }
   };
 
-  /**
-   * Handles editing a task.
-   * @param {Task} task - The task to be edited.
-   */
+  const handleSearch = (searchTerm: string) => {
+    const filtered = tasks.filter((task) =>
+      task.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredTasks(filtered); // Update filtered tasks based on search
+  };
+
   const handleEditTask = (task: Task) => {
     setSelectedTask(task);
     setIsCreateTaskModalOpen(true);
   };
-
-  const allTasks = [...dummyTasks, ...tasks];
 
   return (
     <>
@@ -90,10 +82,14 @@ const TaskPage: React.FC = () => {
           <h2 className="text-2xl font-bold">Tasks</h2>
           <Link to="list">
             {/* Added the link to the ListTasks page */}
-            <Button variant={"outline"} className="text-gray-800 dark:bg-orange-400 dark:text-white dark:hover:bg-orange-300 hover:bg-gray-200 transition-colors">Show Task List</Button>
+            <Button
+              variant={"outline"}
+              className="text-gray-800 dark:bg-orange-400 dark:text-white dark:hover:bg-orange-300 hover:bg-gray-200 transition-colors"
+            >
+              Show Task List
+            </Button>
           </Link>
 
-          {/* <CreateTaskForm onAddTask={handleAddTask} /> */}
           <Button
             variant={"outline"}
             onClick={() => {
@@ -105,6 +101,7 @@ const TaskPage: React.FC = () => {
             Create Task
           </Button>
         </div>
+
         {/* Create Task Form Modal */}
         {isCreateTaskModalOpen && (
           <CreateTaskForm
@@ -114,7 +111,9 @@ const TaskPage: React.FC = () => {
           />
         )}
 
-        <SearchForm setFilteredTasks={setFilteredTasks} allTasks={allTasks} />
+        {/* Search Form */}
+        {/* <SearchForm onSearch={handleSearch} /> */}
+        {/* Kanban Board */}
         <KanbanBoard tasks={filteredTasks} onTaskMove={handleTaskMove} />
         <Outlet />
       </section>
