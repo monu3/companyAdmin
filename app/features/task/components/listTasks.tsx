@@ -24,7 +24,7 @@ import { fetchTasks } from "../service/taskService";
 import { useTaskContext } from "../context/TaskContext";
 
 const ListTasks: React.FC = () => {
-  const { tasks, setTasks } = useTaskContext();
+  const { tasks } = useTaskContext();
   const [selectedTask, setSelectedTask] = useState<Task | null>(null); // State to track the selected task
   const [showModal, setShowModal] = useState(false); // State to control modal visibility
 
@@ -53,7 +53,7 @@ const ListTasks: React.FC = () => {
         {/* Button to navigate to the tasks page */}
         <Link to="/tasks">
           <Button variant={"secondary"} className="dark:bg-orange-400">
-            Go to Tasks
+            Back
           </Button>
         </Link>
       </div>

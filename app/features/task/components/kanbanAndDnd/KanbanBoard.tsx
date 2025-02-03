@@ -23,11 +23,11 @@ import { TaskStatus, type Task } from "../../Types/types";
 import { SortableTask } from "./SortableTask";
 import { DroppableColumn } from "./DroppableColumn";
 import { useTaskContext } from "../../context/TaskContext";
-import { updateTaskStatus } from "../../service/taskService";
 import { getPriorityColor } from "~/common/utils/taskPriorityColor";
+import ToastService from "~/common/utils/toastService";
 
 const KanbanBoard: React.FC = () => {
-  const { tasks, setTasks } = useTaskContext();
+  const { tasks, moveTask } = useTaskContext();
   const [activeId, setActiveId] = useState<string | null>(null);
   const [activeColumnId, setActiveColumnId] = useState<string | null>(null);
 
@@ -36,13 +36,16 @@ const KanbanBoard: React.FC = () => {
     useSensor(KeyboardSensor)
   );
 
-  const columns = useMemo(() => {
-    return Object.values(TaskStatus).map((status) => ({
-      id: status,
-      title: status.replace("_", " ").toUpperCase(),
-      tasks: tasks.filter((task) => task.status === status),
-    }));
-  }, [tasks]);
+  // Memoized columns structure with original formatting
+  const columns = useMemo(
+    () =>
+      Object.values(TaskStatus).map((status) => ({
+        id: status,
+        title: status.replace("_", " ").toUpperCase(),
+        tasks: tasks.filter((task) => task.status === status),
+      })),
+    [tasks]
+  );
 
   const activeTask = useMemo(
     () => tasks.find((task) => task.id === activeId),
@@ -53,7 +56,6 @@ const KanbanBoard: React.FC = () => {
     const container =
       columns.find((column) => column.id === id) ||
       columns.find((column) => column.tasks.some((task) => task.id === id));
-
     return container?.id || null;
   };
 
@@ -63,9 +65,7 @@ const KanbanBoard: React.FC = () => {
 
   const handleDragOver = (event: DragOverEvent) => {
     const { over } = event;
-    if (over) {
-      setActiveColumnId(findContainer(over.id as string));
-    }
+    if (over) setActiveColumnId(findContainer(over.id as string));
   };
 
   const handleDragEnd = async (event: DragEndEvent) => {
@@ -79,18 +79,11 @@ const KanbanBoard: React.FC = () => {
       newStatus &&
       Object.values(TaskStatus).includes(newStatus as TaskStatus)
     ) {
-      const updatedTasks = tasks.map((task) =>
-        task.id === activeTaskId
-          ? { ...task, status: newStatus as TaskStatus }
-          : task
-      );
-
-      setTasks(updatedTasks);
-
       try {
-        await updateTaskStatus(activeTaskId, newStatus);
+        await moveTask(activeTaskId, newStatus);
+        ToastService.success("Status changed successfully !!");
       } catch (error) {
-        console.error("Error updating task status:", error);
+        console.error("Task movement failed:", error);
       }
     }
 
