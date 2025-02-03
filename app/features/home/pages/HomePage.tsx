@@ -43,7 +43,9 @@ export function HomePage() {
       {/* Main Navbar with navigation items and logo */}
       <MainNavbar items={navItems} logo={logo}>
         {/* Dynamic content area where routed components are rendered */}
+        <div className="pl-4 pr-4">
         <Outlet />
+        </div>
       </MainNavbar>
     </>
   );

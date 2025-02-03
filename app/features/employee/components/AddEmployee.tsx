@@ -5,7 +5,7 @@ import { Grid, List, PlusCircle } from 'lucide-react';
 import { EmployeeForm } from './EmployeeForm';
 
 const AddEmployee = () => {
-    const {isOpen,setIsOpen,view,setView,selectedEmployee,setSelectedEmployee}=useEmployeeContext();
+    const { isOpen, setIsOpen, view, setView, selectedEmployee, setSelectedEmployee } = useEmployeeContext();
     const handleCreate = () => {
         setIsOpen(true);
         setSelectedEmployee(null);
@@ -22,17 +22,19 @@ const AddEmployee = () => {
         variant="outline"
         size="icon"
         onClick={() => setView('table')}
+        className={view === 'table' ? 'text-primary bg-orange-400' : ''} 
       >
-        <List className={view === 'table' ? 'text-primary' : ''} />
+        <List  className='dark:text-text' />
       </Button>
       <Button
         variant="outline"
         size="icon"
         onClick={() => setView('card')}
+        className={view === 'card' ? 'text-primary bg-orange-400' : ''} 
       >
-        <Grid className={view === 'card' ? 'text-primary' : ''} />
+        <Grid  className='dark:text-text' />
       </Button>
-      <Button onClick={handleCreate} variant={'outline'}>
+      <Button onClick={handleCreate} variant={'outline'} className='dark:text-text'>
         <PlusCircle/>
       </Button>
       {isOpen &&(

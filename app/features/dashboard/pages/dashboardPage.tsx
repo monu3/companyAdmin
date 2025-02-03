@@ -1,10 +1,14 @@
 import React from 'react'
-import Dashboard from "../comonents/dashboard";
+import ProjectDetails from '../components/ProjectDetails';
+import { WelcomeMessage } from '../components/welcomeMessage';
+
 
 export default function DashboardPage() {
   return (
     <main>
-        <Dashboard/>
+        <WelcomeMessage />
+        <ProjectDetails />
+        {/* <TaskDetails /> */}
     </main>
   );
 }
