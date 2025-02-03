@@ -4,6 +4,7 @@ import { Button } from "~/components/ui/button";
 import { useTaskContext } from "../context/TaskContext";
 import type { ModalProps } from "../Types/types";
 import { getPriorityColor } from "~/common/utils/taskPriorityColor";
+import ToastService from "~/common/utils/toastService";
 
 const TaskDetailModal: React.FC<ModalProps> = ({ task, onClose }) => {
   const { removeTask, updateTask } = useTaskContext();
@@ -13,6 +14,7 @@ const TaskDetailModal: React.FC<ModalProps> = ({ task, onClose }) => {
     setIsDeleting(true);
     try {
       await removeTask(task.id);
+      ToastService.warning(`Task "${task.title}" has been removed.`);
       onClose(); // Close only if deletion is successful
     } catch (error) {
       console.error("Error deleting task:", error);

@@ -43,7 +43,7 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
       if (selectedTask) {
         const updatedTask = { ...formData, id: selectedTask.id }; // Include ID only when updating
         await addTask(updatedTask);
-        ToastService.success("Taks updated successfully");
+        ToastService.success("Task updated successfully");
       } else {
         const newTask = { ...formData };
         await addTask(newTask);

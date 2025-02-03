@@ -81,7 +81,7 @@ const KanbanBoard: React.FC = () => {
     ) {
       try {
         await moveTask(activeTaskId, newStatus);
-        ToastService.success("Status changed successfully !!");
+        ToastService.success(`Task moved to "${newStatus}"!`);
       } catch (error) {
         console.error("Task movement failed:", error);
       }
