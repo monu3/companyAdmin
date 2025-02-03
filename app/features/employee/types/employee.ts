@@ -14,9 +14,35 @@ export interface EmployeeContextProps {
 export interface Employee {
     id: string;
     name: string;
-    position: string;
+    jobRole: string;
     email: string;
     department: string;
     salary: string;
-    joinDate: string;
+    enrollDate: string;
+  }
+
+  export enum Department {
+    HR = "HR",
+    ENGINEERING = "ENGINEERING",
+    MARKETING = "MARKETING",
+    SALES = "SALES",
+    FINANCE = "FINANCE",
+    IT = "IT",
+    LEGAL = "LEGAL",
+    CUSTOMER_SUPPORT = "CUSTOMER_SUPPORT",
+    PRODUCT = "PRODUCT",
+    OPERATIONS = "OPERATIONS",
+  }
+  
+  export enum JobRole {
+    SUPERVISOR = "SUPERVISOR",
+    KITCHEN = "KITCHEN",
+    HELPER = "HELPER",
+    TECHNICAL_SUPPORT = "TECHNICAL_SUPPORT",
+    FULL_TIME = "FULL_TIME",
+    PART_TIME = "PART_TIME",
+    CONTRACTOR = "CONTRACTOR",
+    INTERN = "INTERN",
+    FREELANCER = "FREELANCER",
+    MAINTENANCE = "MAINTENANCE",
   }

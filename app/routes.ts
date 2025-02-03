@@ -13,7 +13,7 @@ export default [
       index("features/dashboard/pages/dashboardPage.tsx"),
       route("projects", "features/project/pages/ProjectPage.tsx"),
       route("tasks/list", "features/task/components/listTasks.tsx"),
-      route("employee", "features/employee/pages/employeePage.tsx"),
+      route("employee", "features/employee/pages/EmployeePage.tsx"),
       route("tasks", "features/task/pages/taskPage.tsx"),
       route("client", "features/client/pages/clientPage.tsx"),
     ]),

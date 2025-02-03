@@ -36,7 +36,7 @@ const EmployeesTable = () => {
                   {index + 1}
                 </Table.Cell>
                 <Table.Cell>{employee.name}</Table.Cell>
-                <Table.Cell>{employee.position}</Table.Cell>
+                <Table.Cell>{employee.jobRole}</Table.Cell>
                 <Table.Cell>{employee.department}</Table.Cell>
                 <Table.Cell>
                   <a href={`mailto:${employee.email}`} className="text-cyan-600 hover:underline dark:text-cyan-500">
@@ -44,7 +44,7 @@ const EmployeesTable = () => {
                   </a>
                 </Table.Cell>
                 <Table.Cell>${employee.salary.toLocaleString()}</Table.Cell>
-                <Table.Cell>{formatDate(employee.joinDate)}</Table.Cell>
+                <Table.Cell>{formatDate(employee.enrollDate)}</Table.Cell>
                 <Table.Cell>
                   <button
                     onClick={() => updateEmployee(employee.id)}

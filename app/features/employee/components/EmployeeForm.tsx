@@ -2,9 +2,11 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { AiOutlineClose } from "react-icons/ai";
-import type { Employee } from "../types/employee";
+import { type Employee, Department,JobRole } from "../types/employee";
 import { useEmployeeContext } from "../context/EmployeeContext";
 import { nanoid } from "nanoid";
+import {addEmployee} from '../service/addEmployeeService';
+import {updateEmployeeService} from '../service/updateEmployeeService'
 
 /**
  * AddEmployee.tsx
@@ -31,25 +33,48 @@ selectedEmployee
     }
   },[selectedEmployee,reset]);
 
-  const onSubmit = (formData: any) => {
-    console.log("Form submitted with selectedId:", selectedEmployee?.id);  // Log the selectedProject ID
-    console.log("Form data:", formData);
+  // const onSubmit = async(formData: any) => {
+  //   console.log("Form submitted with selectedId:", selectedEmployee?.id);  // Log the selectedProject ID
+  //   console.log("Form data:", formData);
   
-    if (selectedEmployee) {
-      // Update existing employee with the new form data
-      const updatedData = { ...formData, id: selectedEmployee.id };
+  //   if (selectedEmployee) {
+  //     // Update existing employee with the new form data
+  //     // const updatedData = {id: selectedEmployee.id, ...formData };
+  //     const updatedData= {...formData};
   
-      const updatedDataList = employees.map(item =>
-        item.id === selectedEmployee.id ? { ...item, ...updatedData } : item
-      );
-      setEmployees(updatedDataList);
-    } else {
-      // If no selectedEmployee, create a new one
-      const dataWithId = { ...formData, id: nanoid() };
-      setEmployees(prevData => [...prevData, dataWithId]);
+  //     // const updatedDataList = employees.map(item =>
+  //     //   item.id === selectedEmployee.id ? { ...item, ...updatedData } : item
+  //     // );
+  //     // setEmployees(updatedDataList);
+  //     updateEmployeeService(selectedEmployee.id,updatedData );
+  //   } else {
+  //     // If no selectedEmployee, create a new one
+  //     const employeeData = { ...formData};
+  //     // setEmployees(prevData => [...prevData, employeeData]);
+  //     addEmployee(employeeData);
+  //   }
+  
+  //   setIsOpen(false);  // Close the modal after saving
+  // };
+  const onSubmit = async(formData: any) => {
+    try {
+      if (selectedEmployee) {
+        // Update existing employee
+        const updatedEmployee = await updateEmployeeService(selectedEmployee.id, formData);
+        setEmployees(prevData => 
+          prevData.map(item => 
+            item.id === updatedEmployee.id ? updatedEmployee : item
+          )
+        );
+      } else {
+        // Create new employee
+        const newEmployee = await addEmployee(formData);
+        setEmployees(prevData => [...prevData, newEmployee]);
+      }
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Error saving employee:", error);
     }
-  
-    setIsOpen(false);  // Close the modal after saving
   };
   return (
     <div className="flex justify-center items-center min-h-screen fixed inset-0 bg-black bg-opacity-75 z-50">
@@ -78,15 +103,19 @@ selectedEmployee
               )}
             </div>
             <div className="form-control flex flex-col">
-              <label>Position</label>
-              <input
-                type="text"
-                {...register("position", {
-                  required: "Position is required.",
-                })}
-              />
-              {errors.position && (
-                <p className="errorMsg">{errors.position.message as string}</p>
+              <label>Job Role</label>
+              <select
+              {...register("jobRole", {
+                required: "Job Role is required.",
+              })}
+              className="h-10 border rounded"
+              >
+                {Object.values(JobRole).map((jobRole)=>(
+                  <option key={jobRole} value={jobRole}>{jobRole}</option>
+                ))}
+              </select>
+              {errors.jobRole && (
+                <p className="errorMsg">{errors.jobRole.message as string}</p>
               )}
             </div>
             <div className="form-control flex flex-col">
@@ -123,12 +152,16 @@ selectedEmployee
             </div> */}
             <div className="form-control flex flex-col">
               <label>Department</label>
-              <input
-                type="text"
+              <select
                 {...register("department", {
                   required: "Department is required.",
                 })}
-              />
+                className="h-10 border rounded"
+                >
+                  {Object.values(Department).map((department) =>(
+                    <option key={department} value={department}>{department}</option>
+                  ))}
+                </select>
               {errors.department && (
                 <p className="errorMsg">
                   {errors.department.message as string}
@@ -151,12 +184,12 @@ selectedEmployee
               <label>Enroll Date</label>
               <input
                 type="date"
-                {...register("joinDate", {
+                {...register("enrollDate", {
                   required: "Date is required.",
                 })}
               />
-              {errors.joinDate && (
-                <p className="errorMsg">{errors.joinDate.message as string}</p>
+              {errors.enrollDate && (
+                <p className="errorMsg">{errors.enrollDate.message as string}</p>
               )}
             </div>
           </div>
