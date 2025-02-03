@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { getStoredEmployees, saveEmployeesToStorage } from '../utils/storage';
 import type {EmployeeContextProps,Employee } from '../types/employee';
-
+import {fetchEmployees} from '../service/fetchEmployees';
+import {deleteEmployeeService} from '../service/deleteEmployeeService';
 
 
 const EmployeeContext = createContext<EmployeeContextProps | undefined>(undefined);
@@ -23,40 +24,52 @@ export const EmployeeProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   };
 
-  const deleteEmployee = (id: string) => {
-    console.log("Data before delete:", employees);
+  // const deleteEmployee = (id: string) => {
+  //   console.log("Data before delete:", employees);
   
-    const filteredData = employees.filter(item => item.id !== id);
+  //   const filteredData = employees.filter(item => item.id !== id);
     
-    if (filteredData.length === employees.length) {
-      console.warn(`No item found with id: ${id}`);
-      return; // Exit if no item is deleted
+  //   if (filteredData.length === employees.length) {
+  //     console.warn(`No item found with id: ${id}`);
+  //     return; // Exit if no item is deleted
+  //   }
+  //   deleteEmployeeService(id);
+  //   // setEmployees(filteredData);
+  
+  //   console.log("Selected ID:", id);
+  //   console.log("Data after delete:", filteredData);
+  // };
+
+  const deleteEmployee = async (id: string) => {
+    try {
+      await deleteEmployeeService(id);
+      setEmployees(prev => prev.filter(employee => employee.id !== id));
+    } catch (error) {
+      console.error(`Error deleting employee with ID ${id}:`, error);
     }
-  
-    setEmployees(filteredData);
-  
-    console.log("Selected ID:", id);
-    console.log("Data after delete:", filteredData);
   };
+  
   useEffect(() => {
     if (typeof window !== "undefined" && employees.length > 0) {
       localStorage.setItem("employees", JSON.stringify(employees));
     }
   }, [employees]);
 
-useEffect(() => {
-  if (typeof window !== "undefined") {
-    // Ensure localStorage is accessed only in the browser
-    const storedData = localStorage.getItem("employees");
-    if (storedData) {
-      try {
-        setEmployees(JSON.parse(storedData));
-      } catch (error) {
-        console.error("Failed to parse localStorage data:", error);
-      }
-    }
-  }
-}, []);
+  useEffect(() => {
+    const fetchAndSetEmployees = async () => {
+        try {
+          const storedData = await fetchEmployees(); // Assuming this is an API call
+          if (storedData) {
+            setEmployees(storedData); // Assuming storedData is already JSON
+          }
+        } catch (error) {
+          console.error("Failed to fetch employees:", error);
+        }
+    };
+  
+    fetchAndSetEmployees();
+  }, []);
+  
 
   return (
     <EmployeeContext.Provider value={{ employees, setEmployees,isOpen,setIsOpen,view,setView, updateEmployee, deleteEmployee,selectedEmployee,setSelectedEmployee }}>

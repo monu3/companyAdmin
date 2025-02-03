@@ -21,28 +21,12 @@ import { getPriorityColor } from "../../../common/utils/taskPriorityColor";
 import { Link } from "react-router";
 import { Button } from "@/components/ui/button";
 import { fetchTasks } from "../service/taskService";
+import { useTaskContext } from "../context/TaskContext";
 
 const ListTasks: React.FC = () => {
-  const [tasks, setTasks] = useState<Task[]>([]); // State to hold the list of tasks
+  const { tasks } = useTaskContext();
   const [selectedTask, setSelectedTask] = useState<Task | null>(null); // State to track the selected task
   const [showModal, setShowModal] = useState(false); // State to control modal visibility
-
-  /**
-   * Effect hook to fetch tasks from the backend when the component mounts.
-   * Fetches tasks for the logged-in user and updates state.
-   */
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchTasks(); // Fetch tasks using the service
-        setTasks(data); // Update tasks state with fetched data
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-      }
-    };
-
-    fetchData(); // Fetch tasks from backend
-  }, []); // Empty dependency array ensures this runs only once when component mounts
 
   /**
    * Handles the click event on a task card.
@@ -69,7 +53,7 @@ const ListTasks: React.FC = () => {
         {/* Button to navigate to the tasks page */}
         <Link to="/tasks">
           <Button variant={"secondary"} className="dark:bg-orange-400">
-            Go to Tasks
+            Back
           </Button>
         </Link>
       </div>
@@ -84,11 +68,11 @@ const ListTasks: React.FC = () => {
           tasks.map((task) => (
             <Card
               key={task.id} // Unique key for each card based on task ID
-              className="mb-4 shadow-md cursor-pointer" // Styling for card appearance
+              className="mb-4 shadow-md cursor-pointer break-words" // Styling for card appearance
               onClick={() => handleTaskClick(task)} // Open modal on card click
             >
               <CardContent className="p-4">
-                <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center justify-between mb-2 ">
                   {/* Display priority badge */}
                   <Badge className={`${getPriorityColor(task.priority)}`}>
                     {task.priority}

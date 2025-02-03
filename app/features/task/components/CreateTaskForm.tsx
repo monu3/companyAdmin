@@ -7,34 +7,34 @@ import {
   type CreateTaskFormProps,
   type Task,
 } from "../Types/types";
-import { nanoid } from "nanoid";
-import { saveTask } from "../service/taskService";
+import { useTaskContext } from "../context/TaskContext";
+import ToastService from "~/common/utils/toastService";
 
 const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
   onAddTask,
   selectedTask,
   setIsOpen,
 }) => {
+  const { addTask } = useTaskContext();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-    control,
   } = useForm<Task>({
     defaultValues: {
       title: "",
       description: "",
       status: TaskStatus.TO_DO,
       priority: Priority.LOW,
-      dueDate: new Date().toISOString().split("T")[0],
+      dueDate: new Date().toISOString().split("T")[0], // Default to today's date
     },
   });
 
-  // Pre-populate the form when selectedTask changes (edit mode)
+  // Pre-fill the form when editing a task
   useEffect(() => {
     if (selectedTask) {
-      reset(selectedTask); // Reset the form with the selectedTask data
+      reset(selectedTask); // Pre-fill form with selected task data
     }
   }, [selectedTask, reset]);
 
@@ -42,17 +42,18 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
     try {
       if (selectedTask) {
         const updatedTask = { ...formData, id: selectedTask.id }; // Include ID only when updating
-        await saveTask(updatedTask);
+        await addTask(updatedTask);
+        ToastService.success("Taks updated successfully");
       } else {
-        // Don't include the ID when creating a new task, since the backend will handle it
         const newTask = { ...formData };
-        await saveTask(newTask);
+        await addTask(newTask);
+        ToastService.success("Task added successfully");
       }
-
-      setIsOpen(false);
       reset();
-    } catch (error: any) {
-      console.error("Failed to save task:", error.message);
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Failed to save task:", error);
+      ToastService.error("Failed to save task. Please try again.");
     }
   };
 

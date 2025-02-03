@@ -9,21 +9,16 @@
  * Returns a promise that resolves to the newly created `Employee` object.
  */
 
+import { getUserEmail } from "~/common/utils/getUserEmail";
 import { apiRequest } from "../../../common/api/backendApi";
 import type { Employee } from "../types/employee";
-
-export const addEmployee = async (
-  employee: Employee,
-  userEmail: string
-): Promise<Employee> => {
+export const addEmployee = async (employee: Employee): Promise<Employee> => {
   try {
-    // Send the employee data and userEmail in the body
+    const userEmail = getUserEmail();
     const response = await apiRequest("/employee", {
       method: "POST",
-      body: { employee, userEmail }, // apiRequest already handles the serialization
+      body: { employee, userEmail },
     });
-
-    // Assuming the backend returns the created employee object
     return response;
   } catch (error) {
     console.error("Error adding employee:", error);

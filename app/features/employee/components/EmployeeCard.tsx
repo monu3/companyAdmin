@@ -16,7 +16,7 @@ const EmployeeCard=() => {
           <div className="flex justify-between items-start">
             <div>
               <h3 className="text-lg font-semibold">{employee.name}</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{employee.position}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{employee.jobRole}</p>
             </div>
             <div className="text-right">
               <p className="text-sm font-medium">{employee.department}</p>
@@ -27,7 +27,7 @@ const EmployeeCard=() => {
           <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
             <p className="text-sm text-gray-500 dark:text-gray-400">{employee.email}</p>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Joined: {new Date(employee.joinDate).toLocaleDateString()}
+              Joined: {new Date(employee.enrollDate).toLocaleDateString()}
             </p>
           </div>
         </div>
