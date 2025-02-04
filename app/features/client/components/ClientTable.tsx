@@ -17,8 +17,6 @@ const EmployeesTable = () => {
             <Table.HeadCell>#</Table.HeadCell>
             <Table.HeadCell>Name</Table.HeadCell>
             <Table.HeadCell>Email</Table.HeadCell>
-            <Table.HeadCell>Project Name</Table.HeadCell>
-            <Table.HeadCell>Budget</Table.HeadCell>
             <Table.HeadCell>Join Date</Table.HeadCell>
             <Table.HeadCell>
               <span className="sr-only">Edit</span>
@@ -40,8 +38,6 @@ const EmployeesTable = () => {
                     {client.email}
                   </a>
                 </Table.Cell>
-                <Table.Cell>{client.projectName}</Table.Cell>
-                <Table.Cell>${client.budget.toLocaleString()}</Table.Cell>
                 <Table.Cell>{formatDate(client.joinDate)}</Table.Cell>
                 <Table.Cell>
                   <button

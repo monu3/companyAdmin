@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import type {ClientContextProps,Client } from '../types/client';
+import { fetchClients } from '../service/clientService';
 
 
 
@@ -43,18 +44,22 @@ export const ClientProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
   }, [clients]);
 
-useEffect(() => {
+useEffect(() => { 
+  const fetchAndSetClients=async () =>  {
   if (typeof window !== "undefined") {
     // Ensure localStorage is accessed only in the browser
-    const storedData = localStorage.getItem("clients");
+    // const storedData
+    const storedData=await fetchClients();
     if (storedData) {
       try {
-        setClients(JSON.parse(storedData));
+        setClients(storedData);
       } catch (error) {
-        console.error("Failed to parse localStorage data:", error);
+        console.error("Failed to fetch clients:", error);
       }
     }
   }
+};
+fetchAndSetClients();
 }, []);
 
   return (

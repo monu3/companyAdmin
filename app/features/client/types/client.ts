@@ -14,7 +14,6 @@ export interface Client {
     id: string;
     name: string;
     email: string;
-    budget:string;
+    password:string;
     joinDate: string;
-    projectName:string;
   }
