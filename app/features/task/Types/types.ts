@@ -104,3 +104,14 @@ export interface DroppableColumnProps {
   children: React.ReactNode;
   isDropTarget: boolean;
 }
+
+export interface TaskContextType {
+  tasks: Task[];
+  loading: boolean;
+  addTask: (task: Task) => Promise<void>;
+  updateTask: (task: Task) => Promise<void>;
+  removeTask: (taskId: string) => Promise<void>;
+  moveTask: (taskId: string, newStatus: string) => Promise<void>;
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
