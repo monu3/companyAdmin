@@ -24,9 +24,8 @@ import { fetchTasks } from "../service/taskService";
 import { useTaskContext } from "../context/TaskContext";
 
 const ListTasks: React.FC = () => {
-  const { tasks } = useTaskContext();
+  const { tasks,showModal,setShowModal } = useTaskContext();
   const [selectedTask, setSelectedTask] = useState<Task | null>(null); // State to track the selected task
-  const [showModal, setShowModal] = useState(false); // State to control modal visibility
 
   /**
    * Handles the click event on a task card.
