@@ -13,11 +13,18 @@ export const saveTask = async (task: Task): Promise<any> => {
 
   // If task has an ID, it's likely an update, so use PUT instead of POST
   const method = task.id ? "PUT" : "POST";
+  console.log("method: ", method);
+  console.log("Taks id: ",task.id)
+  const body = task.id ? { ...task } : { task, emailCompany };
+  console.log("body:", body);
+  console.log("tasks service page: ", task);
+
   const endpoint = task.id ? `/tasks/${task.id}` : "/tasks"; // Update URL if ID is provided
 
-  return apiRequest(endpoint, {
+  console.log("endpoint: ", endpoint);
+  return await apiRequest(endpoint, {
     method,
-    body: { task, emailCompany },
+    body,
   });
 };
 
