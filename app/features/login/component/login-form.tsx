@@ -12,6 +12,7 @@ import { useNavigate } from "react-router";
 import { login } from "../service/loginAuthService"; // Import the login function from authService
 import { Label } from "@/components/ui/label"; // UI component for labeling inputs
 import { Button } from "@/components/ui/button"; // UI component for the button
+import ToastService from "~/common/utils/toastService";
 
 export default function LoginForm() {
   const [email, setEmail] = useState(""); // State to store email input
@@ -33,15 +34,24 @@ export default function LoginForm() {
     setError(""); // Clear any previous error messages
 
     try {
-      const result = await login(email, password); // Attempt to login using the credentials
-
-      if (result === "Login successful") {
-        localStorage.setItem("userEmail", email); // Store user email in local storage
-        navigate("/"); // Redirect to the homepage on successful login
+      if (email === "") {
+        ToastService.warning("enter email");
+      } else if (password === "") {
+        ToastService.warning("enter passowrd");
       } else {
-        setError(result); // If login fails, display error message
+        const result = await login(email, password); // Attempt to login using the credentials
+        if (result === "Login successful") {
+          localStorage.setItem("userEmail", email); // Store user email in local storage
+          navigate("/"); // Redirect to the homepage on successful login
+          ToastService.success("Login success");
+        } else {
+          setError(result); // If login fails, display error message
+        }
       }
     } catch (err) {
+      ToastService.error(
+        err instanceof Error ? err.message : "An unknown error occurred"
+      );
       setError(
         err instanceof Error ? err.message : "Failed to connect to server"
       ); // Handle connection errors or other issues
@@ -57,7 +67,6 @@ export default function LoginForm() {
           <h2 className="text-2xl font-bold text-gray-900">Sign in</h2>
           <p className="mt-2 text-sm text-gray-600">Access your account</p>
         </div>
-        {error && <p className="text-red-500 text-sm text-center">{error}</p>}{" "}
         {/* Show error if exists */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2 flex flex-col">
@@ -67,7 +76,7 @@ export default function LoginForm() {
               type="email"
               placeholder="name@example.com"
               className="rounded"
-              required
+              // required
               value={email}
               onChange={(e) => setEmail(e.target.value)} // Update email state on change
               disabled={isLoading} // Disable input when loading
@@ -82,7 +91,7 @@ export default function LoginForm() {
               type="password"
               className="rounded"
               placeholder="Enter your password"
-              required
+              // required
               value={password}
               onChange={(e) => setPassword(e.target.value)} // Update password state on change
               disabled={isLoading} // Disable input when loading

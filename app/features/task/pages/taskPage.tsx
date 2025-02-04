@@ -3,22 +3,15 @@ import CreateTaskForm from "../components/CreateTaskForm";
 import KanbanBoard from "../components/kanbanAndDnd/KanbanBoard";
 import { Link, Outlet } from "react-router";
 import { Button } from "~/components/ui/button";
-import { useTaskContext } from "../context/TaskContext";
 import type { Task } from "../Types/types";
 
 const TaskPage: React.FC = () => {
-  const { addTask, updateTask } = useTaskContext();
   const [isCreateTaskModalOpen, setIsCreateTaskModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
-  const handleAddTask = async (task: Task) => {
-    if (selectedTask) {
-      await updateTask(task);
-    } else {
-      await addTask(task);
-    }
-    setSelectedTask(null);
-    setIsCreateTaskModalOpen(false);
+  const handleOpenEditModal = (task: Task) => {
+    setSelectedTask(task);
+    setIsCreateTaskModalOpen(true);
   };
 
   return (
@@ -39,7 +32,7 @@ const TaskPage: React.FC = () => {
 
         {isCreateTaskModalOpen && (
           <CreateTaskForm
-            onAddTask={handleAddTask}
+            onAddTask={() => setIsCreateTaskModalOpen(false)}
             selectedTask={selectedTask}
             setIsOpen={setIsCreateTaskModalOpen}
           />

@@ -22,6 +22,7 @@ import { TaskProvider } from "./features/task/context/TaskContext";
 import TaskPage from "./features/task/pages/taskPage";
 //import { ThemeProvider } from "./common/theme/context/themeContext";
 import {ClientProvider} from "./features/client/context/ClientContext"
+import { CompanyProvider } from "./features/profile/context/companyContext";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -60,18 +61,21 @@ export default function App() {
     <Provider store={store}>
       <ToastContainer />
       <ThemeProvider>
-      <ClientProvider>  
-        {/* <TaskProvider> */}
-        <EmployeeProvider>
-          <ProjectContextProvider>
-            <TaskProvider>
-              <QueryClientProvider client={queryClient}>
-                <Outlet />
-              </QueryClientProvider>
-            </TaskProvider>
-          </ProjectContextProvider>
-        </EmployeeProvider>
-      </ClientProvider>
+        <ClientProvider>
+          <CompanyProvider>
+            {/* <TaskProvider> */}
+            <EmployeeProvider>
+              <ProjectContextProvider>
+                <TaskProvider>
+                  <QueryClientProvider client={queryClient}>
+                    <Outlet />
+                  </QueryClientProvider>
+                </TaskProvider>
+              </ProjectContextProvider>
+            </EmployeeProvider>
+          </CompanyProvider>
+        </ClientProvider>
+
         {/* </TaskProvider> */}
       </ThemeProvider>
     </Provider>

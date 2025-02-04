@@ -15,7 +15,7 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
   selectedTask,
   setIsOpen,
 }) => {
-  const { addTask } = useTaskContext();
+  const { addTask, updateTask, tasks, setShowModal } = useTaskContext();
   const {
     register,
     handleSubmit,
@@ -34,6 +34,7 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
   // Pre-fill the form when editing a task
   useEffect(() => {
     if (selectedTask) {
+      console.log("Pre-filling form with:", selectedTask);
       reset(selectedTask); // Pre-fill form with selected task data
     }
   }, [selectedTask, reset]);
@@ -41,9 +42,12 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
   const onSubmit = async (formData: Task) => {
     try {
       if (selectedTask) {
-        const updatedTask = { ...formData, id: selectedTask.id }; // Include ID only when updating
-        await addTask(updatedTask);
-        ToastService.success("Taks updated successfully");
+        console.log("selected tasks: ", selectedTask);
+        const updatedTask = { ...formData, id: selectedTask.id };
+        console.log("Updated Task being sent:", updatedTask);
+        await updateTask(updatedTask);
+        setShowModal(false);
+        ToastService.success("Task updated successfully");
       } else {
         const newTask = { ...formData };
         await addTask(newTask);
