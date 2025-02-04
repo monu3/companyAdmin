@@ -17,10 +17,10 @@ const ClientCard=() => {
             <div>
               <h3 className="text-lg font-semibold">{client.name}</h3>
             </div>
-            <div className="text-right">
+            {/* <div className="text-right">
               <p className="text-sm font-medium">{client.projectName}</p>
               <p className="text-sm text-gray-500 dark:text-gray-400">{client.budget}</p>
-            </div>
+            </div> */}
           </div>
           
           <div className="pt-4 border-t border-gray-200 dark:border-gray-700">

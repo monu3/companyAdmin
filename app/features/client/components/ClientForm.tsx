@@ -5,6 +5,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import type { Client} from "../types/client";
 import { useClientContext } from "../context/ClientContext";
 import { nanoid } from "nanoid";
+import { addClient } from "../service/clientService";
 
 export const ClientForm = ({
 selectedClient
@@ -23,12 +24,12 @@ selectedClient
     }
   },[selectedClient,reset]);
 
-  const onSubmit = (formData: any) => {
+  const onSubmit = async(formData: any) => {
     console.log("Form submitted with selectedId:", selectedClient?.id);  // Log the selectedClient ID
     console.log("Form data:", formData);
   
     if (selectedClient) {
-      // Update existing clinet with the new form data
+      // Update existing client with the new form data
       const updatedData = { ...formData, id: selectedClient.id };
   
       const updatedDataList = clients.map(item =>
@@ -37,8 +38,8 @@ selectedClient
       setClients(updatedDataList);
     } else {
       // If no selectedClient, create a new one
-      const dataWithId = { ...formData, id: nanoid() };
-      setClients(prevData => [...prevData, dataWithId]);
+      const newClient = await addClient(formData);
+      setClients(prevData => [...prevData, newClient]);
     }
   
     setIsOpen(false);  // Close the modal after saving
@@ -85,7 +86,7 @@ selectedClient
                 <p className="errorMsg">{errors.email.message as string}</p>
               )}
             </div>
-            {/* <div className="form-control flex flex-col">
+           <div className="form-control flex flex-col">
               <label>Password</label>
               <input
                 type="password"
@@ -100,8 +101,8 @@ selectedClient
               {errors.password && (
                 <p className="errorMsg">{errors.password.message as string}</p>
               )}
-            </div> */}
-            <div className="form-control flex flex-col">
+            </div>
+            {/* <div className="form-control flex flex-col">
               <label>Budget</label>
               <input
                 type="text"
@@ -114,8 +115,8 @@ selectedClient
                   {errors.budget.message as string}
                 </p>
               )}
-            </div>
-            <div className="form-control flex flex-col">
+            </div> */}
+            {/* <div className="form-control flex flex-col">
               <label>Project Name</label>
               <input
                 type="text"
@@ -126,7 +127,7 @@ selectedClient
               {errors.projectName && (
                 <p className="errorMsg">{errors.projectName.message as string}</p>
               )}
-            </div>
+            </div> */}
             <div className="form-control flex flex-col">
               <label>Enroll Date</label>
               <input
