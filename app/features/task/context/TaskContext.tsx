@@ -46,7 +46,9 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
 
   const updateTask = async (task: Task) => {
     try {
+      console.log("task coming for updating in taskCOntext:", task);
       const updatedTask = await saveTask(task);
+      console.log("task after updating in taskCOntext:", updateTask);
       setTasks((prevTasks) =>
         prevTasks.map((t) => (t.id === updatedTask.id ? updatedTask : t))
       );
@@ -83,7 +85,17 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
 
   return (
     <TaskContext.Provider
-      value={{ tasks, loading, addTask, updateTask, removeTask, moveTask, showModal, setShowModal }}
+      value={{
+        tasks,
+        setTasks,
+        loading,
+        addTask,
+        updateTask,
+        removeTask,
+        moveTask,
+        showModal,
+        setShowModal,
+      }}
     >
       {children}
     </TaskContext.Provider>

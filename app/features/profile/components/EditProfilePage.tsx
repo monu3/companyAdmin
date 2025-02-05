@@ -4,7 +4,7 @@ import { Input } from "~/components/ui/input";
 import { useCompanyContext } from "../context/companyContext";
 
 const EditProfilePage = () => {
-  const { fetchCompany, company, updateCompany } = useCompanyContext();
+  const { company, updateCompany } = useCompanyContext();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -13,18 +13,6 @@ const EditProfilePage = () => {
     state: "",
     phone: "",
   });
-
-  // Fetch company data when component mounts
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await fetchCompany();
-      } catch (err) {
-        console.error("Error fetching company data:", err);
-      }
-    };
-    fetchData();
-  }, []);
 
   // Set form data once company data is available
   useEffect(() => {

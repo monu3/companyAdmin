@@ -107,6 +107,7 @@ export interface DroppableColumnProps {
 
 export interface TaskContextType {
   tasks: Task[];
+  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   loading: boolean;
   addTask: (task: Task) => Promise<void>;
   updateTask: (task: Task) => Promise<void>;

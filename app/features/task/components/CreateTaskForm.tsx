@@ -15,7 +15,8 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
   selectedTask,
   setIsOpen,
 }) => {
-  const { addTask, updateTask, tasks, setShowModal } = useTaskContext();
+  const { addTask, updateTask, tasks, setShowModal } =
+    useTaskContext();
   const {
     register,
     handleSubmit,
