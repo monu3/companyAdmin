@@ -5,7 +5,7 @@ import { useCompanyContext } from "../context/companyContext";
 import { Link } from "react-router";
 
 const ProfilePage = () => {
-  const { fetchCompany, company } = useCompanyContext();
+  const { company } = useCompanyContext();
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -16,17 +16,6 @@ const ProfilePage = () => {
     updatedAt: "",
     phone: "",
   });
-  // Fetch company data when component mounts
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await fetchCompany();
-      } catch (err) {
-        console.error("Error fetching company data:", err);
-      }
-    };
-    fetchData();
-  }, []);
 
   // If company data is available, set it to the state
   useEffect(() => {

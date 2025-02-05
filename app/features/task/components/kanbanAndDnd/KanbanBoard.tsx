@@ -27,7 +27,7 @@ import { getPriorityColor } from "~/common/utils/taskPriorityColor";
 import ToastService from "~/common/utils/toastService";
 
 const KanbanBoard: React.FC = () => {
-  const { tasks, moveTask } = useTaskContext();
+  const { tasks,moveTask,setTasks } = useTaskContext();
   const [activeId, setActiveId] = useState<string | null>(null);
   const [activeColumnId, setActiveColumnId] = useState<string | null>(null);
 
@@ -81,6 +81,12 @@ const KanbanBoard: React.FC = () => {
     ) {
       try {
         await moveTask(activeTaskId, newStatus);
+        // Directly update the task state to reflect the change in the UI
+        setTasks((prevTasks) =>
+          prevTasks.map((task) =>
+            task.id === activeTaskId ? { ...task, status: newStatus } : task
+          )
+        );
         ToastService.success(`Task moved to "${newStatus}"!`);
       } catch (error) {
         console.error("Task movement failed:", error);

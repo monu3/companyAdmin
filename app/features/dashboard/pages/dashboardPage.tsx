@@ -1,6 +1,6 @@
 import React from 'react'
 import ProjectDetails from '../components/ProjectDetails';
-import { WelcomeMessage } from '../components/welcomeMessage';
+import { WelcomeMessage } from '../components/WelcomeMessage';
 
 
 export default function DashboardPage() {
