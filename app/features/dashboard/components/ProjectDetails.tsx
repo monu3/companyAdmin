@@ -73,7 +73,7 @@ const ProjectDetails = () => {
   ];
   
   return (
-    <div className="p-2 rounded-lg">
+    <div className="py-2 rounded-lg">
       <h2 className="text-xl font-bold mb-3">Project Details</h2>
       <div className="grid grid-cols-6 gap-4">
         {projectDetail.map((detail, index) => (
