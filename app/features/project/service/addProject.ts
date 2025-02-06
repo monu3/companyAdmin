@@ -15,7 +15,7 @@ export const addProject = async (
   try {
     const userEmail = getUserEmail();
     const clientId = project.clientId;
-    console.log("formData from project service page: ", project);
+    // console.log("formData from project service page: ", project);
     const response = await apiRequest("/addProjectDetails", {
       method: "POST",
       body: { project, clientId, userEmail },

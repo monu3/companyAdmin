@@ -23,7 +23,7 @@ const ProjectContextProvider = ({
   ); // Track selected project
   const handleDelete = (selectedId: number) => {
     ToastService.success("This is a success message!");
-    console.log("data before delete:", project);
+    // console.log("data before delete:", project);
 
     const filteredData = project.filter((item) => item.id !== selectedId);
 
@@ -34,8 +34,8 @@ const ProjectContextProvider = ({
 
     setProject(filteredData);
 
-    console.log("Selected ID:", selectedId);
-    console.log("Data after delete:", filteredData);
+    // console.log("Selected ID:", selectedId);
+    // console.log("Data after delete:", filteredData);
   };
 
   const handleEdit = (selectedId: number) => {

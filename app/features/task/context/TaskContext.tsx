@@ -46,9 +46,9 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
 
   const updateTask = async (task: Task) => {
     try {
-      console.log("task coming for updating in taskCOntext:", task);
+      // console.log("task coming for updating in taskCOntext:", task);
       const updatedTask = await saveTask(task);
-      console.log("task after updating in taskCOntext:", updateTask);
+      // console.log("task after updating in taskCOntext:", updateTask);
       setTasks((prevTasks) =>
         prevTasks.map((t) => (t.id === updatedTask.id ? updatedTask : t))
       );

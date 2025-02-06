@@ -11,11 +11,11 @@ const DisplayTable = () => {
   };
   const { project, handleDelete, handleEdit } = useProjectContext(); // Ensure setData is available in context
   const { clients } = useClientContext();
-  console.log("client: sdfgergergerfg", clients);
+  // console.log("client: sdfgergergerfg", clients);
 
   const getClientName = (clientId: string) => {
     const client = clients.find((client) => client.id == clientId);
-    console.log("client: sdfgergergerfg", client);
+    // console.log("client: sdfgergergerfg", client);
     return client ? client.name : "Unknown Client";
   };
   return (
