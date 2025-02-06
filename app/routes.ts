@@ -20,7 +20,6 @@ export default [
       route("/editProfile","features/profile/components/EditProfilePage.tsx"),
     ]),
  // ]),
-  route("dummyDashboard", "features/dashboard/pages/DummyDashboard.tsx"),
   route("contact", "features/ContactUs/ContactUs.tsx"),
   route("*", "features/NotFound/NotFoundPage.tsx"),
 ] satisfies RouteConfig;
