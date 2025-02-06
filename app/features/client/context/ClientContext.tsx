@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import type {ClientContextProps,Client } from '../types/client';
-import { fetchClients } from '../service/clientService';
+import { deleteClients, fetchClients } from '../service/clientService';
 
 
 
@@ -11,6 +11,7 @@ export const ClientProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [clients, setClients] = useState<Client[]>(defaultClientDetails);
   const [selectedClient,setSelectedClient]=useState<Client|null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [view, setView] = useState<"table" | "card">("table");
   const updateClient = (selectedId: string) => {
     // Find the empolyee you want to edit based on the selectedId
@@ -23,20 +24,13 @@ export const ClientProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
   };
 
-  const deleteClient = (id: string) => {
-    console.log("Data before delete:", clients);
-  
-    const filteredData = clients.filter(item => item.id !== id);
-    
-    if (filteredData.length === clients.length) {
-      console.warn(`No item found with id: ${id}`);
-      return; // Exit if no item is deleted
+  const deleteClient = async(id: string) => {
+    try{
+      await deleteClients(id);
+      setClients(prev => prev.filter(clients =>clients.id!==id));
+    }catch(error){
+      console.error(`Error deleting client with ID:${id} `,error);
     }
-  
-    setClients(filteredData);
-  
-    console.log("Selected ID:", id);
-    console.log("Data after delete:", filteredData);
   };
   useEffect(() => {
     if (typeof window !== "undefined" && clients.length > 0) {
@@ -63,7 +57,7 @@ fetchAndSetClients();
 }, []);
 
   return (
-    <ClientContext.Provider value={{ clients, setClients,isOpen,setIsOpen,view,setView, updateClient, deleteClient,selectedClient,setSelectedClient }}>
+    <ClientContext.Provider value={{ clients, setClients,isOpen,setIsOpen,view,setView, updateClient, deleteClient,selectedClient,setSelectedClient,isLoading,setIsLoading }}>
       {children}
     </ClientContext.Provider>
   );
