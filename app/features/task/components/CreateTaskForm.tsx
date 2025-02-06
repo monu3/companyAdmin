@@ -56,11 +56,11 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
           )
         );
         setShowModal(false);
-        ToastService.success("Task updated successfully");
+        ToastService.success("Task updated successfully",500);
       } else {
         const newTask = { ...formData };
         await addTask(newTask);
-        ToastService.success("Task added successfully");
+        ToastService.success("Task added successfully",500);
       }
       reset();
       setIsOpen(false);
