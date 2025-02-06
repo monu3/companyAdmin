@@ -1,4 +1,4 @@
-import { Table } from "flowbite-react";
+import { Button, Table } from "flowbite-react";
 import { useProjectContext } from "../store/context";
 import { useClientContext } from "~/features/client/context/ClientContext";
 
@@ -31,12 +31,7 @@ const DisplayTable = () => {
               <Table.HeadCell>Deadline</Table.HeadCell>
               <Table.HeadCell>Progress</Table.HeadCell>
               <Table.HeadCell>Status</Table.HeadCell>
-              <Table.HeadCell>
-                <span className="sr-only">Edit</span>
-              </Table.HeadCell>
-              <Table.HeadCell>
-                <span className="sr-only">Delete</span>
-              </Table.HeadCell>
+              <Table.HeadCell className="text-center">Actions </Table.HeadCell>
             </Table.Head>
 
             <Table.Body className="divide-y">
@@ -52,23 +47,20 @@ const DisplayTable = () => {
                     <Table.Cell>{formatDate(data.endDate)}</Table.Cell>
                     <Table.Cell>{data.progress}</Table.Cell>
                     <Table.Cell>{data.status}</Table.Cell>
-                    <Table.Cell>
-                      <a
-                        href="#"
+                    <Table.Cell className="flex gap-4">
+                      <Button
                         className="font-medium text-cyan-600 hover:underline dark:text-text"
                         onClick={() => handleEdit(data.id)}
                       >
                         Edit
-                      </a>
-                    </Table.Cell>
-                    <Table.Cell>
-                      <a
-                        href="#"
+                      </Button>
+
+                      <Button
                         className="font-medium text-cyan-600 hover:underline dark:text-text"
                         onClick={() => handleDelete(data.id)}
                       >
                         Delete
-                      </a>
+                      </Button>
                     </Table.Cell>
                   </Table.Row>
                 );
