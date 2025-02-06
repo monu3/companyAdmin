@@ -1,6 +1,8 @@
 import React from 'react'
-import ProjectDetails from '../components/ProjectDetails';
 import { WelcomeMessage } from '../components/WelcomeMessage';
+import TaskDetails from '../components/TaskDetails';
+import ProjectDetails from '../components/projectDetails';
+
 
 
 export default function DashboardPage() {
@@ -8,7 +10,7 @@ export default function DashboardPage() {
     <main>
         <WelcomeMessage />
         <ProjectDetails />
-        {/* <TaskDetails /> */}
+        <TaskDetails />
     </main>
   );
 }
