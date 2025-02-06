@@ -5,6 +5,8 @@ export interface ClientContextProps {
   deleteClient: (id: string) => void;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   view: "table" | "card"; // Union type for the possible values of `view`
   setView: React.Dispatch<React.SetStateAction<"table" | "card">>;
   selectedClient:Client|null;

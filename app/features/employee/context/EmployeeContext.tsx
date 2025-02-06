@@ -49,11 +49,11 @@ export const EmployeeProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   };
   
-  useEffect(() => {
-    if (typeof window !== "undefined" && employees.length > 0) {
-      localStorage.setItem("employees", JSON.stringify(employees));
-    }
-  }, [employees]);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined" && employees.length > 0) {
+  //     localStorage.setItem("employees", JSON.stringify(employees));
+  //   }
+  // }, [employees]);
 
   useEffect(() => {
     const fetchAndSetEmployees = async () => {

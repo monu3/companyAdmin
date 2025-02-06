@@ -1,13 +1,14 @@
 import { Table } from "flowbite-react";
 import { useClientContext } from '../context/ClientContext';
 
-const EmployeesTable = () => {
+const ClientTable = () => {
   const formatDate = (date: string | Date): string => {
     const parsedDate = date instanceof Date ? date : new Date(date);
     return !isNaN(parsedDate.getTime()) ? parsedDate.toLocaleDateString() : "Invalid date";
   };
 
   const { clients, updateClient, deleteClient } = useClientContext();
+  console.log(clients);
 
   return (
     <div className="overflow-x-auto">
@@ -64,4 +65,4 @@ const EmployeesTable = () => {
   );
 };
 
-export default EmployeesTable;
+export default ClientTable;
