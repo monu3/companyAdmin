@@ -7,7 +7,7 @@ import { MdOutlineHourglassTop } from "react-icons/md";
 import { GiProgression } from "react-icons/gi";
 
 const ProjectDetails = () => {
-  const { data } = useProjectContext(); // Assuming `data` is an array
+  const { project } = useProjectContext(); 
   const [countPending, setCountPending] = useState(0);
   const [countProgress, setCountProgress] = useState(0);
   const [countCompleted, setCountCompleted] = useState(0);
@@ -16,9 +16,13 @@ const ProjectDetails = () => {
 
   // Count different project statuses
   useEffect(() => {
-    let pending = 0, progress = 0, completed = 0, started = 0, notStarted = 0;
+    let pending = 0,
+      progress = 0,
+      completed = 0,
+      started = 0,
+      notStarted = 0;
 
-    data.forEach((project) => {
+    project.forEach((project) => {
       if (project.status === "pending") pending++;
       if (project.status === "started") started++;
       if (project.status === "not-started") notStarted++;
@@ -31,13 +35,13 @@ const ProjectDetails = () => {
     setCountCompleted(completed);
     setCountStarted(started);
     setCountNotStarted(notStarted);
-  }, [data]); // Runs whenever `data` changes
+  }, [project]); // Runs whenever `data` changes
 
   const projectDetail = [
     {
       icon: <CiCircleCheck />,
       label: "Total Projects",
-      count: data.length || 0,
+      count: project.length || 0,
       bgColor: "bg-gradient-to-r from-blue-200 to-blue-300",
     },
     {
@@ -71,19 +75,20 @@ const ProjectDetails = () => {
       bgColor: "bg-gradient-to-r from-green-200 to-green-300",
     },
   ];
-  
+
   return (
     <div className="py-2 rounded-lg">
       <h2 className="text-xl font-bold mb-3">Project Details</h2>
       <div className="grid grid-cols-6 gap-4">
         {projectDetail.map((detail, index) => (
-          <div key={index} className={`flex items-center gap-2 bg-gray-100 p-3 rounded-md ${detail.bgColor}`}>
+          <div
+            key={index}
+            className={`flex items-center gap-2 bg-gray-100 p-3 rounded-md ${detail.bgColor}`}
+          >
             <div className="text-4xl">{detail.icon}</div>
             <div className="text-center">
               <p className="text-2xl font-bold">{detail.count}</p>
-              <p className="font-medium">
-              {detail.label}
-              </p>
+              <p className="font-medium">{detail.label}</p>
             </div>
           </div>
         ))}

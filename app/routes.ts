@@ -16,9 +16,12 @@ export default [
       route("employee", "features/employee/pages/EmployeePage.tsx"),
       route("tasks", "features/task/pages/taskPage.tsx"),
       route("client", "features/client/pages/clientPage.tsx"),
+      route("profile","features/profile/page/profilePage.tsx"),
+      route("/editProfile","features/profile/components/EditProfilePage.tsx"),
     ]),
  // ]),
   route("dummyDashboard", "features/dashboard/pages/DummyDashboard.tsx"),
   route("contact", "features/ContactUs/ContactUs.tsx"),
   route("*", "features/NotFound/NotFoundPage.tsx"),
 ] satisfies RouteConfig;
+

@@ -7,22 +7,13 @@ import React, {
   type ReactNode,
   useEffect,
 } from "react";
-import type { Task } from "../Types/types";
+import type { Task, TaskContextType } from "../Types/types";
 import {
   fetchTasks,
   saveTask,
   deleteTask,
   updateTaskStatus,
 } from "../service/taskService";
-
-interface TaskContextType {
-  tasks: Task[];
-  loading: boolean;
-  addTask: (task: Task) => Promise<void>;
-  updateTask: (task: Task) => Promise<void>;
-  removeTask: (taskId: string) => Promise<void>;
-  moveTask: (taskId: string, newStatus: string) => Promise<void>;
-}
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
 
@@ -31,6 +22,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   const loadTasks = async () => {
     try {
@@ -54,7 +46,9 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
 
   const updateTask = async (task: Task) => {
     try {
+      console.log("task coming for updating in taskCOntext:", task);
       const updatedTask = await saveTask(task);
+      console.log("task after updating in taskCOntext:", updateTask);
       setTasks((prevTasks) =>
         prevTasks.map((t) => (t.id === updatedTask.id ? updatedTask : t))
       );
@@ -91,7 +85,17 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
 
   return (
     <TaskContext.Provider
-      value={{ tasks, loading, addTask, updateTask, removeTask, moveTask }}
+      value={{
+        tasks,
+        setTasks,
+        loading,
+        addTask,
+        updateTask,
+        removeTask,
+        moveTask,
+        showModal,
+        setShowModal,
+      }}
     >
       {children}
     </TaskContext.Provider>

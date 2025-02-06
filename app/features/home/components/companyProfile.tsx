@@ -17,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { logout } from "~/common/utils/logOut"; // Utility function for handling user logout
+import { Link } from "react-router";
 
 const CompanyProfile = () => {
   return (
@@ -33,7 +34,12 @@ const CompanyProfile = () => {
       {/* Dropdown menu content */}
       <DropdownMenuContent className="w-48">
         <DropdownMenuSeparator /> {/* Visual separator */}
-        <DropdownMenuItem>Profile</DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link to="/profile">Profile</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link to="/editProfile">Edit Details</Link>
+        </DropdownMenuItem>
         <DropdownMenuItem>Billing</DropdownMenuItem>
         <DropdownMenuItem>Team</DropdownMenuItem>
         <DropdownMenuItem>Subscription</DropdownMenuItem>

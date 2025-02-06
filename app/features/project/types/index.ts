@@ -1,6 +1,6 @@
 export interface ProjectContextType {
-  data: projectDetails[];  // Explicitly defining the type for `data`
-  setData: React.Dispatch<React.SetStateAction<projectDetails[]>>;  // Updated to match the new `data` type
+  project: projectDetails[]; // Explicitly defining the type for `data`
+  setProject: React.Dispatch<React.SetStateAction<projectDetails[]>>; // Updated to match the new `data` type
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   view: "table" | "card"; // Union type for the possible values of `view`
@@ -8,22 +8,20 @@ export interface ProjectContextType {
   handleDelete: (id: number) => void;
   handleEdit: (id: number) => void;
   selectedProject: projectDetails | null;
-  setSelectedProject: React.Dispatch<React.SetStateAction<projectDetails | null>>;
+  setSelectedProject: React.Dispatch<
+    React.SetStateAction<projectDetails | null>
+  >;
 }
 
-
-export interface projectDetails{
-  id: number,
+export interface projectDetails {
+  id: number;
   progress: number;
-  length: number;
-  title: string,
-  category: string,
-  price: number,
-  startDate: Date,
-  endDate: Date,
-  lead: string,
-  client: string,
-  employee: number,
-  status: string,
-  description: string
+  title: string;
+  category: string;
+  price: number;
+  startDate: Date;
+  endDate: Date;
+  clientId: string;
+  status: string;
+  description: string;
 }
