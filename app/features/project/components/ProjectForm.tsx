@@ -1,14 +1,12 @@
-import { useContext, useRef, useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useProjectContext } from "../store/context";
-import { nanoid } from "nanoid";
 import type { projectDetails } from "../types";
-import { clientOptions } from "../dummyData/client";
-import { lead } from "../dummyData/lead";
 import { statusOptions } from "../dummyData/status";
 import { useClientContext } from "~/features/client/context/ClientContext";
 import { useEmployeeContext } from "~/features/employee/context/EmployeeContext";
 import { addProject } from "../service/addProject";
+import { updateProjectService } from "../service/editProject";
 
 const ProjectForm = ({
   selectedProject,
@@ -34,25 +32,23 @@ const ProjectForm = ({
 
   const onSubmit = async (formData: any) => {
     if (selectedProject) {
-      console.log("formData:{}", formData);
+      const updatedEmployee = await updateProjectService(
+        selectedProject.id,
+        formData
+      );
       // Update existing project with the new form data
       const updatedData = { ...formData, id: selectedProject.id };
 
-      const updatedDataList = project.map((item) =>
-        item.id === selectedProject.id ? { ...item, ...updatedData } : item
+      setProject((prevData) =>
+        prevData.map((item) =>
+          item.id === updatedEmployee.id ? updatedEmployee : item
+        )
       );
-      setProject(updatedDataList);
+      // const updatedDataList = project.map((item) =>
+      //   item.id === selectedProject.id ? { ...item, ...updatedData } : item
+      // );
+      // setProject(updatedDataList);
     } else {
-      console.log("formData: ", formData);
-
-      // If no selectedProject, create a new one
-      /*todo impleement the backend logic for adding
-
-        // const newProjects = await addProjects(formData);
-        ------------------------------------------
-        this data in project table and should be fetched 
-        it instantly with added project
-      */
       const newProjects = await addProject(formData);
       // const dataWithId = { ...formData, id: nanoid() };
       setProject((prevData) => [...prevData, newProjects]);

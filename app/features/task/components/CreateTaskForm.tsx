@@ -15,7 +15,7 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
   selectedTask,
   setIsOpen,
 }) => {
-  const { addTask, updateTask, tasks, setShowModal } =
+  const { addTask, updateTask, tasks, setShowModal, setTasks } =
     useTaskContext();
   const {
     register,
@@ -35,7 +35,7 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
   // Pre-fill the form when editing a task
   useEffect(() => {
     if (selectedTask) {
-      console.log("Pre-filling form with:", selectedTask);
+      // console.log("Pre-filling form with:", selectedTask);
       reset(selectedTask); // Pre-fill form with selected task data
     }
   }, [selectedTask, reset]);
@@ -43,10 +43,18 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
   const onSubmit = async (formData: Task) => {
     try {
       if (selectedTask) {
-        console.log("selected tasks: ", selectedTask);
+        // console.log("selected tasks: ", selectedTask);
         const updatedTask = { ...formData, id: selectedTask.id };
-        console.log("Updated Task being sent:", updatedTask);
-        await updateTask(updatedTask);
+        // console.log("Updated Task being sent:", updatedTask);
+        // await updateTask(updatedTask);
+        const updatedTasks = await updateTask(updatedTask);
+        // setTasks(updatedTasks);
+
+        setTasks((prevTasks) =>
+          prevTasks.map((task) =>
+            task.id === selectedTask.id ? updatedTask : task
+          )
+        );
         setShowModal(false);
         ToastService.success("Task updated successfully");
       } else {
@@ -57,7 +65,7 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
       reset();
       setIsOpen(false);
     } catch (error) {
-      console.error("Failed to save task:", error);
+      // console.error("Failed to save task:", error);
       ToastService.error("Failed to save task. Please try again.");
     }
   };
