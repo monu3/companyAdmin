@@ -19,18 +19,35 @@ import MainNavbar from "../components/mainNavbar"; // Navbar component
 import CompanyProfile from "../components/companyProfile"; // Company profile dropdown
 import Chat from "../components/chat"; // Chat component
 import LanguageSelect from "../components/languageSelect"; // Language selection component
+import { useLanguage } from "~/features/LanguageTranslation/context/LanguageContext";
+import translations from "~/features/LanguageTranslation/Languagetranslations/navItemTranslation";
 
 // Array of navigation items for the sidebar/menu
-const navItems = [
-  { to: "/", label: "Dashboard", icon: RxDashboard },
-  { to: "/employee", label: "Employee", icon: IoPerson },
-  { to: "/client", label: "Client", icon: BsFillAwardFill },
-  { to: "/projects", label: "Project", icon: VscGitPullRequest },
-  { to: "/tasks", label: "Task", icon: VscChecklist },
-  { to: "/projectReport", label: "Project Report", icon: TbReport },
-];
 
 export function HomePage() {
+  const { language } = useLanguage();
+  const t = translations[language] || translations.EN;
+  const navItems = [
+    { to: "/", label: t.dashboard, icon: RxDashboard },
+    { to: "/employee", label: t.employee, icon: IoPerson },
+    {
+      to: "/client",
+      label: t.client,
+      icon: BsFillAwardFill,
+    },
+    {
+      to: "/projects",
+      label: t.project,
+      icon: VscGitPullRequest,
+    },
+    { to: "/tasks", label: t.task, icon: VscChecklist },
+    {
+      to: "/projectReport",
+      label: t.report,
+      icon: TbReport,
+    },
+  ];
+
   return (
     <>
       {/* Top-right section with language select, chat, and company profile dropdown */}
@@ -44,7 +61,7 @@ export function HomePage() {
       <MainNavbar items={navItems} logo={logo}>
         {/* Dynamic content area where routed components are rendered */}
         <div className="pl-4 pr-4">
-        <Outlet />
+          <Outlet />
         </div>
       </MainNavbar>
     </>

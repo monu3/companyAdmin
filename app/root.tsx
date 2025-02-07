@@ -21,8 +21,9 @@ import { ToastContainer } from "react-toastify";
 import { TaskProvider } from "./features/task/context/TaskContext";
 import TaskPage from "./features/task/pages/taskPage";
 //import { ThemeProvider } from "./common/theme/context/themeContext";
-import {ClientProvider} from "./features/client/context/ClientContext"
+import { ClientProvider } from "./features/client/context/ClientContext";
 import { CompanyProvider } from "./features/profile/context/companyContext";
+import { LanguageProvider } from "./features/LanguageTranslation/context/LanguageContext";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -58,27 +59,29 @@ export function Layout({ children }: { children: React.ReactNode }) {
 const queryClient = new QueryClient();
 export default function App() {
   return (
-    <Provider store={store}>
-      <ToastContainer />
-      <ThemeProvider>
-        <ClientProvider>
-          <CompanyProvider>
-            {/* <TaskProvider> */}
-            <EmployeeProvider>
-              <ProjectContextProvider>
-                <TaskProvider>
-                  <QueryClientProvider client={queryClient}>
-                    <Outlet />
-                  </QueryClientProvider>
-                </TaskProvider>
-              </ProjectContextProvider>
-            </EmployeeProvider>
-          </CompanyProvider>
-        </ClientProvider>
+    <LanguageProvider>
+      <Provider store={store}>
+        <ToastContainer />
+        <ThemeProvider>
+          <ClientProvider>
+            <CompanyProvider>
+              {/* <TaskProvider> */}
+              <EmployeeProvider>
+                <ProjectContextProvider>
+                  <TaskProvider>
+                    <QueryClientProvider client={queryClient}>
+                      <Outlet />
+                    </QueryClientProvider>
+                  </TaskProvider>
+                </ProjectContextProvider>
+              </EmployeeProvider>
+            </CompanyProvider>
+          </ClientProvider>
 
-        {/* </TaskProvider> */}
-      </ThemeProvider>
-    </Provider>
+          {/* </TaskProvider> */}
+        </ThemeProvider>
+      </Provider>
+    </LanguageProvider>
   );
 }
 
