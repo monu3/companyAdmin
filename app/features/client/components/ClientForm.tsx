@@ -77,7 +77,7 @@ selectedClient
             </div>
             <div className="form-control flex flex-col">
               <label>Email</label>
-              <input
+              {selectedClient?<input
                 type="text"
                 {...register("email", {
                   required: "Email is required.",
@@ -86,7 +86,16 @@ selectedClient
                     message: "Email is not valid.",
                   },
                 })}
-              />
+              readOnly />:<input
+                type="text"
+                {...register("email", {
+                  required: "Email is required.",
+                  pattern: {
+                    value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                    message: "Email is not valid.",
+                  },
+                })}
+              />}
               {errors.email && (
                 <p className="errorMsg">{errors.email.message as string}</p>
               )}
