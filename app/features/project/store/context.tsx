@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import type { ProjectContextType, projectDetails } from "../types";
 import ToastService from "~/common/utils/toastService";
 import { fetchProjectDetail } from "../service/fetchProject";
+import { deleteProject } from "../service/deleteProjects";
 
 export const ProjectContext = createContext<ProjectContextType | undefined>(
   undefined
@@ -21,10 +22,12 @@ const ProjectContextProvider = ({
   const [selectedProject, setSelectedProject] = useState<projectDetails | null>(
     null
   ); // Track selected project
-  const handleDelete = (selectedId: number) => {
-    ToastService.success("This is a success message!");
-    console.log("data before delete:", project);
 
+  const handleDelete = async (selectedId: number) => {
+    // console.log("data before delete:", project);
+    await deleteProject(selectedId.toString());
+
+    //removed the deleted project from the state
     const filteredData = project.filter((item) => item.id !== selectedId);
 
     if (filteredData.length === project.length) {
@@ -33,9 +36,9 @@ const ProjectContextProvider = ({
     }
 
     setProject(filteredData);
-
-    console.log("Selected ID:", selectedId);
-    console.log("Data after delete:", filteredData);
+    ToastService.success("Project deleted successfully", 500);
+    // console.log("Selected ID:", selectedId);
+    // console.log("Data after delete:", filteredData);
   };
 
   const handleEdit = (selectedId: number) => {

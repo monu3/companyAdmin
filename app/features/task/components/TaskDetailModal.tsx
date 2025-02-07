@@ -16,7 +16,7 @@ const TaskDetailModal: React.FC<ModalProps> = ({ task, onClose }) => {
     setIsDeleting(true);
     try {
       await removeTask(task.id);
-      ToastService.warning(`Task "${task.title}" has been removed.`);
+      ToastService.warning("Task has been removed", 500);
       onClose(); // Close only if deletion is successful
     } catch (error) {
       console.error("Error deleting task:", error);

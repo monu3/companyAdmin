@@ -13,15 +13,17 @@ export const saveTask = async (task: Task): Promise<any> => {
 
   // If task has an ID, it's likely an update, so use PUT instead of POST
   const method = task.id ? "PUT" : "POST";
-  console.log("method: ", method);
-  console.log("Taks id: ",task.id)
-  const body = task.id ? { ...task } : { task, emailCompany };
-  console.log("body:", body);
-  console.log("tasks service page: ", task);
+  const projectId = task.projectId;
+  console.log("tasks: ", task);
+  // console.log("method: ", method);
+  // console.log("Taks id: ",task.id)
+  const body = task.id ? { ...task } : { task, projectId, emailCompany };
+  // console.log("body:", body);
+  // console.log("tasks service page: ", task);
 
   const endpoint = task.id ? `/tasks/${task.id}` : "/tasks"; // Update URL if ID is provided
 
-  console.log("endpoint: ", endpoint);
+  // console.log("endpoint: ", endpoint);
   return await apiRequest(endpoint, {
     method,
     body,
@@ -46,7 +48,7 @@ export const fetchTasks = async (): Promise<Task[]> => {
 export const updateTaskStatus = async (taskId: string, newStatus: string) => {
   try {
     const taskIdAsNumber = Number(taskId);
-    console.log("status: ", newStatus);
+    // console.log("status: ", newStatus);
     // Make the API request to update the task status in the backend
     const response = await apiRequest(`/tasks/${taskIdAsNumber}/status`, {
       method: "PUT",

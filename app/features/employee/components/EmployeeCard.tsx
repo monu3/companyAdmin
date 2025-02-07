@@ -9,7 +9,7 @@ const EmployeeCard=() => {
   const {employees,updateEmployee,deleteEmployee}=useEmployeeContext();
   return (
     <>
-    <div className="mt-8 flex p-4 flex-wrap gap-4">
+    <div className="mt-8 flex flex-wrap gap-4">
       {employees.map((employee,index)=>(
         <Card key={index} className="p-6 relative group w-[300px]">
         <div className="space-y-4">

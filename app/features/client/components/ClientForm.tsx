@@ -5,12 +5,12 @@ import { AiOutlineClose } from "react-icons/ai";
 import type { Client} from "../types/client";
 import { useClientContext } from "../context/ClientContext";
 import { nanoid } from "nanoid";
-import { addClient } from "../service/clientService";
+import { addClient, editClients } from "../service/clientService";
 
 export const ClientForm = ({
 selectedClient
 }:{selectedClient?:Client | null}) => {
-  const {setIsOpen,setClients,clients}=useClientContext();
+  const {setIsOpen,setClients,setIsLoading}=useClientContext();
   const {
     register,
     handleSubmit,
@@ -27,22 +27,27 @@ selectedClient
   const onSubmit = async(formData: any) => {
     console.log("Form submitted with selectedId:", selectedClient?.id);  // Log the selectedClient ID
     console.log("Form data:", formData);
-  
+  try{
     if (selectedClient) {
       // Update existing client with the new form data
-      const updatedData = { ...formData, id: selectedClient.id };
-  
-      const updatedDataList = clients.map(item =>
-        item.id === selectedClient.id ? { ...item, ...updatedData } : item
+      const updatedClient = await editClients(selectedClient.id, formData);
+     
+      setClients(prevData =>
+        prevData.map(item =>
+          item.id===updatedClient.id ? updatedClient: item
+        )
       );
-      setClients(updatedDataList);
     } else {
       // If no selectedClient, create a new one
       const newClient = await addClient(formData);
+      setIsLoading(true);
       setClients(prevData => [...prevData, newClient]);
     }
   
-    setIsOpen(false);  // Close the modal after saving
+    setIsOpen(false);
+  }catch(error){
+    console.error("Error saving client: ", error);
+  }  // Close the modal after saving
   };
   return (
     <div className="flex justify-center items-center min-h-screen fixed inset-0 bg-black bg-opacity-75 z-50">
@@ -72,7 +77,7 @@ selectedClient
             </div>
             <div className="form-control flex flex-col">
               <label>Email</label>
-              <input
+              {selectedClient?<input
                 type="text"
                 {...register("email", {
                   required: "Email is required.",
@@ -81,53 +86,20 @@ selectedClient
                     message: "Email is not valid.",
                   },
                 })}
-              />
+              readOnly />:<input
+                type="text"
+                {...register("email", {
+                  required: "Email is required.",
+                  pattern: {
+                    value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                    message: "Email is not valid.",
+                  },
+                })}
+              />}
               {errors.email && (
                 <p className="errorMsg">{errors.email.message as string}</p>
               )}
             </div>
-           <div className="form-control flex flex-col">
-              <label>Password</label>
-              <input
-                type="password"
-                {...register("password", {
-                  required: "Password is required.",
-                  minLength: {
-                    value: 6,
-                    message: "Password should be at least 6 characters.",
-                  },
-                })}
-              />
-              {errors.password && (
-                <p className="errorMsg">{errors.password.message as string}</p>
-              )}
-            </div>
-            {/* <div className="form-control flex flex-col">
-              <label>Budget</label>
-              <input
-                type="text"
-                {...register("budget", {
-                  required: "Budget is required.",
-                })}
-              />
-              {errors.budget && (
-                <p className="errorMsg">
-                  {errors.budget.message as string}
-                </p>
-              )}
-            </div> */}
-            {/* <div className="form-control flex flex-col">
-              <label>Project Name</label>
-              <input
-                type="text"
-                {...register("projectName", {
-                  required: "Project is required.",
-                })}
-              />
-              {errors.projectName && (
-                <p className="errorMsg">{errors.projectName.message as string}</p>
-              )}
-            </div> */}
             <div className="form-control flex flex-col">
               <label>Enroll Date</label>
               <input

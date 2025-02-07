@@ -9,14 +9,16 @@ import {
 } from "../Types/types";
 import { useTaskContext } from "../context/TaskContext";
 import ToastService from "~/common/utils/toastService";
+import { useProjectContext } from "~/features/project/store/context";
 
 const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
   onAddTask,
   selectedTask,
   setIsOpen,
 }) => {
-  const { addTask, updateTask, tasks, setShowModal } =
+  const { addTask, updateTask, tasks, setShowModal, setTasks } =
     useTaskContext();
+  const { project } = useProjectContext();
   const {
     register,
     handleSubmit,
@@ -35,7 +37,7 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
   // Pre-fill the form when editing a task
   useEffect(() => {
     if (selectedTask) {
-      console.log("Pre-filling form with:", selectedTask);
+      // console.log("Pre-filling form with:", selectedTask);
       reset(selectedTask); // Pre-fill form with selected task data
     }
   }, [selectedTask, reset]);
@@ -43,21 +45,29 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
   const onSubmit = async (formData: Task) => {
     try {
       if (selectedTask) {
-        console.log("selected tasks: ", selectedTask);
+        // console.log("selected tasks: ", selectedTask);
         const updatedTask = { ...formData, id: selectedTask.id };
-        console.log("Updated Task being sent:", updatedTask);
-        await updateTask(updatedTask);
+        // console.log("Updated Task being sent:", updatedTask);
+        // await updateTask(updatedTask);
+        const updatedTasks = await updateTask(updatedTask);
+        // setTasks(updatedTasks);
+
+        setTasks((prevTasks) =>
+          prevTasks.map((task) =>
+            task.id === selectedTask.id ? updatedTask : task
+          )
+        );
         setShowModal(false);
-        ToastService.success("Task updated successfully");
+        ToastService.success("Task updated successfully", 500);
       } else {
         const newTask = { ...formData };
         await addTask(newTask);
-        ToastService.success("Task added successfully");
+        ToastService.success("Task added successfully", 500);
       }
       reset();
       setIsOpen(false);
     } catch (error) {
-      console.error("Failed to save task:", error);
+      // console.error("Failed to save task:", error);
       ToastService.error("Failed to save task. Please try again.");
     }
   };
@@ -109,6 +119,27 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
             </select>
             {errors.status && (
               <p className="errorMsg text-error">{errors.status.message}</p>
+            )}
+          </div>
+          {/* Project */}
+          <div className="form-control flex flex-col">
+            <label>Project</label>
+            <select
+              id="project"
+              {...register("projectId", {
+                required: "Priority is required.",
+              })}
+              className="h-10 border rounded"
+            >
+              <option value={""}>Select Project</option>
+              {project.map((option: any) => (
+                <option key={option.id} value={option.id}>
+                  {option.title}
+                </option>
+              ))}
+            </select>
+            {errors.projectId && (
+              <p className="errorMsg text-error">{errors.projectId.message}</p>
             )}
           </div>
 

@@ -28,3 +28,29 @@ export const fetchClients= async (): Promise<Client[]> =>{
         throw error;
     }
 }
+
+export const deleteClients= async (id: string):Promise<void> =>{
+    try{
+        await  apiRequest(`/client/${id}`,{
+            method: "DELETE"
+        });
+    }catch(error){
+        console.error(`Error deleting clients with ID: ${id}`,error);
+        throw error;
+    }
+}
+
+export const editClients= async (
+    id:string,
+    updatedClient: Partial<Client>
+):Promise<Client> => {
+    try{
+        return await apiRequest(`/clients/${id}`,{
+            method: "PUT",
+            body: updatedClient
+        });
+    }catch(error){
+        console.error(`Error updating client with ID ${id}`, error);
+        throw error;
+    }
+}
