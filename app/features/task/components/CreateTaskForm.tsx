@@ -9,6 +9,7 @@ import {
 } from "../Types/types";
 import { useTaskContext } from "../context/TaskContext";
 import ToastService from "~/common/utils/toastService";
+import { useProjectContext } from "~/features/project/store/context";
 
 const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
   onAddTask,
@@ -17,6 +18,7 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
 }) => {
   const { addTask, updateTask, tasks, setShowModal, setTasks } =
     useTaskContext();
+  const { project } = useProjectContext();
   const {
     register,
     handleSubmit,
@@ -56,11 +58,11 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
           )
         );
         setShowModal(false);
-        ToastService.success("Task updated successfully",500);
+        ToastService.success("Task updated successfully", 500);
       } else {
         const newTask = { ...formData };
         await addTask(newTask);
-        ToastService.success("Task added successfully",500);
+        ToastService.success("Task added successfully", 500);
       }
       reset();
       setIsOpen(false);
@@ -117,6 +119,27 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
             </select>
             {errors.status && (
               <p className="errorMsg text-error">{errors.status.message}</p>
+            )}
+          </div>
+          {/* Project */}
+          <div className="form-control flex flex-col">
+            <label>Project</label>
+            <select
+              id="project"
+              {...register("projectId", {
+                required: "Priority is required.",
+              })}
+              className="h-10 border rounded"
+            >
+              <option value={""}>Select Project</option>
+              {project.map((option: any) => (
+                <option key={option.id} value={option.id}>
+                  {option.title}
+                </option>
+              ))}
+            </select>
+            {errors.projectId && (
+              <p className="errorMsg text-error">{errors.projectId.message}</p>
             )}
           </div>
 
