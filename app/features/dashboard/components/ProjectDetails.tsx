@@ -79,11 +79,11 @@ const ProjectDetails = () => {
   return (
     <div className="py-2 rounded-lg">
       <h2 className="text-xl font-bold mb-3">Project Details</h2>
-      <div className="grid grid-cols-6 gap-4">
+      <div className="grid xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4">
         {projectDetail.map((detail, index) => (
           <div
             key={index}
-            className={`flex items-center gap-2 bg-gray-100 p-3 rounded-md ${detail.bgColor}`}
+            className={`flex items-center justify-center gap-2 bg-gray-100 p-3 rounded-md ${detail.bgColor}`}
           >
             <div className="text-4xl">{detail.icon}</div>
             <div className="text-center">
