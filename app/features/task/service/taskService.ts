@@ -13,9 +13,11 @@ export const saveTask = async (task: Task): Promise<any> => {
 
   // If task has an ID, it's likely an update, so use PUT instead of POST
   const method = task.id ? "PUT" : "POST";
+  const projectId = task.projectId;
+  console.log("tasks: ", task);
   // console.log("method: ", method);
   // console.log("Taks id: ",task.id)
-  const body = task.id ? { ...task } : { task, emailCompany };
+  const body = task.id ? { ...task } : { task, projectId, emailCompany };
   // console.log("body:", body);
   // console.log("tasks service page: ", task);
 
