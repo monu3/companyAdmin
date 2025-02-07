@@ -48,7 +48,7 @@ const TaskLineChart = () => {
   } satisfies ChartConfig;
 
   return (
-    <Card className="w-1/2">
+    <Card className="lg:w-1/2">
       <CardHeader>
         <CardTitle>Tasks by Month</CardTitle>
         <CardDescription>Overview of tasks from January - December</CardDescription>
