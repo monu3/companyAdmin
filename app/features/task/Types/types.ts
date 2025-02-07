@@ -17,6 +17,7 @@ export interface Task {
   status: string; // Current status of the task (e.g., To-Do, In Progress)
   priority: string; // Priority level of the task (e.g., High, Medium, Low)
   dueDate: string; // Due date for the task in YYYY-MM-DD format
+  projectId: number;
 }
 
 export enum TaskStatus {
