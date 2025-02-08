@@ -33,15 +33,15 @@ const LanguageSelect = () => {
     <DropdownMenu>
       <DropdownMenuTrigger className="bg-transparent p-0 border-none">
         <div className="flex items-center gap-2 cursor-pointer">
-          <FaGlobe className="text-xl dark:text-text" />
-          <span className="dark:text-text">{language}</span>
+          <FaGlobe className="text-xl text-gray-700 dark:text-gray-300" />
+          <span className="text-gray-700 dark:text-gray-300">{language}</span>
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-40 bg-white shadow-lg p-1">
+      <DropdownMenuContent className="w-40 bg-white dark:bg-gray-800 shadow-lg p-1 rounded-md border dark:border-gray-600">
         {languages.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
-            className="cursor-pointer hover:bg-blue-100 rounded px-2 py-1"
+            className="cursor-pointer px-2 py-1 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-200 rounded"
             onClick={() => setLanguage(lang.code)}
           >
             {lang.label}
