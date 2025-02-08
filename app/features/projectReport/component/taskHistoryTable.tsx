@@ -1,24 +1,29 @@
 import React from "react";
 import type { TaskHistoryProps } from "../types/taksHistory";
+import { useLanguage } from "~/features/LanguageTranslation/context/LanguageContext";
+import translations from "../language/taskHistoryTableTranslation";
 
 const TaskHistory: React.FC<TaskHistoryProps> = ({ filteredTasks }) => {
+  const { language } = useLanguage();
+  const t = translations[language]; // Get translations for the current language
+
   return (
     <div className="overflow-x-auto mt-4">
       {filteredTasks.length === 0 ? (
         <div className="text-muted-foreground text-center border border-border rounded-lg p-5">
-          No history available for this time range.
+          {t.noHistory}
         </div>
       ) : (
         <div className="rounded-lg border border-border shadow-md">
           <table className="w-full">
             <thead className="bg-muted text-muted-foreground">
               <tr>
-                <th className="border px-4 py-2">Task</th>
-                <th className="border px-4 py-2">Action</th>
-                <th className="border px-4 py-2">Updated Field</th>
-                <th className="border px-4 py-2">Old Value</th>
-                <th className="border px-4 py-2">New Value</th>
-                <th className="border px-4 py-2">Timestamp</th>
+                <th className="border px-4 py-2">{t.task}</th>
+                <th className="border px-4 py-2">{t.action}</th>
+                <th className="border px-4 py-2">{t.updatedField}</th>
+                <th className="border px-4 py-2">{t.oldValue}</th>
+                <th className="border px-4 py-2">{t.newValue}</th>
+                <th className="border px-4 py-2">{t.timestamp}</th>
               </tr>
             </thead>
             <tbody>

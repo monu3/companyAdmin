@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTaskHistory } from "../context/taskHistoryContext";
 import TaskHistoryTimeFilter from "../component/taskHistoryTimeFilter";
-import TaskHistory from "../component/taskHistoryComponent";
+import TaskHistory from "../component/taskHistoryTable";
 import TaskHistoryFilterForm from "../component/taksHistoryFilterForm";
 
 const TaskHistoryPage: React.FC = () => {
