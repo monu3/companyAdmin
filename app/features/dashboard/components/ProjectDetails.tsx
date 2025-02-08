@@ -5,9 +5,13 @@ import { MdOutlinePending } from "react-icons/md";
 import { IoMdAlarm } from "react-icons/io";
 import { MdOutlineHourglassTop } from "react-icons/md";
 import { GiProgression } from "react-icons/gi";
+import { useLanguage } from "~/features/LanguageTranslation/context/LanguageContext";
+import translations from "~/features/LanguageTranslation/Languagetranslations/dashBoard/projectDisplayDashboard";
 
 const ProjectDetails = () => {
-  const { project } = useProjectContext(); 
+  const { language } = useLanguage();
+  const t = translations[language]; // Get translations for the current language
+  const { project } = useProjectContext();
   const [countPending, setCountPending] = useState(0);
   const [countProgress, setCountProgress] = useState(0);
   const [countCompleted, setCountCompleted] = useState(0);
@@ -40,37 +44,37 @@ const ProjectDetails = () => {
   const projectDetail = [
     {
       icon: <CiCircleCheck />,
-      label: "Total Projects",
+      label: t.totalProjects,
       count: project.length || 0,
       bgColor: "bg-gradient-to-r from-blue-200 to-blue-300",
     },
     {
       icon: <MdOutlinePending />,
-      label: "Pending",
+      label: t.pending,
       count: countPending,
       bgColor: "bg-gradient-to-r from-teal-200 to-teal-300",
     },
     {
       icon: <IoMdAlarm />,
-      label: "Started",
+      label: t.started,
       count: countStarted,
       bgColor: "bg-gradient-to-r from-red-200 to-red-300",
     },
     {
       icon: <MdOutlineHourglassTop />,
-      label: "Not started",
+      label: t.notStarted,
       count: countNotStarted,
       bgColor: "bg-gradient-to-r from-orange-200 to-orange-300",
     },
     {
       icon: <GiProgression />,
-      label: "In Progress",
+      label: t.inProgress,
       count: countProgress,
       bgColor: "bg-gradient-to-r from-purple-200 to-purple-300",
     },
     {
       icon: <CiCircleCheck />,
-      label: "Completed",
+      label: t.completed,
       count: countCompleted,
       bgColor: "bg-gradient-to-r from-green-200 to-green-300",
     },
@@ -78,7 +82,7 @@ const ProjectDetails = () => {
 
   return (
     <div className="py-2 rounded-lg">
-      <h2 className="text-xl font-bold mb-3">Project Details</h2>
+      <h2 className="text-xl font-bold mb-3">{t.projectDetails}</h2>
       <div className="grid xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4">
         {projectDetail.map((detail, index) => (
           <div

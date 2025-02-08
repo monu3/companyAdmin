@@ -20,7 +20,7 @@ import CompanyProfile from "../components/companyProfile"; // Company profile dr
 import Chat from "../components/chat"; // Chat component
 import LanguageSelect from "../components/languageSelect"; // Language selection component
 import { useLanguage } from "~/features/LanguageTranslation/context/LanguageContext";
-import translations from "~/features/LanguageTranslation/Languagetranslations/navItemTranslation";
+import translations from "~/features/LanguageTranslation/Languagetranslations/navItem/navItemTranslation";
 
 // Array of navigation items for the sidebar/menu
 
