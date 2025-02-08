@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import type { TaskHistoryFilterFormProps } from "../types/taksHistory";
+import { useLanguage } from "~/features/LanguageTranslation/context/LanguageContext";
+import translations from "../language/filterFormTranslation";
 
 const TaskHistoryFilterForm: React.FC<TaskHistoryFilterFormProps> = ({
   onFilter,
   onReset,
 }) => {
   const [filters, setFilters] = useState({ title: "", status: "" });
+  const { language } = useLanguage();
+  const t = translations[language]; // Get translations for the current language
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -25,7 +29,7 @@ const TaskHistoryFilterForm: React.FC<TaskHistoryFilterFormProps> = ({
         <input
           type="text"
           name="title"
-          placeholder="Search by title..."
+          placeholder={t.searchTitle}
           value={filters.title}
           onChange={handleInputChange}
           className="w-full p-2 border border-border rounded-md"
@@ -38,10 +42,10 @@ const TaskHistoryFilterForm: React.FC<TaskHistoryFilterFormProps> = ({
           onChange={handleInputChange}
           className="w-full md:w-1/3 p-2 border border-border rounded-md"
         >
-          <option value="">All Status</option>
-          <option value="CREATED">Created</option>
-          <option value="UPDATED">Updated</option>
-          <option value="DELETED">Deleted</option>
+          <option value="">{t.allStatus}</option>
+          <option value="CREATED">{t.created}</option>
+          <option value="UPDATED">{t.updated}</option>
+          <option value="DELETED">{t.deleted}</option>
         </select>
 
         {/* 🔹 Buttons */}
@@ -50,14 +54,14 @@ const TaskHistoryFilterForm: React.FC<TaskHistoryFilterFormProps> = ({
             type="submit"
             className="px-4 py-2 brounded-md hover:bg-gray-500 transition"
           >
-            Apply
+            {t.apply}
           </button>
           <button
             type="button"
             onClick={onReset}
             className="px-4 py-2  rounded-md hover:bg-gray-500 transition"
           >
-            Reset
+            {t.reset}
           </button>
         </div>
       </div>
