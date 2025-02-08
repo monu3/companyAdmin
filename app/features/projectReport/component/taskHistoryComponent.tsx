@@ -9,8 +9,8 @@ const TaskHistory: React.FC<TaskHistoryProps> = ({ filteredTasks }) => {
           No history available for this time range.
         </div>
       ) : (
-        <div className="rounded-lg overflow-hidden border border-border shadow-md">
-          <table className="w-full border-collapse">
+        <div className="rounded-lg border border-border shadow-md">
+          <table className="w-full">
             <thead className="bg-muted text-muted-foreground">
               <tr>
                 <th className="border px-4 py-2">Task</th>
