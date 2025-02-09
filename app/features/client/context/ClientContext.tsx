@@ -1,40 +1,45 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import type {ClientContextProps,Client } from '../types/client';
-import { deleteClients, fetchClients } from '../service/clientService';
-import { useProjectContext } from '~/features/project/store/context';
-
-
+import React, { createContext, useContext, useState, useEffect } from "react";
+import type { ClientContextProps, Client } from "../types/client";
+import { deleteClients, fetchClients } from "../service/clientService";
+import { useProjectContext } from "~/features/project/store/context";
+import { useTaskContext } from "~/features/task/context/TaskContext";
+import { useTaskHistory } from "~/features/projectReport/context/taskHistoryContext";
 
 const ClientContext = createContext<ClientContextProps | undefined>(undefined);
 
-export const ClientProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const defaultClientDetails:Client[]=[];
+export const ClientProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const defaultClientDetails: Client[] = [];
   const [clients, setClients] = useState<Client[]>(defaultClientDetails);
-  const [selectedClient,setSelectedClient]=useState<Client|null>(null);
+  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [view, setView] = useState<"table" | "card">("table");
-  const {refreshProject}=useProjectContext();
+  const { refreshProject } = useProjectContext();
+  const { refreshTaskHistory } = useTaskHistory();
+  const { refreshTasks } = useTaskContext();
 
-  
   const updateClient = (selectedId: string) => {
     // Find the empolyee you want to edit based on the selectedId
-    const clientToEdit = clients.find(item => item.id === selectedId);
-    
+    const clientToEdit = clients.find((item) => item.id === selectedId);
+
     // If employee is found, set it as selectedEmployee and open the modal for editing
     if (clientToEdit) {
       setSelectedClient(clientToEdit);
-      setIsOpen(true);  // Open the form for editing
+      setIsOpen(true); // Open the form for editing
     }
   };
 
-  const deleteClient = async(id: string) => {
-    try{
+  const deleteClient = async (id: string) => {
+    try {
       await deleteClients(id);
-      setClients(prev => prev.filter(clients =>clients.id!==id));
+      setClients((prev) => prev.filter((clients) => clients.id !== id));
       refreshProject();
-    }catch(error){
-      console.error(`Error deleting client with ID:${id} `,error);
+      refreshTasks();
+      refreshTaskHistory();
+    } catch (error) {
+      console.error(`Error deleting client with ID:${id} `, error);
     }
   };
   // useEffect(() => {
@@ -43,26 +48,41 @@ export const ClientProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   //   }
   // }, [clients]);
 
-useEffect(() => { 
-  const fetchAndSetClients=async () =>  {
-  if (typeof window !== "undefined") {
-    // Ensure localStorage is accessed only in the browser
-    // const storedData
-    const storedData=await fetchClients();
-    if (storedData) {
-      try {
-        setClients(storedData);
-      } catch (error) {
-        console.error("Failed to fetch clients:", error);
+  useEffect(() => {
+    const fetchAndSetClients = async () => {
+      if (typeof window !== "undefined") {
+        // Ensure localStorage is accessed only in the browser
+        // const storedData
+        const storedData = await fetchClients();
+        if (storedData) {
+          try {
+            setClients(storedData);
+          } catch (error) {
+            console.error("Failed to fetch clients:", error);
+          }
+        }
       }
-    }
-  }
-};
-fetchAndSetClients();
-}, []);
+    };
+    fetchAndSetClients();
+  }, []);
 
   return (
-    <ClientContext.Provider value={{ clients, setClients,isOpen,setIsOpen,view,setView, updateClient, deleteClient,selectedClient,setSelectedClient,isLoading,setIsLoading }}>
+    <ClientContext.Provider
+      value={{
+        clients,
+        setClients,
+        isOpen,
+        setIsOpen,
+        view,
+        setView,
+        updateClient,
+        deleteClient,
+        selectedClient,
+        setSelectedClient,
+        isLoading,
+        setIsLoading,
+      }}
+    >
       {children}
     </ClientContext.Provider>
   );
@@ -70,6 +90,9 @@ fetchAndSetClients();
 
 export const useClientContext = () => {
   const context = useContext(ClientContext);
-  if (!context) throw new Error('useEmployeeContext must be used within an EmployeeProvider');
+  if (!context)
+    throw new Error(
+      "useEmployeeContext must be used within an EmployeeProvider"
+    );
   return context;
 };
