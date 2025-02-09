@@ -116,4 +116,5 @@ export interface TaskContextType {
   moveTask: (taskId: string, newStatus: string) => Promise<void>;
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  refreshTasks:()=>void
 }

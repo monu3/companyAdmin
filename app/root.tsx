@@ -69,13 +69,13 @@ export default function App() {
             <TaskHistoryProvider>
               <EmployeeProvider>
                 <ProjectContextProvider>
-                  <ClientProvider>
-                    <TaskProvider>
+                  <TaskProvider>
+                    <ClientProvider>
                       <QueryClientProvider client={queryClient}>
                         <Outlet />
                       </QueryClientProvider>
-                    </TaskProvider>
-                  </ClientProvider>
+                    </ClientProvider>
+                  </TaskProvider>
                 </ProjectContextProvider>
               </EmployeeProvider>
             </TaskHistoryProvider>
