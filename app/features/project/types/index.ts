@@ -10,7 +10,8 @@ export interface ProjectContextType {
   selectedProject: projectDetails | null;
   setSelectedProject: React.Dispatch<
     React.SetStateAction<projectDetails | null>
-  >;
+    >;
+  refreshProject:() => void;
 }
 
 export interface projectDetails {
