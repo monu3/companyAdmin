@@ -5,6 +5,7 @@ import {fetchEmployees} from '../service/fetchEmployees';
 import {deleteEmployeeService} from '../service/deleteEmployeeService';
 
 
+
 const EmployeeContext = createContext<EmployeeContextProps | undefined>(undefined);
 
 export const EmployeeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -13,6 +14,8 @@ export const EmployeeProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [selectedEmployee,setSelectedEmployee]=useState<Employee|null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [view, setView] = useState<"table" | "card">("table");
+  
+
   const updateEmployee = (selectedId: string) => {
     // Find the empolyee you want to edit based on the selectedId
     const employeeToEdit = employees.find(item => item.id === selectedId);

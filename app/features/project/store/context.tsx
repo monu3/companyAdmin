@@ -52,23 +52,24 @@ const ProjectContextProvider = ({
     }
   };
 
-  useEffect(() => {
-    if (typeof window !== "undefined" && project.length > 0) {
-      localStorage.setItem("data", JSON.stringify(project));
-    }
-  }, [project]);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined" && project.length > 0) {
+  //     localStorage.setItem("data", JSON.stringify(project));
+  //   }
+  // }, [project]);
 
+  const fetchProject = async () => {
+    try {
+      const storedData = await fetchProjectDetail();
+      setProject(storedData);
+      // if (storedData) {
+      //   setProject(storedData);
+      // }
+    } catch (error) {
+      console.error("Failed to fetch project:", error);
+    }
+  };
   useEffect(() => {
-    const fetchProject = async () => {
-      try {
-        const storedData = await fetchProjectDetail();
-        if (storedData) {
-          setProject(storedData);
-        }
-      } catch (error) {
-        console.error("Failed to fetch project:", error);
-      }
-    };
     fetchProject();
   }, []);
 
@@ -85,6 +86,7 @@ const ProjectContextProvider = ({
         handleDelete,
         handleEdit,
         setSelectedProject,
+        refreshProject: fetchProject,
       }}
     >
       {children}

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import type {ClientContextProps,Client } from '../types/client';
 import { deleteClients, fetchClients } from '../service/clientService';
+import { useProjectContext } from '~/features/project/store/context';
 
 
 
@@ -13,6 +14,9 @@ export const ClientProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [view, setView] = useState<"table" | "card">("table");
+  const {refreshProject}=useProjectContext();
+
+  
   const updateClient = (selectedId: string) => {
     // Find the empolyee you want to edit based on the selectedId
     const clientToEdit = clients.find(item => item.id === selectedId);
@@ -28,15 +32,16 @@ export const ClientProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     try{
       await deleteClients(id);
       setClients(prev => prev.filter(clients =>clients.id!==id));
+      refreshProject();
     }catch(error){
       console.error(`Error deleting client with ID:${id} `,error);
     }
   };
-  useEffect(() => {
-    if (typeof window !== "undefined" && clients.length > 0) {
-      localStorage.setItem("clients", JSON.stringify(clients));
-    }
-  }, [clients]);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined" && clients.length > 0) {
+  //     localStorage.setItem("clients", JSON.stringify(clients));
+  //   }
+  // }, [clients]);
 
 useEffect(() => { 
   const fetchAndSetClients=async () =>  {
