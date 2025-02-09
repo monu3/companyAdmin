@@ -32,7 +32,7 @@ export function EmployeeDetails() {
     { employee: "employee", count: employees.length, fill: "var(--color-employee)" },
   ]
   return (
-    <Card className="flex sm:flex-col lg:w-1/4">
+    <Card className="flex flex-col lg:w-1/4 w-full">
       <CardHeader className="items-center pb-0">
         <CardTitle>Total Employees</CardTitle>
       </CardHeader>

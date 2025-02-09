@@ -11,9 +11,9 @@ export function WelcomeMessage() {
   const t = translations[language]; // Get translations for the current language
 
   return (
-    <div className="flex sm:flex-col lg:flex-row gap-2 items-center justify-center">
-      <Card className="lg:w-3/4 h-fit">
-        <div className="flex sm:flex-col lg:flex-row items-center justify-center">
+    <div className="flex flex-col lg:flex-row gap-2 items-center">
+      <Card className="w-full lg:w-3/4 h-fit">
+        <div className="flex flex-col lg:flex-row items-center justify-between">
           <div>
             <p className="text-2xl tracking-tight text-gray-900 dark:text-white">
               {t.welcome}
