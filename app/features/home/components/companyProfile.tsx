@@ -24,7 +24,7 @@ const CompanyProfile = () => {
     <DropdownMenu>
       {/* Trigger button for opening the dropdown menu */}
       <DropdownMenuTrigger className="bg-transparent p-0 border-none">
-        <Avatar className="inline-block size-6 items-center">
+        <Avatar className="inline-block size-6 items-center cursor-pointer">
           <AvatarImage src="https://github.com/shadcn.png" />{" "}
           {/* Profile picture */}
           <AvatarFallback>C</AvatarFallback> {/* Fallback avatar */}
@@ -32,7 +32,7 @@ const CompanyProfile = () => {
       </DropdownMenuTrigger>
 
       {/* Dropdown menu content */}
-      <DropdownMenuContent className="w-48">
+      <DropdownMenuContent className="w-30">
         <DropdownMenuSeparator /> {/* Visual separator */}
         <DropdownMenuItem>
           <Link to="/profile">Profile</Link>
