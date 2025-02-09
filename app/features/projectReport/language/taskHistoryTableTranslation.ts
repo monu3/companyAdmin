@@ -7,6 +7,7 @@ const translations: Record<string, Record<string, string>> = {
     newValue: "New Value",
     timestamp: "Timestamp",
     noHistory: "No history available for this time range.",
+    taskHistory: "Task History",
   },
   NP: {
     task: "कार्य",
@@ -16,6 +17,7 @@ const translations: Record<string, Record<string, string>> = {
     newValue: "नयाँ मान",
     timestamp: "समय छाप",
     noHistory: "यो समय अवधिको लागि कुनै इतिहास उपलब्ध छैन।",
+    taskHistory: "कार्य इतिहास",
   },
   ES: {
     task: "Tarea",
@@ -25,6 +27,7 @@ const translations: Record<string, Record<string, string>> = {
     newValue: "Valor nuevo",
     timestamp: "Marca de tiempo",
     noHistory: "No hay historial disponible para este rango de tiempo.",
+    taskHistory: "Historial de tareas",
   },
   FR: {
     task: "Tâche",
@@ -34,6 +37,7 @@ const translations: Record<string, Record<string, string>> = {
     newValue: "Nouvelle valeur",
     timestamp: "Horodatage",
     noHistory: "Aucun historique disponible pour cette période.",
+    taskHistory: "Historial de tareas",
   },
   DE: {
     task: "Aufgabe",
@@ -43,6 +47,7 @@ const translations: Record<string, Record<string, string>> = {
     newValue: "Neuer Wert",
     timestamp: "Zeitstempel",
     noHistory: "Kein Verlauf für diesen Zeitraum verfügbar.",
+    taskHistory: "Aufgabenverlauf",
   },
   HI: {
     task: "कार्य",
@@ -52,6 +57,7 @@ const translations: Record<string, Record<string, string>> = {
     newValue: "नया मान",
     timestamp: "समय-मुद्रा",
     noHistory: "इस समय सीमा के लिए कोई इतिहास उपलब्ध नहीं है।",
+    taskHistory: "कार्य इतिहास",
   },
   CN: {
     task: "任务",
@@ -61,6 +67,7 @@ const translations: Record<string, Record<string, string>> = {
     newValue: "新值",
     timestamp: "时间戳",
     noHistory: "此时间范围内无可用历史记录。",
+    taskHistory: "任务历史",
   },
   JA: {
     task: "タスク",
@@ -70,6 +77,7 @@ const translations: Record<string, Record<string, string>> = {
     newValue: "新値",
     timestamp: "タイムスタンプ",
     noHistory: "この期間の履歴は利用できません。",
+    taskHistory: "タスク履歴",
   },
   IT: {
     task: "Compito",
@@ -79,6 +87,7 @@ const translations: Record<string, Record<string, string>> = {
     newValue: "Nuovo valore",
     timestamp: "Timestamp",
     noHistory: "Nessuna cronologia disponibile per questo intervallo di tempo.",
+    taskHistory: "Cronologia attività",
   },
   PT: {
     task: "Tarefa",
@@ -88,6 +97,7 @@ const translations: Record<string, Record<string, string>> = {
     newValue: "Novo valor",
     timestamp: "Carimbo de data/hora",
     noHistory: "Nenhum histórico disponível para este intervalo de tempo.",
+    taskHistory: "Histórico de tarefas",
   },
   RU: {
     task: "Задача",
@@ -97,6 +107,7 @@ const translations: Record<string, Record<string, string>> = {
     newValue: "Новое значение",
     timestamp: "Отметка времени",
     noHistory: "Нет доступной истории для этого периода.",
+    taskHistory: "История задач",
   },
   AR: {
     task: "المهمة",
@@ -106,6 +117,7 @@ const translations: Record<string, Record<string, string>> = {
     newValue: "القيمة الجديدة",
     timestamp: "الطابع الزمني",
     noHistory: "لا يوجد سجل متاح لهذا النطاق الزمني.",
+    taskHistory: "سجل المهام",
   },
   KO: {
     task: "작업",
@@ -115,6 +127,7 @@ const translations: Record<string, Record<string, string>> = {
     newValue: "새로운 값",
     timestamp: "타임스탬프",
     noHistory: "이 시간 범위에 대한 사용 가능한 기록이 없습니다.",
+    taskHistory: "작업 기록",
   },
   TR: {
     task: "Görev",
@@ -124,6 +137,7 @@ const translations: Record<string, Record<string, string>> = {
     newValue: "Yeni Değer",
     timestamp: "Zaman Damgası",
     noHistory: "Bu zaman aralığı için mevcut bir geçmiş yok.",
+    taskHistory: "Görev Geçmişi",
   },
   VI: {
     task: "Nhiệm vụ",
@@ -133,6 +147,7 @@ const translations: Record<string, Record<string, string>> = {
     newValue: "Giá trị mới",
     timestamp: "Dấu thời gian",
     noHistory: "Không có lịch sử nào có sẵn cho khoảng thời gian này.",
+    taskHistory: "Lịch sử nhiệm vụ",
   },
 };
 

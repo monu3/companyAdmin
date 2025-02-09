@@ -101,6 +101,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
         moveTask,
         showModal,
         setShowModal,
+        refreshTasks: loadTasks,
       }}
     >
       {children}

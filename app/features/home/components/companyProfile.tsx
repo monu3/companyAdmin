@@ -25,7 +25,7 @@ const CompanyProfile = () => {
       {/* Trigger button for opening the dropdown menu */}
       <DropdownMenuTrigger className="bg-transparent p-0 border-none">
         <Avatar className="inline-block size-6 items-center cursor-pointer">
-          <AvatarImage src="https://github.com/shadcn.png" />{" "}
+          <AvatarImage src="https://i.pravatar.cc/150?img=3" />{" "}
           {/* Profile picture */}
           <AvatarFallback>C</AvatarFallback> {/* Fallback avatar */}
         </Avatar>

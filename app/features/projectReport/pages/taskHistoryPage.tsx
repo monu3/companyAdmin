@@ -3,10 +3,15 @@ import { useTaskHistory } from "../context/taskHistoryContext";
 import TaskHistoryTimeFilter from "../component/taskHistoryTimeFilter";
 import TaskHistory from "../component/taskHistoryTable";
 import TaskHistoryFilterForm from "../component/taksHistoryFilterForm";
+import { useLanguage } from "~/features/LanguageTranslation/context/LanguageContext";
+import translations from "../language/taskHistoryTableTranslation";
 
 const TaskHistoryPage: React.FC = () => {
   const { taskHistory, loading, error } = useTaskHistory();
   const [filteredTasks, setFilteredTasks] = useState(taskHistory);
+
+  const { language } = useLanguage();
+  const t = translations[language]; // Get translations for the current language
 
   useEffect(() => {
     setFilteredTasks(taskHistory);
@@ -81,7 +86,9 @@ const TaskHistoryPage: React.FC = () => {
 
   return (
     <div className="max-w-5xl mx-auto p-6 bg-card text-card-foreground shadow-lg rounded-lg transition-colors duration-300">
-      <h2 className="text-2xl font-semibold text-center mb-4">Task History</h2>
+      <h2 className="text-2xl font-semibold text-center mb-4">
+        {t.taskHistory}
+      </h2>
 
       <TaskHistoryTimeFilter onFilterChange={handleTimeFilterChange} />
       <TaskHistoryFilterForm onFilter={handleFilter} onReset={handleReset} />

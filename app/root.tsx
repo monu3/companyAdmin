@@ -64,22 +64,22 @@ export default function App() {
       <Provider store={store}>
         <ToastContainer />
         <ThemeProvider>
-          <ClientProvider>
-            <CompanyProvider>
-              {/* <TaskProvider> */}
-              <TaskHistoryProvider>
-                <EmployeeProvider>
-                  <ProjectContextProvider>
-                    <TaskProvider>
+          <CompanyProvider>
+            {/* <TaskProvider> */}
+            <TaskHistoryProvider>
+              <EmployeeProvider>
+                <ProjectContextProvider>
+                  <TaskProvider>
+                    <ClientProvider>
                       <QueryClientProvider client={queryClient}>
                         <Outlet />
                       </QueryClientProvider>
-                    </TaskProvider>
-                  </ProjectContextProvider>
-                </EmployeeProvider>
-              </TaskHistoryProvider>
-            </CompanyProvider>
-          </ClientProvider>
+                    </ClientProvider>
+                  </TaskProvider>
+                </ProjectContextProvider>
+              </EmployeeProvider>
+            </TaskHistoryProvider>
+          </CompanyProvider>
 
           {/* </TaskProvider> */}
         </ThemeProvider>
