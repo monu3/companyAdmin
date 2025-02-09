@@ -24,6 +24,7 @@ import TaskPage from "./features/task/pages/taskPage";
 import { ClientProvider } from "./features/client/context/ClientContext";
 import { CompanyProvider } from "./features/profile/context/companyContext";
 import { LanguageProvider } from "./features/LanguageTranslation/context/LanguageContext";
+import { TaskHistoryProvider } from "./features/projectReport/context/taskHistoryContext";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -66,15 +67,17 @@ export default function App() {
           <ClientProvider>
             <CompanyProvider>
               {/* <TaskProvider> */}
-              <EmployeeProvider>
-                <ProjectContextProvider>
-                  <TaskProvider>
-                    <QueryClientProvider client={queryClient}>
-                      <Outlet />
-                    </QueryClientProvider>
-                  </TaskProvider>
-                </ProjectContextProvider>
-              </EmployeeProvider>
+              <TaskHistoryProvider>
+                <EmployeeProvider>
+                  <ProjectContextProvider>
+                    <TaskProvider>
+                      <QueryClientProvider client={queryClient}>
+                        <Outlet />
+                      </QueryClientProvider>
+                    </TaskProvider>
+                  </ProjectContextProvider>
+                </EmployeeProvider>
+              </TaskHistoryProvider>
             </CompanyProvider>
           </ClientProvider>
 

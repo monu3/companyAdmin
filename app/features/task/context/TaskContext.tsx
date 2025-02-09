@@ -14,6 +14,7 @@ import {
   deleteTask,
   updateTaskStatus,
 } from "../service/taskService";
+import { useTaskHistory } from "~/features/projectReport/context/taskHistoryContext";
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
 
@@ -23,6 +24,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const { refreshTaskHistory } = useTaskHistory();
 
   const loadTasks = async () => {
     try {
@@ -39,6 +41,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
     try {
       const newTask = await saveTask(task);
       setTasks((prevTasks) => [...prevTasks, newTask]);
+      refreshTaskHistory();
     } catch (error) {
       console.error("Error adding task:", error);
     }
@@ -52,6 +55,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
       setTasks((prevTasks) =>
         prevTasks.map((t) => (t.id === updatedTask.id ? updatedTask : t))
       );
+      refreshTaskHistory();
     } catch (error) {
       console.error("Error updating task:", error);
     }
@@ -61,6 +65,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
     try {
       await deleteTask(taskId);
       setTasks((prevTasks) => prevTasks.filter((t) => t.id !== taskId));
+      refreshTaskHistory();
     } catch (error) {
       console.error("Error deleting task:", error);
     }
@@ -74,6 +79,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
           t.id === taskId ? { ...t, status: newStatus } : t
         )
       );
+      refreshTaskHistory();
     } catch (error) {
       console.error("Error moving task:", error);
     }
