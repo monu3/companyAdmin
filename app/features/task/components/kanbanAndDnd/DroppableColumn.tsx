@@ -19,8 +19,8 @@ export const DroppableColumn: React.FC<DroppableColumnProps> = ({
         data-droppable="true" // Helps in collision detection
         className={`p-4 min-h-[100px] rounded-lg transition-colors flex flex-col space-y-2 ${
           isDropTarget || isOver
-            ? "bg-gray-200 ring-2 ring-blue-500 ring-opacity-50"
-            : "bg-gray-100"
+            ? "bg-[--color-card] ring-2 ring-blue-500 ring-opacity-50"
+            : "bg-[--color-card]"
         }`}
       >
         {/* Ensure the column remains a valid drop zone even when empty */}

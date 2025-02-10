@@ -135,14 +135,14 @@ const KanbanBoard: React.FC = () => {
 
       <DragOverlay>
         {activeTask ? (
-          <Card className="shadow-xl rotate-3 bg-white w-72 break-words">
+          <Card className="shadow-xl rotate-3 bg-[--new] text-[--new-text] w-72 break-words">
             <CardContent className="p-4">
               <div className="flex items-center justify-between mb-2">
                 <Badge className={getPriorityColor(activeTask.priority)}>
                   {activeTask.priority}
                 </Badge>
               </div>
-              <h4 className="font-medium mb-2">{activeTask.title}</h4>
+              <h4 className="font-medium mb-2 ">{activeTask.title}</h4>
               <h4 className="font-medium mb-2">{activeTask.description}</h4>
               <div className="flex items-center text-sm text-gray-500">
                 <CalendarIcon className="h-4 w-4 mr-1" />

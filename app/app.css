@@ -89,6 +89,9 @@ td {
   --color-warning: #ff9800;
   --color-info: #2196f3;
 
+  --new: #efe0ca;
+  --new-text: #12202e;
+
   /* Example extra brand tokens */
   --color-brand-dark: #ff8f00;
   --color-brand-light: #ffdda8;
@@ -98,7 +101,6 @@ td {
 @media (prefers-color-scheme: dark) {
   :root {
     --color-bg: #12202e;
-    ;
     --color-text: #ffffff;
 
     --color-primary: #ff8f00; /* Deeper orange for dark mode */
@@ -112,6 +114,9 @@ td {
     --color-info: #35baf6;
     --color-brand-dark: #c76a00;
     --color-brand-light: #ffac4f;
+
+    --new: #efe0ca;
+    --new-text: #12202e;
   }
 }
 
