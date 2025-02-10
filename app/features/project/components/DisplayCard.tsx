@@ -2,6 +2,7 @@ import { useProjectContext } from "../store/context";
 import { Card } from "flowbite-react";
 
 import { Progress } from "@/components/ui/progress";
+import { useClientContext } from "~/features/client/context/ClientContext";
 
 const DisplayCard = () => {
   const formatDate = (date: string | Date): string => {
@@ -11,6 +12,12 @@ const DisplayCard = () => {
       : "Invalid date";
   };
   const { project, handleDelete, handleEdit } = useProjectContext(); // Ensure setData is available in context
+  const { clients } = useClientContext();
+  const getClientName = (clientId: string) => {
+    const client = clients.find((client) => client.id == clientId);
+    // console.log("client: sdfgergergerfg", client);
+    return client ? client.name : "Unknown Client";
+  };
 
   return (
     <>
@@ -33,13 +40,15 @@ const DisplayCard = () => {
             }}
           >
             <div className="border-b-2 border-solid border-gray-300 pb-1">
-              <p className="text-dark font-bold dark:text-white lg:text-2xl sm:text:[20px]">
+              <p className="text-[--color-text] lg:text-2xl sm:text:[20px]">
                 {project.title}
               </p>
-              <p className="text-gray-600 lg:text-2xl">Project</p>
+              <p className="text-[--color-text] lg:text-2xl">
+                {getClientName(project.clientId)}
+              </p>
             </div>
             <div className="border-b-2 border-solid border-gray-300 pb-3">
-              <p className="text-gray-600 sm:text-[11px] lg:text-[15px]">
+              <p className="text-[--color-text] sm:text-[11px] lg:text-[15px]">
                 Progress
               </p>
               <Progress
@@ -59,12 +68,6 @@ const DisplayCard = () => {
                   {formatDate(project.endDate)}
                 </div>
               </div>
-              {/* <div>
-                <div>Project Manager</div>
-                <div className="bg-yellow-200 p-1 text-center font-bold text-[15px]">
-                  {project.lead}
-                </div>
-              </div> */}
             </div>
             <div className="flex gap-4">
               <a

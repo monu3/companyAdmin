@@ -1,6 +1,8 @@
 import { Button, Table } from "flowbite-react";
 import { useProjectContext } from "../store/context";
 import { useClientContext } from "~/features/client/context/ClientContext";
+import { useLanguage } from "~/features/LanguageTranslation/context/LanguageContext";
+import translations from "../language/DisplayTable";
 
 const DisplayTable = () => {
   const formatDate = (date: string | Date): string => {
@@ -12,6 +14,8 @@ const DisplayTable = () => {
   const { project, handleDelete, handleEdit } = useProjectContext(); // Ensure setData is available in context
   const { clients } = useClientContext();
   // console.log("client: sdfgergergerfg", clients);
+  const { language } = useLanguage();
+  const t = translations[language];
 
   const getClientName = (clientId: string) => {
     const client = clients.find((client) => client.id == clientId);
@@ -24,14 +28,16 @@ const DisplayTable = () => {
         {project.length > 0 && (
           <Table striped>
             <Table.Head>
-              <Table.HeadCell>Id</Table.HeadCell>
-              <Table.HeadCell>Title</Table.HeadCell>
-              <Table.HeadCell>Client</Table.HeadCell>
-              <Table.HeadCell>Start Date</Table.HeadCell>
-              <Table.HeadCell>Deadline</Table.HeadCell>
-              <Table.HeadCell>Progress</Table.HeadCell>
-              <Table.HeadCell>Status</Table.HeadCell>
-              <Table.HeadCell className="text-center">Actions </Table.HeadCell>
+              <Table.HeadCell>{t.id}</Table.HeadCell>
+              <Table.HeadCell>{t.title}</Table.HeadCell>
+              <Table.HeadCell>{t.client}</Table.HeadCell>
+              <Table.HeadCell>{t.startDate}</Table.HeadCell>
+              <Table.HeadCell>{t.deadline}</Table.HeadCell>
+              <Table.HeadCell>{t.progress}</Table.HeadCell>
+              <Table.HeadCell>{t.status}</Table.HeadCell>
+              <Table.HeadCell className="text-center">
+                {t.actions}{" "}
+              </Table.HeadCell>
             </Table.Head>
 
             <Table.Body className="divide-y">
