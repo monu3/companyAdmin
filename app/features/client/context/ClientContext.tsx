@@ -4,6 +4,7 @@ import { deleteClients, fetchClients } from "../service/clientService";
 import { useProjectContext } from "~/features/project/store/context";
 import { useTaskContext } from "~/features/task/context/TaskContext";
 import { useTaskHistory } from "~/features/projectReport/context/taskHistoryContext";
+import ToastService from "~/common/utils/toastService";
 
 const ClientContext = createContext<ClientContextProps | undefined>(undefined);
 
@@ -35,11 +36,13 @@ export const ClientProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       await deleteClients(id);
       setClients((prev) => prev.filter((clients) => clients.id !== id));
+      ToastService.success("Deleted Successfully",500);
       refreshProject();
       refreshTasks();
       refreshTaskHistory();
     } catch (error) {
       console.error(`Error deleting client with ID:${id} `, error);
+      ToastService.error("Deleted successfully",500);
     }
   };
   // useEffect(() => {

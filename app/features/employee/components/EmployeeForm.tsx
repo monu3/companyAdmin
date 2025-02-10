@@ -7,6 +7,7 @@ import { useEmployeeContext } from "../context/EmployeeContext";
 import { nanoid } from "nanoid";
 import {addEmployee} from '../service/addEmployeeService';
 import {updateEmployeeService} from '../service/updateEmployeeService'
+import ToastService from "~/common/utils/toastService";
 
 /**
  * AddEmployee.tsx
@@ -66,14 +67,16 @@ selectedEmployee
             item.id === updatedEmployee.id ? updatedEmployee : item
           )
         );
+        ToastService.success("Update Successful",500);
       } else {
         // Create new employee
         const newEmployee = await addEmployee(formData);
         setEmployees(prevData => [...prevData, newEmployee]);
+        ToastService.success("Added Successfully",500);
       }
       setIsOpen(false);
     } catch (error) {
-      console.error("Error saving employee:", error);
+      ToastService.error('Failed',500);
     }
   };
   return (

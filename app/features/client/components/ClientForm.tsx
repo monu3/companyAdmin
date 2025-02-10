@@ -6,6 +6,7 @@ import type { Client} from "../types/client";
 import { useClientContext } from "../context/ClientContext";
 import { nanoid } from "nanoid";
 import { addClient, editClients } from "../service/clientService";
+import ToastService from "~/common/utils/toastService";
 
 export const ClientForm = ({
 selectedClient
@@ -37,16 +38,19 @@ selectedClient
           item.id===updatedClient.id ? updatedClient: item
         )
       );
+      ToastService.success("Update Successful",500);
     } else {
       // If no selectedClient, create a new one
       const newClient = await addClient(formData);
       setIsLoading(true);
       setClients(prevData => [...prevData, newClient]);
+      ToastService.success("Added Successfully",500);
     }
   
     setIsOpen(false);
   }catch(error){
     console.error("Error saving client: ", error);
+    ToastService.error("Failed",500);
   }  // Close the modal after saving
   };
   return (
