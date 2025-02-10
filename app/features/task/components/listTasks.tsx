@@ -24,7 +24,7 @@ import { fetchTasks } from "../service/taskService";
 import { useTaskContext } from "../context/TaskContext";
 
 const ListTasks: React.FC = () => {
-  const { tasks,showModal,setShowModal } = useTaskContext();
+  const { tasks, showModal, setShowModal } = useTaskContext();
   const [selectedTask, setSelectedTask] = useState<Task | null>(null); // State to track the selected task
 
   /**
@@ -51,7 +51,7 @@ const ListTasks: React.FC = () => {
         <h2 className="text-2xl font-bold mb-4">Task List</h2>
         {/* Button to navigate to the tasks page */}
         <Link to="/tasks">
-          <Button variant={"secondary"} className="dark:bg-orange-400">
+          <Button variant={"outline"} className="text-[--color-text]">
             Back
           </Button>
         </Link>

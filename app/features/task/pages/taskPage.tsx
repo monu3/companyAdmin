@@ -20,9 +20,15 @@ const TaskPage: React.FC = () => {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Tasks</h2>
           <Link to="list">
-            <Button variant={"outline"}>Show Task List</Button>
+            <Button
+              className="text-[--color-text] "
+              variant={"outline"}
+            >
+              Show Task List
+            </Button>
           </Link>
           <Button
+            className="text-[--color-text] "
             variant={"outline"}
             onClick={() => setIsCreateTaskModalOpen(true)}
           >
