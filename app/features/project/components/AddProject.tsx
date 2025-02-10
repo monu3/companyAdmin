@@ -35,7 +35,7 @@ const AddProject = () => {
           onClick={() => setView("table")}
           className={view === "table" ? "text-primary bg-orange-400" : ""}
         >
-          <List />
+          <List className="dark:text-text" />
         </Button>
         <Button
           variant="outline"
@@ -43,7 +43,7 @@ const AddProject = () => {
           onClick={() => setView("card")}
           className={view === "card" ? "text-primary bg-orange-400" : ""}
         >
-          <Grid />
+          <Grid className="dark:text-text" />
         </Button>
 
         <Button
