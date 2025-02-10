@@ -81,7 +81,7 @@ export function TaskRadialChart() {
     { status: "completed", count: countCompleted, fill: "var(--color-completed)" },
   ]
   return (
-    <Card className="flex flex-col lg:w-1/2">
+    <Card className="flex flex-col items-center lg:w-1/2">
       <CardHeader className="items-center pb-0">
         <CardTitle>Radial Chart</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
