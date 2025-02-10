@@ -1,10 +1,13 @@
 import React, { useContext, useState } from "react";
-import { RiAddBoxFill } from "react-icons/ri";
 import ProjectForm from "./ProjectForm";
 import { ProjectContext, useProjectContext } from "../store/context";
 import { Button } from "@/components/ui/button";
 import { Grid, List, PlusCircle } from "lucide-react";
+import { useLanguage } from "~/features/LanguageTranslation/context/LanguageContext";
+import translations from "../language/AddProjects";
 const AddProject = () => {
+  const { language } = useLanguage();
+  const t = translations[language];
   const {
     isOpen,
     setIsOpen,
@@ -21,8 +24,8 @@ const AddProject = () => {
   return (
     <div className="flex justify-between items-center">
       <div>
-        <h1 className="text-2xl font-bold">Projects</h1>
-        <p className="text-gray-500">Manage your pojects</p>
+        <h1 className="text-2xl font-bold">{t.projects}</h1>
+        <p className="text-gray-500">{t.manageProjects}</p>
       </div>
 
       <div className="flex gap-2">
