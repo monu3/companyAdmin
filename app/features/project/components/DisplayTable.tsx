@@ -26,7 +26,7 @@ const DisplayTable = () => {
     <>
       <div className="overflow-x-auto">
         {project.length > 0 && (
-          <Table striped>
+          <Table striped hoverable>
             <Table.Head>
               <Table.HeadCell>{t.id}</Table.HeadCell>
               <Table.HeadCell>{t.title}</Table.HeadCell>
@@ -41,36 +41,33 @@ const DisplayTable = () => {
             </Table.Head>
 
             <Table.Body className="divide-y">
-              {project.map((data, index) => {
-                return (
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                    <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                      {index + 1}
-                    </Table.Cell>
-                    <Table.Cell>{data.title}</Table.Cell>
-                    <Table.Cell>{getClientName(data.clientId)}</Table.Cell>
-                    <Table.Cell>{formatDate(data.startDate)}</Table.Cell>
-                    <Table.Cell>{formatDate(data.endDate)}</Table.Cell>
-                    <Table.Cell>{data.progress}</Table.Cell>
-                    <Table.Cell>{data.status}</Table.Cell>
-                    <Table.Cell className="flex gap-4">
-                      <Button
-                        className=" text-[--bg-color]"
-                        onClick={() => handleEdit(data.id)}
-                      >
-                        Edit
-                      </Button>
-
-                      <Button
-                        className=" text-[--bg-color]"
-                        onClick={() => handleDelete(data.id)}
-                      >
-                        Delete
-                      </Button>
-                    </Table.Cell>
-                  </Table.Row>
-                );
-              })}
+              {project.map((data, index) => (
+                <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                    {index + 1}
+                  </Table.Cell>
+                  <Table.Cell>{data.title}</Table.Cell>
+                  <Table.Cell>{getClientName(data.clientId)}</Table.Cell>
+                  <Table.Cell>{formatDate(data.startDate)}</Table.Cell>
+                  <Table.Cell>{formatDate(data.endDate)}</Table.Cell>
+                  <Table.Cell>{data.progress}</Table.Cell>
+                  <Table.Cell>{data.status}</Table.Cell>
+                  <Table.Cell className="flex justify-center gap-4">
+                    <Button
+                      className="font-medium text-cyan-600 dark:text-cyan-500"
+                      onClick={() => handleEdit(data.id)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      className="font-medium text-cyan-600 dark:text-cyan-500"
+                      onClick={() => handleDelete(data.id)}
+                    >
+                      Delete
+                    </Button>
+                  </Table.Cell>
+                </Table.Row>
+              ))}
             </Table.Body>
           </Table>
         )}

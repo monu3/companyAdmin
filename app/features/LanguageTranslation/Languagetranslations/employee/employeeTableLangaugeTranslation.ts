@@ -9,6 +9,7 @@ const translations: Record<string, Record<string, string>> = {
     joinDate: "Join Date",
     edit: "Edit",
     delete: "Delete",
+    actions: "Actions",
     invalidDate: "Invalid date",
   },
   NP: {
@@ -21,6 +22,7 @@ const translations: Record<string, Record<string, string>> = {
     joinDate: "सामेल मिति",
     edit: "सम्पादन गर्नुहोस्",
     delete: "हटाउनुहोस्",
+    actions: "कार्यहरू",
     invalidDate: "अवैध मिति",
   },
   ES: {
@@ -45,6 +47,7 @@ const translations: Record<string, Record<string, string>> = {
     joinDate: "Date d'entrée",
     edit: "Éditer",
     delete: "Supprimer",
+    actions: "Acciones",
     invalidDate: "Date invalide",
   },
   DE: {
@@ -57,6 +60,7 @@ const translations: Record<string, Record<string, string>> = {
     joinDate: "Eintrittsdatum",
     edit: "Bearbeiten",
     delete: "Löschen",
+    actions: "Aktionen",
     invalidDate: "Ungültiges Datum",
   },
   HI: {
@@ -69,6 +73,7 @@ const translations: Record<string, Record<string, string>> = {
     joinDate: "जॉइनिंग तिथि",
     edit: "संपादित करें",
     delete: "हटाएं",
+    actions: "क्रियाएँ",
     invalidDate: "अमान्य तिथि",
   },
   CN: {
@@ -81,6 +86,7 @@ const translations: Record<string, Record<string, string>> = {
     joinDate: "入职日期",
     edit: "编辑",
     delete: "删除",
+    actions: "操作",
     invalidDate: "无效日期",
   },
   JA: {
@@ -93,6 +99,7 @@ const translations: Record<string, Record<string, string>> = {
     joinDate: "入社日",
     edit: "編集",
     delete: "削除",
+    actions: "アクション",
     invalidDate: "無効な日付",
   },
   IT: {
@@ -105,6 +112,7 @@ const translations: Record<string, Record<string, string>> = {
     joinDate: "Data di Assunzione",
     edit: "Modifica",
     delete: "Elimina",
+    actions: "Azioni",
     invalidDate: "Data non valida",
   },
   PT: {
@@ -117,6 +125,7 @@ const translations: Record<string, Record<string, string>> = {
     joinDate: "Data de Admissão",
     edit: "Editar",
     delete: "Excluir",
+    actions: "Ações",
     invalidDate: "Data inválida",
   },
   RU: {
@@ -129,6 +138,7 @@ const translations: Record<string, Record<string, string>> = {
     joinDate: "Дата вступления",
     edit: "Редактировать",
     delete: "Удалить",
+    actions: "Действия",
     invalidDate: "Недействительная дата",
   },
   AR: {
@@ -141,6 +151,7 @@ const translations: Record<string, Record<string, string>> = {
     joinDate: "تاريخ الانضمام",
     edit: "تعديل",
     delete: "حذف",
+    actions: "الإجراءات",
     invalidDate: "تاريخ غير صالح",
   },
   KO: {
@@ -153,6 +164,7 @@ const translations: Record<string, Record<string, string>> = {
     joinDate: "입사일",
     edit: "편집",
     delete: "삭제",
+    actions: "작업",
     invalidDate: "유효하지 않은 날짜",
   },
   TR: {
@@ -165,6 +177,7 @@ const translations: Record<string, Record<string, string>> = {
     joinDate: "İşe Başlama Tarihi",
     edit: "Düzenle",
     delete: "Sil",
+    actions: "Eylemler",
     invalidDate: "Geçersiz tarih",
   },
   VI: {
@@ -177,6 +190,7 @@ const translations: Record<string, Record<string, string>> = {
     joinDate: "Ngày vào làm",
     edit: "Chỉnh sửa",
     delete: "Xóa",
+    actions: "Hành động",
     invalidDate: "Ngày không hợp lệ",
   },
 };
