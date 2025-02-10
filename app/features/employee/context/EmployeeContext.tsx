@@ -3,6 +3,7 @@ import { getStoredEmployees, saveEmployeesToStorage } from '../utils/storage';
 import type {EmployeeContextProps,Employee } from '../types/employee';
 import {fetchEmployees} from '../service/fetchEmployees';
 import {deleteEmployeeService} from '../service/deleteEmployeeService';
+import ToastService from '~/common/utils/toastService';
 
 
 
@@ -47,8 +48,10 @@ export const EmployeeProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     try {
       await deleteEmployeeService(id);
       setEmployees(prev => prev.filter(employee => employee.id !== id));
+      ToastService.success("Deleted Successfully",500);
     } catch (error) {
       console.error(`Error deleting employee with ID ${id}:`, error);
+      ToastService.error("Failed to delete",500);
     }
   };
   
