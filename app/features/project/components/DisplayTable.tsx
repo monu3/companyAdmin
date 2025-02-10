@@ -55,14 +55,14 @@ const DisplayTable = () => {
                     <Table.Cell>{data.status}</Table.Cell>
                     <Table.Cell className="flex gap-4">
                       <Button
-                        className="font-medium text-cyan-600 hover:underline dark:text-text"
+                        className=" text-[--bg-color]"
                         onClick={() => handleEdit(data.id)}
                       >
                         Edit
                       </Button>
 
                       <Button
-                        className="font-medium text-cyan-600 hover:underline dark:text-text"
+                        className=" text-[--bg-color]"
                         onClick={() => handleDelete(data.id)}
                       >
                         Delete
