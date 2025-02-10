@@ -1,4 +1,4 @@
-import { Table } from "flowbite-react";
+import { Button, Table } from "flowbite-react";
 import { useEmployeeContext } from "../context/EmployeeContext";
 import { useLanguage } from "~/features/LanguageTranslation/context/LanguageContext";
 import translations from "~/features/LanguageTranslation/Languagetranslations/employee/employeeTableLangaugeTranslation";
@@ -27,8 +27,7 @@ const EmployeesTable = () => {
             <Table.HeadCell>{t.email}</Table.HeadCell>
             <Table.HeadCell>{t.salary}</Table.HeadCell>
             <Table.HeadCell>{t.joinDate}</Table.HeadCell>
-            <Table.HeadCell>{t.edit}</Table.HeadCell>
-            <Table.HeadCell>{t.delete}</Table.HeadCell>
+            <Table.HeadCell className="text-center">{t.actions}</Table.HeadCell>
           </Table.Head>
 
           <Table.Body className="divide-y">
@@ -53,21 +52,19 @@ const EmployeesTable = () => {
                 </Table.Cell>
                 <Table.Cell>${employee.salary.toLocaleString()}</Table.Cell>
                 <Table.Cell>{formatDate(employee.enrollDate)}</Table.Cell>
-                <Table.Cell>
-                  <button
+                <Table.Cell className="flex justify-center gap-4">
+                  <Button
                     onClick={() => updateEmployee(employee.id)}
-                    className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
+                    className="font-medium text-cyan-600 dark:text-cyan-500"
                   >
                     {t.edit}
-                  </button>
-                </Table.Cell>
-                <Table.Cell>
-                  <button
+                  </Button>
+                  <Button
                     onClick={() => deleteEmployee(employee.id)}
-                    className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
+                    className="font-medium text-cyan-600 dark:text-cyan-500"
                   >
                     {t.delete}
-                  </button>
+                  </Button>
                 </Table.Cell>
               </Table.Row>
             ))}
