@@ -31,7 +31,7 @@ const Pagination: React.FC<PaginationProps> = ({
               {num}
             </option>
           ))}
-          <option value={-1}>All</option>
+          <option value={totalItems}>All</option>
         </select>
       </div>
       <div className="flex items-center space-x-2  mr-6">
