@@ -2,6 +2,8 @@ import { Button, Table } from "flowbite-react";
 import { useClientContext } from "../context/ClientContext";
 import { useState } from "react";
 import Pagination from "~/common/utils/pagination";
+import { useLanguage } from "~/features/LanguageTranslation/context/LanguageContext";
+import translations from "../languages/ClientTable";
 
 const ClientTable = () => {
   const formatDate = (date: string | Date): string => {
@@ -19,17 +21,22 @@ const ClientTable = () => {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedTasks = clients.slice(startIndex, startIndex + itemsPerPage);
+
+  const { language } = useLanguage();
+  const t = translations[language];
   return (
     <>
       <div className="overflow-x-auto">
         {clients.length > 0 && (
           <Table striped hoverable>
             <Table.Head>
-              <Table.HeadCell>S.N.</Table.HeadCell>
-              <Table.HeadCell>Full Name</Table.HeadCell>
-              <Table.HeadCell>Email</Table.HeadCell>
-              <Table.HeadCell>Join Date</Table.HeadCell>
-              <Table.HeadCell className="text-center">Actions </Table.HeadCell>
+              <Table.HeadCell>{t.sn}</Table.HeadCell>
+              <Table.HeadCell>{t.fullName}</Table.HeadCell>
+              <Table.HeadCell>{t.email}</Table.HeadCell>
+              <Table.HeadCell>{t.joinDate}</Table.HeadCell>
+              <Table.HeadCell className="text-center">
+                {t.actions}{" "}
+              </Table.HeadCell>
             </Table.Head>
 
             <Table.Body className="divide-y">
@@ -56,13 +63,13 @@ const ClientTable = () => {
                       onClick={() => updateClient(client.id)}
                       className="font-medium text-cyan-600  dark:text-cyan-500"
                     >
-                      Edit
+                      {t.edit}
                     </Button>
                     <Button
                       onClick={() => deleteClient(client.id)}
                       className="font-medium text-cyan-600  dark:text-cyan-500"
                     >
-                      Delete
+                      {t.delete}
                     </Button>
                   </Table.Cell>
                 </Table.Row>
