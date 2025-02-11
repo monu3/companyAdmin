@@ -25,8 +25,13 @@ import { DroppableColumn } from "./DroppableColumn";
 import { useTaskContext } from "../../context/TaskContext";
 import { getPriorityColor } from "~/common/utils/taskPriorityColor";
 import ToastService from "~/common/utils/toastService";
+import { useLanguage } from "~/features/LanguageTranslation/context/LanguageContext";
+import translations from "../../language/DragTask";
 
 const KanbanBoard: React.FC = () => {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   const { tasks, moveTask, setTasks } = useTaskContext();
   const [activeId, setActiveId] = useState<string | null>(null);
   const [activeColumnId, setActiveColumnId] = useState<string | null>(null);
@@ -41,7 +46,7 @@ const KanbanBoard: React.FC = () => {
     () =>
       Object.values(TaskStatus).map((status) => ({
         id: status,
-        title: status.replace("_", " ").toUpperCase(),
+        title: status,
         tasks: tasks.filter((task) => task.status === status),
       })),
     [tasks]
@@ -110,7 +115,8 @@ const KanbanBoard: React.FC = () => {
           <DroppableColumn
             key={column.id}
             id={column.id}
-            title={column.title}
+            // title={column.title}
+            title={t[column.title]}
             isDropTarget={column.id === activeColumnId}
           >
             <SortableContext
@@ -120,7 +126,7 @@ const KanbanBoard: React.FC = () => {
               <div className="space-y-4">
                 {column.tasks.length === 0 ? (
                   <div className="flex items-center justify-center text-sm text-gray-500 h-24">
-                    Drag tasks here
+                    {t.drag}
                   </div>
                 ) : (
                   column.tasks.map((task) => (

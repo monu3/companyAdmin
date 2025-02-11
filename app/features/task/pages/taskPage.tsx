@@ -4,6 +4,8 @@ import KanbanBoard from "../components/kanbanAndDnd/KanbanBoard";
 import { Link, Outlet } from "react-router";
 import { Button } from "~/components/ui/button";
 import type { Task } from "../Types/types";
+import { useLanguage } from "~/features/LanguageTranslation/context/LanguageContext";
+import translations from "../language/taskPage";
 
 const TaskPage: React.FC = () => {
   const [isCreateTaskModalOpen, setIsCreateTaskModalOpen] = useState(false);
@@ -14,14 +16,17 @@ const TaskPage: React.FC = () => {
     setIsCreateTaskModalOpen(true);
   };
 
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <>
       <section className="h-auto p-4 md:px-6 dark:bg-[#121212]">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">Tasks</h2>
+          <h2 className="text-2xl font-bold">{t.tasksTitle}</h2>
           <Link to="list">
             <Button className="text-[--color-text] " variant={"outline"}>
-              Show Task List
+              {t.showTaskList}
             </Button>
           </Link>
           <Button
@@ -29,7 +34,7 @@ const TaskPage: React.FC = () => {
             variant={"outline"}
             onClick={() => setIsCreateTaskModalOpen(true)}
           >
-            Create Task
+            {t.createTask}
           </Button>
         </div>
 

@@ -85,15 +85,14 @@ const TaskHistoryPage: React.FC = () => {
     return <div className="text-center py-5 text-red-500">{error}</div>;
 
   return (
-    <div className="max-w-5xl mx-auto p-6 bg-card text-card-foreground shadow-lg rounded-lg transition-colors duration-300">
+    <>
       <h2 className="text-2xl font-semibold text-center mb-4">
         {t.taskHistory}
       </h2>
-
       <TaskHistoryTimeFilter onFilterChange={handleTimeFilterChange} />
       <TaskHistoryFilterForm onFilter={handleFilter} onReset={handleReset} />
       <TaskHistory filteredTasks={filteredTasks} />
-    </div>
+    </>
   );
 };
 
