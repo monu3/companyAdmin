@@ -49,7 +49,7 @@ const ListTasks: React.FC = () => {
   };
 
   return (
-    <div className="h-auto p-2 md:px-4 dark:bg-[#121212]">
+    <div className="h-auto p-2 md:px-4">
       {/* Header section with title and navigation button */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold mb-4">{t.taskListTitle}</h2>
@@ -64,7 +64,7 @@ const ListTasks: React.FC = () => {
       {/* Grid layout for displaying task cards */}
       <div className="px-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {tasks.length === 0 ? (
-          <div className="col-span-full text-center text-lg text-gray-500">
+          <div className="col-span-full text-center text-lg bg-orange-400 text-white p-12 rounded">
             {t.noTasksFound}
           </div>
         ) : (
