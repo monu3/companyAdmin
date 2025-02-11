@@ -20,14 +20,14 @@ const TaskHistory: React.FC<TaskHistoryProps> = ({ filteredTasks }) => {
   );
 
   return (
-    <div className="overflow-x-auto mt-4">
-      {filteredTasks.length === 0 ? (
-        <div className="text-muted-foreground text-center border border-border rounded-lg p-5">
-          {t.noHistory}
-        </div>
-      ) : (
-        <>
-          <div className="rounded-lg border border-border shadow-md">
+    <>
+      <div className="overflow-x-auto">
+        {filteredTasks.length === 0 ? (
+          <div className="text-muted-foreground text-center border border-border rounded-lg p-5">
+            {t.noHistory}
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-muted text-muted-foreground">
                 <tr>
@@ -74,18 +74,16 @@ const TaskHistory: React.FC<TaskHistoryProps> = ({ filteredTasks }) => {
               </tbody>
             </table>
           </div>
-          <div className="sticky bottom-0 left-0 w-full bg-[--color-bg] py-3 border-t shadow-md">
-            <Pagination
-              totalItems={filteredTasks.length}
-              itemsPerPage={itemsPerPage}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              setItemsPerPage={setItemsPerPage}
-            />
-          </div>
-        </>
-      )}
-    </div>
+        )}
+      </div>
+      <Pagination
+        totalItems={filteredTasks.length}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        setItemsPerPage={setItemsPerPage}
+      />
+    </>
   );
 };
 

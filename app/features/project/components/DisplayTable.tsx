@@ -81,12 +81,12 @@ const DisplayTable = () => {
         )}
       </div>
       <Pagination
-          totalItems={project.length}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          setItemsPerPage={setItemsPerPage}
-        />
+        totalItems={project.length}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        setItemsPerPage={setItemsPerPage}
+      />
     </>
   );
 };
