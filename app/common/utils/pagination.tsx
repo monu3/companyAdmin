@@ -1,3 +1,6 @@
+import { useLanguage } from "~/features/LanguageTranslation/context/LanguageContext";
+import translations from "~/features/LanguageTranslation/Languagetranslations/pagination/pagination";
+
 interface PaginationProps {
   totalItems: number;
   itemsPerPage: number;
@@ -15,6 +18,9 @@ const Pagination: React.FC<PaginationProps> = ({
 }) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <div className="flex flex-wrap items-center justify-between p-3 border-t shadow-md w-full gap-4">
       <div className="flex items-center space-x-2">
@@ -31,7 +37,7 @@ const Pagination: React.FC<PaginationProps> = ({
               {num}
             </option>
           ))}
-          <option value={totalItems}>All</option>
+          <option value={totalItems}>{t.all}</option>
         </select>
       </div>
       <div className="flex items-center space-x-2  mr-6">
@@ -40,7 +46,7 @@ const Pagination: React.FC<PaginationProps> = ({
           onClick={() => setCurrentPage(1)}
           disabled={currentPage === 1}
         >
-          First
+          {t.first}
         </button>
         <button
           className="px-2 py-1 md:px-3 border rounded  text-xs md:text-sm"
@@ -66,7 +72,7 @@ const Pagination: React.FC<PaginationProps> = ({
           onClick={() => setCurrentPage(totalPages)}
           disabled={currentPage === totalPages}
         >
-          Last
+          {t.last}
         </button>
       </div>
     </div>
