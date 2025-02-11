@@ -7,6 +7,7 @@ import { useClientContext } from "~/features/client/context/ClientContext";
 import { useEmployeeContext } from "~/features/employee/context/EmployeeContext";
 import { addProject } from "../service/addProject";
 import { updateProjectService } from "../service/editProject";
+import ToastService from "~/common/utils/toastService";
 
 const ProjectForm = ({
   selectedProject,
@@ -44,6 +45,7 @@ const ProjectForm = ({
           item.id === updatedEmployee.id ? updatedEmployee : item
         )
       );
+      ToastService.success("Update Successful", 500);
       // const updatedDataList = project.map((item) =>
       //   item.id === selectedProject.id ? { ...item, ...updatedData } : item
       // );
@@ -52,6 +54,7 @@ const ProjectForm = ({
       const newProjects = await addProject(formData);
       // const dataWithId = { ...formData, id: nanoid() };
       setProject((prevData) => [...prevData, newProjects]);
+      ToastService.success("Added Successfully", 500);
     }
 
     setIsOpen(false); // Close the modal after saving
