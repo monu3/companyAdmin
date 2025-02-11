@@ -20,12 +20,16 @@ import TaskDetailModal from "./TaskDetailModal"; // Import TaskDetailModal
 import { getPriorityColor } from "../../../common/utils/taskPriorityColor";
 import { Link } from "react-router";
 import { Button } from "@/components/ui/button";
-import { fetchTasks } from "../service/taskService";
 import { useTaskContext } from "../context/TaskContext";
+import { useLanguage } from "~/features/LanguageTranslation/context/LanguageContext";
+import translations from "../language/ListTask";
 
 const ListTasks: React.FC = () => {
   const { tasks, showModal, setShowModal } = useTaskContext();
   const [selectedTask, setSelectedTask] = useState<Task | null>(null); // State to track the selected task
+
+  const { language } = useLanguage();
+  const t = translations[language];
 
   /**
    * Handles the click event on a task card.
@@ -48,11 +52,11 @@ const ListTasks: React.FC = () => {
     <div className="h-auto p-2 md:px-4 dark:bg-[#121212]">
       {/* Header section with title and navigation button */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold mb-4">Task List</h2>
+        <h2 className="text-2xl font-bold mb-4">{t.taskListTitle}</h2>
         {/* Button to navigate to the tasks page */}
         <Link to="/tasks">
           <Button variant={"outline"} className="text-[--color-text]">
-            Back
+            {t.backButton}
           </Button>
         </Link>
       </div>
@@ -61,7 +65,7 @@ const ListTasks: React.FC = () => {
       <div className="px-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {tasks.length === 0 ? (
           <div className="col-span-full text-center text-lg text-gray-500">
-            No tasks found
+            {t.noTasksFound}
           </div>
         ) : (
           tasks.map((task) => (
