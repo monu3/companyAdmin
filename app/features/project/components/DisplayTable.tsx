@@ -3,6 +3,8 @@ import { useProjectContext } from "../store/context";
 import { useClientContext } from "~/features/client/context/ClientContext";
 import { useLanguage } from "~/features/LanguageTranslation/context/LanguageContext";
 import translations from "../language/DisplayTable";
+import { useState } from "react";
+import Pagination from "~/common/utils/pagination";
 
 const DisplayTable = () => {
   const formatDate = (date: string | Date): string => {
@@ -22,6 +24,12 @@ const DisplayTable = () => {
     // console.log("client: sdfgergergerfg", client);
     return client ? client.name : "Unknown Client";
   };
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedTasks = project.slice(startIndex, startIndex + itemsPerPage);
+
   return (
     <>
       <div className="overflow-x-auto">
@@ -72,6 +80,13 @@ const DisplayTable = () => {
           </Table>
         )}
       </div>
+      <Pagination
+          totalItems={project.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          setItemsPerPage={setItemsPerPage}
+        />
     </>
   );
 };
