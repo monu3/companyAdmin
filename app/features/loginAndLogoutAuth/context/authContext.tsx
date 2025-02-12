@@ -14,14 +14,7 @@ import {
   useEffect,
 } from "react";
 import { useNavigate } from "react-router";
-
-// Define the shape of the authentication context
-type AuthContextType = {
-  isAuthenticated: boolean; // Whether the user is authenticated
-  userEmail: string | null; // The email of the authenticated user
-  login: (email: string) => void; // Function to log the user in
-  logout: () => void; // Function to log the user out
-};
+import type { AuthContextType } from "../types/types";
 
 // Create a context with default values
 const AuthContext = createContext<AuthContextType>({

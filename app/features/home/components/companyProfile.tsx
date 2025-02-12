@@ -16,8 +16,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { logout } from "~/common/utils/logOut"; // Utility function for handling user logout
 import { Link } from "react-router";
+import { logout } from "~/common/utils/logOut";
 
 const CompanyProfile = () => {
   return (
@@ -47,8 +47,8 @@ const CompanyProfile = () => {
         {/* Logout button */}
         <DropdownMenuItem asChild>
           <button
-            onClick={logout} // Calls the logout function
-            className="w-full text-left bg-transparent p-0 border-none"
+            onClick={logout}
+            className="w-full text-left bg-transparent p-0 text-[--color-text] border-none"
           >
             Logout
           </button>
