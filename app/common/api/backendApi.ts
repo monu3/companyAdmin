@@ -7,8 +7,11 @@
  * It ensures consistency and handles common functionality like setting headers, error handling,
  * and response parsing.
  */
-
-import axios, { type AxiosInstance, type AxiosRequestConfig } from "axios";
+import axios, {
+  AxiosError,
+  type AxiosInstance,
+  type AxiosRequestConfig,
+} from "axios";
 
 const API_BASE_URL = "http://localhost:8080/api";
 
@@ -18,6 +21,7 @@ const axiosInstance: AxiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 export interface ApiOptions {
@@ -25,6 +29,17 @@ export interface ApiOptions {
   headers?: Record<string, string>;
   body?: any;
 }
+
+// Global error handling for 401 responses
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error: AxiosError) => {
+    if (error.response?.status === 401) {
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const apiRequest = async (
   endpoint: string,
@@ -44,13 +59,14 @@ export const apiRequest = async (
   try {
     const response = await axiosInstance.request(config);
     return response.data;
-  } catch (error: any) {
+  } catch (error) {
+    const axiosError = error as AxiosError<{ message?: string }>;
     console.error(
       `API request error [${method} ${endpoint}]:`,
-      error.response?.data || error.message || "Failed to connect to server"
+      axiosError.response?.data?.message || axiosError.message
     );
     throw new Error(
-      error.response?.data?.message || error.message || "Something went wrong"
+      axiosError.response?.data?.message || "Something went wrong"
     );
   }
 };
