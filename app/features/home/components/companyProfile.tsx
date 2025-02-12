@@ -48,7 +48,7 @@ const CompanyProfile = () => {
         <DropdownMenuItem asChild>
           <button
             onClick={logout}
-            className="w-full text-left bg-transparent p-0 border-none"
+            className="w-full text-left bg-transparent p-0 text-[--color-text] border-none"
           >
             Logout
           </button>
