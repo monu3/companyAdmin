@@ -8,7 +8,7 @@
 
 import { useEffect, useState } from "react";
 import { useNavigate, Outlet } from "react-router";
-import { useAuth } from "./authContext";
+import { useAuth } from "../context/authContext";
 import Spinner from "~/common/utils/Spinner";
 
 const ProtectedRoute = () => {

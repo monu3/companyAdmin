@@ -3,15 +3,25 @@
  * Created On : 2025-28-01
  * Author : Diwash Pokhrel
  * Description :
- * This file contains a utility function for making API requests. It ensures
- * consistency and handles common functionality like setting headers, error handling,
+ * This file contains a utility function for making API requests using an Axios instance.
+ * It ensures consistency and handles common functionality like setting headers, error handling,
  * and response parsing.
  */
 
+import axios, { type AxiosInstance, type AxiosRequestConfig } from "axios";
+
 const API_BASE_URL = "http://localhost:8080/api";
 
+// Create an Axios instance with default settings
+const axiosInstance: AxiosInstance = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
 export interface ApiOptions {
-  method?: string;
+  method?: "GET" | "POST" | "PUT" | "DELETE";
   headers?: Record<string, string>;
   body?: any;
 }
@@ -22,37 +32,25 @@ export const apiRequest = async (
 ): Promise<any> => {
   const { method = "GET", headers = {}, body } = options;
 
+  const config: AxiosRequestConfig = {
+    method,
+    url: endpoint,
+    headers: {
+      ...headers,
+    },
+    data: body,
+  };
+
   try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-        ...headers,
-      },
-      body: body ? JSON.stringify(body) : undefined,
-    });
-
-    // Check response type and handle accordingly
-    const contentType = response.headers.get("Content-Type");
-    let data: any;
-
-    if (contentType && contentType.includes("application/json")) {
-      data = await response.json();
-    } else {
-      data = await response.text(); // Handle plain text responses
-    }
-
-    if (!response.ok) {
-      // Throw error with detailed response message
-      throw new Error(data || "Something went wrong");
-    }
-
-    return data;
+    const response = await axiosInstance.request(config);
+    return response.data;
   } catch (error: any) {
     console.error(
       `API request error [${method} ${endpoint}]:`,
-      error.message || error
+      error.response?.data || error.message || "Failed to connect to server"
     );
-    throw new Error(error.message || "Failed to connect to server");
+    throw new Error(
+      error.response?.data?.message || error.message || "Something went wrong"
+    );
   }
 };
