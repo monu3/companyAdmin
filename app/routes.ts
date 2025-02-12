@@ -8,7 +8,7 @@ import {
 
 export default [
   route("login", "features/loginAndLogoutAuth/pages/loginPage.tsx"),
-  //layout("features/login/component/ProtectedRoute.tsx", [
+  // layout("features/loginAndLogoutAuth/component/ProtectedRoute.tsx", [
   layout("features/home/pages/HomePage.tsx", [
     index("features/dashboard/pages/dashboardPage.tsx"),
     route("projects", "features/project/pages/ProjectPage.tsx"),
