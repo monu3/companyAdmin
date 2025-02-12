@@ -16,10 +16,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { logout } from "~/common/utils/logOut"; // Utility function for handling user logout
 import { Link } from "react-router";
+import { useAuth } from "~/features/loginAndLogoutAuth/context/authContext";
 
 const CompanyProfile = () => {
+  const { logout } = useAuth();
   return (
     <DropdownMenu>
       {/* Trigger button for opening the dropdown menu */}
@@ -47,7 +48,7 @@ const CompanyProfile = () => {
         {/* Logout button */}
         <DropdownMenuItem asChild>
           <button
-            onClick={logout} // Calls the logout function
+            onClick={logout}
             className="w-full text-left bg-transparent p-0 border-none"
           >
             Logout
