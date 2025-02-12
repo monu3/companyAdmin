@@ -17,10 +17,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Link } from "react-router";
-import { useAuth } from "~/features/loginAndLogoutAuth/context/authContext";
+import { logout } from "~/common/utils/logOut";
 
 const CompanyProfile = () => {
-  const { logout } = useAuth();
   return (
     <DropdownMenu>
       {/* Trigger button for opening the dropdown menu */}
