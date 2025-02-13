@@ -13,7 +13,6 @@ import {
   type ReactNode,
   useEffect,
 } from "react";
-import { useNavigate } from "react-router";
 import type { AuthContextType } from "../types/types";
 
 // Create a context with default values
@@ -28,29 +27,31 @@ const AuthContext = createContext<AuthContextType>({
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Tracks if the user is authenticated
   const [userEmail, setUserEmail] = useState<string | null>(null); // Stores the user's email
-  const navigate = useNavigate(); // For navigation after login/logout
 
   // Check authentication status on initial load
   useEffect(() => {
-    const email = localStorage.getItem("userEmail"); // Retrieve email from localStorage
-    setIsAuthenticated(!!email); // Set authentication status
-    setUserEmail(email); // Set the user's email
+    const checkAuth = () => {
+      const email = localStorage.getItem("userEmail"); // Retrieve email from localStorage
+      setIsAuthenticated(!!email); // Set authentication status
+      setUserEmail(email); // Set the user's email
+    };
+    checkAuth();
   }, []);
 
   // Function to log the user in
   const authlogin = (email: string) => {
+    console.log("authlogin called with email: ", email);
     localStorage.setItem("userEmail", email); // Save email in localStorage
-    setIsAuthenticated(true); // Mark user as authenticated
     setUserEmail(email); // Store the user's email
-    navigate("/"); // Redirect to the home page
+    setIsAuthenticated(true); // Mark user as authenticated
+    window.location.reload();
   };
 
   // Function to log the user out
   const logout = () => {
     localStorage.removeItem("userEmail"); // Remove email from localStorage
-    setIsAuthenticated(false); // Mark user as not authenticated
     setUserEmail(null); // Clear the stored email
-    navigate("/login"); // Redirect to the login page
+    setIsAuthenticated(false); // Mark user as not authenticated
   };
 
   return (

@@ -5,6 +5,8 @@ import { useProjectContext } from "~/features/project/store/context";
 import { useTaskContext } from "~/features/task/context/TaskContext";
 import { useTaskHistory } from "~/features/projectReport/context/taskHistoryContext";
 import ToastService from "~/common/utils/toastService";
+import { isAuthenticated } from "~/features/auth/auth";
+import { useAuth } from "~/features/loginAndLogoutAuth/context/authContext";
 
 const ClientContext = createContext<ClientContextProps | undefined>(undefined);
 
@@ -20,6 +22,7 @@ export const ClientProvider: React.FC<{ children: React.ReactNode }> = ({
   const { refreshProject } = useProjectContext();
   const { refreshTaskHistory } = useTaskHistory();
   const { refreshTasks } = useTaskContext();
+  const { isAuthenticated } = useAuth();
 
   const updateClient = (selectedId: string) => {
     // Find the empolyee you want to edit based on the selectedId
@@ -36,13 +39,13 @@ export const ClientProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       await deleteClients(id);
       setClients((prev) => prev.filter((clients) => clients.id !== id));
-      ToastService.success("Deleted Successfully",500);
+      ToastService.success("Deleted Successfully", 500);
       refreshProject();
       refreshTasks();
       refreshTaskHistory();
     } catch (error) {
       console.error(`Error deleting client with ID:${id} `, error);
-      ToastService.error("Deleted successfully",500);
+      ToastService.error("Deleted successfully", 500);
     }
   };
   // useEffect(() => {
@@ -51,22 +54,25 @@ export const ClientProvider: React.FC<{ children: React.ReactNode }> = ({
   //   }
   // }, [clients]);
 
-  useEffect(() => {
-    const fetchAndSetClients = async () => {
-      if (typeof window !== "undefined") {
-        // Ensure localStorage is accessed only in the browser
-        // const storedData
-        const storedData = await fetchClients();
-        if (storedData) {
-          try {
-            setClients(storedData);
-          } catch (error) {
-            console.error("Failed to fetch clients:", error);
-          }
+  const fetchAndSetClients = async () => {
+    if (typeof window !== "undefined") {
+      // Ensure localStorage is accessed only in the browser
+      // const storedData
+      const storedData = await fetchClients();
+      if (storedData) {
+        try {
+          setClients(storedData);
+        } catch (error) {
+          console.error("Failed to fetch clients:", error);
         }
       }
-    };
-    fetchAndSetClients();
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchAndSetClients();
+    }
   }, []);
 
   return (

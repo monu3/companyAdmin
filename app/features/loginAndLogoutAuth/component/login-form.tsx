@@ -13,37 +13,38 @@ import { login } from "../service/loginAuthService"; // Import the login functio
 import { Label } from "@/components/ui/label"; // UI component for labeling inputs
 import { Button } from "@/components/ui/button"; // UI component for the button
 import ToastService from "~/common/utils/toastService";
+import { useAuth } from "../context/authContext";
 
 export default function LoginForm() {
+  const { isAuthenticated, authlogin } = useAuth();
   const [email, setEmail] = useState(""); // State to store email input
   const [password, setPassword] = useState(""); // State to store password input
-  const [error, setError] = useState(""); // State to store any error messages
   const [isLoading, setIsLoading] = useState(false); // State to indicate if login is in progress
   const navigate = useNavigate(); // Hook for navigation after successful login
 
   useEffect(() => {
-    const storedEmail = localStorage.getItem("userEmail");
-    if (storedEmail) {
-      navigate("/"); // Redirect to the homepage if userEmail is already set
+    if (isAuthenticated) {
+      navigate("/");
     }
-  }, [navigate]); // Run this effect once when the component mounts
+  }, [isAuthenticated, navigate]); // Run this effect once when the component mounts
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Prevent form submission from reloading the page
     setIsLoading(true); // Set loading state to true
-    setError(""); // Clear any previous error messages
 
     try {
-      if (email === "") {
+      if (!email) {
         ToastService.warning("enter email");
-      } else if (password === "") {
+      } else if (!password) {
         ToastService.warning("enter passowrd");
       } else {
         const result = await login(email, password); // Attempt to login using the credentials
         if (result === "Login successful") {
-          localStorage.setItem("userEmail", email); // Store user email in local storage
-          navigate("/"); // Redirect to the homepage on successful login
+          authlogin(email);
           ToastService.success("Login success");
+          setTimeout(() => {
+            navigate("/"); // Navigate after auth state updates
+          }, 100); // Small delay to ensure state updates
         } else if (result === "Invalid password") {
           // setError(result); // If login fails, display error message
           ToastService.warning("Invalid password");
@@ -55,9 +56,6 @@ export default function LoginForm() {
       ToastService.error(
         err instanceof Error ? err.message : "An unknown error occurred"
       );
-      setError(
-        err instanceof Error ? err.message : "Failed to connect to server"
-      ); // Handle connection errors or other issues
     } finally {
       setIsLoading(false); // Set loading state to false when login is complete
     }

@@ -15,6 +15,8 @@ import {
   updateTaskStatus,
 } from "../service/taskService";
 import { useTaskHistory } from "~/features/projectReport/context/taskHistoryContext";
+import { isAuthenticated } from "~/features/auth/auth";
+import { useAuth } from "~/features/loginAndLogoutAuth/context/authContext";
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
 
@@ -25,7 +27,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const { refreshTaskHistory } = useTaskHistory();
-
+  const { isAuthenticated } = useAuth();
   const loadTasks = async () => {
     try {
       const tasks = await fetchTasks();
@@ -86,7 +88,9 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   useEffect(() => {
-    loadTasks();
+    if (isAuthenticated) {
+      loadTasks();
+    }
   }, []);
 
   return (

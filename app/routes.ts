@@ -7,8 +7,8 @@ import {
 } from "@react-router/dev/routes";
 
 export default [
-  route("login", "features/loginAndLogoutAuth/pages/loginPage.tsx"),
-  // layout("features/loginAndLogoutAuth/component/ProtectedRoute.tsx", [
+  route("/login", "features/loginAndLogoutAuth/pages/loginPage.tsx"),
+  layout("features/loginAndLogoutAuth/component/ProtectedRoute.tsx", [
   layout("features/home/pages/HomePage.tsx", [
     index("features/dashboard/pages/dashboardPage.tsx"),
     route("projects", "features/project/pages/ProjectPage.tsx"),
@@ -20,7 +20,7 @@ export default [
     route("/editProfile", "features/profile/components/EditProfilePage.tsx"),
     route("/projectReport", "features/projectReport/pages/taskHistoryPage.tsx"),
   ]),
-  // ]),
+  ]),
   route("contact", "features/ContactUs/ContactUs.tsx"),
   route("*", "features/NotFound/NotFoundPage.tsx"),
 ] satisfies RouteConfig;

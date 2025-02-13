@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import type { Company } from "../types/types";
 import { fetchCompanyInfo, updateCompanyInfo } from "../service/companyService";
+import { useAuth } from "~/features/loginAndLogoutAuth/context/authContext";
 
 interface CompanyContextType {
   company: Company | null;
@@ -22,6 +23,8 @@ export const CompanyProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [company, setCompany] = useState<Company | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const { isAuthenticated } = useAuth();
 
   const fetchCompany = async () => {
     try {
@@ -44,7 +47,9 @@ export const CompanyProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   useEffect(() => {
-    fetchCompany(); // Fetch the company data when the component mounts
+    if (isAuthenticated) {
+      fetchCompany(); // Fetch the company data when the component mounts
+    }
   }, []);
 
   return (
