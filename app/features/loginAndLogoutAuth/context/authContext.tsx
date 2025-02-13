@@ -20,7 +20,7 @@ import type { AuthContextType } from "../types/types";
 const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
   userEmail: null,
-  login: () => {},
+  authlogin: () => {},
   logout: () => {},
 });
 
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   // Function to log the user in
-  const login = (email: string) => {
+  const authlogin = (email: string) => {
     localStorage.setItem("userEmail", email); // Save email in localStorage
     setIsAuthenticated(true); // Mark user as authenticated
     setUserEmail(email); // Store the user's email
@@ -54,8 +54,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    // Provide authentication context to children components
-    <AuthContext.Provider value={{ isAuthenticated, userEmail, login, logout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, userEmail, authlogin, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
