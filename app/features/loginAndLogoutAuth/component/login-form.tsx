@@ -44,8 +44,11 @@ export default function LoginForm() {
           localStorage.setItem("userEmail", email); // Store user email in local storage
           navigate("/"); // Redirect to the homepage on successful login
           ToastService.success("Login success");
+        } else if (result === "Invalid password") {
+          // setError(result); // If login fails, display error message
+          ToastService.warning("Invalid password");
         } else {
-          setError(result); // If login fails, display error message
+          ToastService.warning("Company not found");
         }
       }
     } catch (err) {
