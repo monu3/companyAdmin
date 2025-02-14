@@ -25,6 +25,7 @@ import { ClientProvider } from "./features/client/context/ClientContext";
 import { CompanyProvider } from "./features/profile/context/companyContext";
 import { LanguageProvider } from "./features/LanguageTranslation/context/LanguageContext";
 import { TaskHistoryProvider } from "./features/projectReport/context/taskHistoryContext";
+import { AuthProvider } from "./features/loginAndLogoutAuth/context/authContext";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -60,31 +61,32 @@ export function Layout({ children }: { children: React.ReactNode }) {
 const queryClient = new QueryClient();
 export default function App() {
   return (
-    <LanguageProvider>
-      <Provider store={store}>
-        <ToastContainer />
-        <ThemeProvider>
-          <CompanyProvider>
-            {/* <TaskProvider> */}
-            <TaskHistoryProvider>
-              <EmployeeProvider>
-                <ProjectContextProvider>
-                  <TaskProvider>
-                    <ClientProvider>
-                      <QueryClientProvider client={queryClient}>
-                        <Outlet />
-                      </QueryClientProvider>
-                    </ClientProvider>
-                  </TaskProvider>
-                </ProjectContextProvider>
-              </EmployeeProvider>
-            </TaskHistoryProvider>
-          </CompanyProvider>
-
-          {/* </TaskProvider> */}
-        </ThemeProvider>
-      </Provider>
-    </LanguageProvider>
+    <AuthProvider>
+      <LanguageProvider>
+        <Provider store={store}>
+          <ToastContainer />
+          <ThemeProvider>
+            <CompanyProvider>
+              {/* <TaskProvider> */}
+              <TaskHistoryProvider>
+                <EmployeeProvider>
+                  <ProjectContextProvider>
+                    <TaskProvider>
+                      <ClientProvider>
+                        <QueryClientProvider client={queryClient}>
+                          <Outlet />
+                        </QueryClientProvider>
+                      </ClientProvider>
+                    </TaskProvider>
+                  </ProjectContextProvider>
+                </EmployeeProvider>
+              </TaskHistoryProvider>
+            </CompanyProvider>
+            {/* </TaskProvider> */}
+          </ThemeProvider>
+        </Provider>
+      </LanguageProvider>
+    </AuthProvider>
   );
 }
 

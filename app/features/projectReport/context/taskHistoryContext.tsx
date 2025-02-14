@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import type { TaskHistory, TaskHistoryContextType } from "../types/taksHistory";
 import { fetchTaskHistory } from "../service/fetchTaskHistoryService";
+import { useAuth } from "~/features/loginAndLogoutAuth/context/authContext";
 
 const TaskHistoryContext = createContext<TaskHistoryContextType | undefined>(
   undefined
@@ -12,7 +13,7 @@ export const TaskHistoryProvider: React.FC<{ children: React.ReactNode }> = ({
   const [taskHistory, setTaskHistory] = useState<TaskHistory[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+  const { isAuthenticated } = useAuth();
   const loadTaskHistory = async () => {
     try {
       setLoading(true);
@@ -26,7 +27,9 @@ export const TaskHistoryProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   useEffect(() => {
-    loadTaskHistory();
+    if (isAuthenticated) {
+      loadTaskHistory();
+    }
   }, []);
 
   return (

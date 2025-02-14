@@ -3,6 +3,7 @@ import type { ProjectContextType, projectDetails } from "../types";
 import ToastService from "~/common/utils/toastService";
 import { fetchProjectDetail } from "../service/fetchProject";
 import { deleteProject } from "../service/deleteProjects";
+import { useAuth } from "~/features/loginAndLogoutAuth/context/authContext";
 
 export const ProjectContext = createContext<ProjectContextType | undefined>(
   undefined
@@ -23,6 +24,7 @@ const ProjectContextProvider = ({
     null
   ); // Track selected project
 
+  const { isAuthenticated } = useAuth(); // Get authentication state
   const handleDelete = async (selectedId: number) => {
     // console.log("data before delete:", project);
     await deleteProject(selectedId.toString());
@@ -58,7 +60,7 @@ const ProjectContextProvider = ({
   //   }
   // }, [project]);
 
-  const fetchProject = async () => {
+   const fetchProject = async () => {
     try {
       const storedData = await fetchProjectDetail();
       setProject(storedData);
@@ -70,7 +72,9 @@ const ProjectContextProvider = ({
     }
   };
   useEffect(() => {
-    fetchProject();
+    if (isAuthenticated) {
+      fetchProject();
+    }
   }, []);
 
   return (

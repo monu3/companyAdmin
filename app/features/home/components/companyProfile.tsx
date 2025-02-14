@@ -17,9 +17,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Link } from "react-router";
-import { logout } from "~/common/utils/logOut";
+import { useAuth } from "~/features/loginAndLogoutAuth/context/authContext";
 
 const CompanyProfile = () => {
+  const { logout } = useAuth();
   return (
     <DropdownMenu>
       {/* Trigger button for opening the dropdown menu */}
@@ -50,7 +51,9 @@ const CompanyProfile = () => {
             onClick={logout}
             className="w-full text-left bg-transparent p-0 text-[--color-text] border-none"
           >
-            Logout
+            <Link to="/login" className="text-inherit no-underline">
+              Logout
+            </Link>
           </button>
         </DropdownMenuItem>
       </DropdownMenuContent>
