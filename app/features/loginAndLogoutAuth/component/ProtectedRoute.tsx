@@ -7,29 +7,46 @@
  */
 
 import { useEffect, useState } from "react";
-import { Outlet, Navigate } from "react-router";
+import { Outlet } from "react-router";
 import { useAuth } from "../context/authContext";
 import Spinner from "~/common/utils/Spinner";
 
 const ProtectedRoute = () => {
-  const { isAuthenticated } = useAuth(); // Access authentication state from context
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true); // State to track if authentication is being checked
+  const { isAuthenticated } = useAuth();
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsCheckingAuth(false);
-    }, 1000);
-  }, []);
+    const checkAuth = async () => {
+      try {
+        const hasStoredAuth = Boolean(localStorage.getItem("userEmail"));
 
-  // Show a spinner while checking authentication
+        if (!hasStoredAuth) {
+          window.location.href = "/login";
+          return;
+        }
+
+        if (!isAuthenticated && hasStoredAuth) {
+          // Keep checking auth state until it's initialized
+          return;
+        }
+
+        // Only set checking to false when we have a definitive auth state
+        if (isAuthenticated || !hasStoredAuth) {
+          setIsCheckingAuth(false);
+        }
+      } catch (error) {
+        console.error("Auth check failed:", error);
+        window.location.href = "/login";
+      }
+    };
+
+    checkAuth();
+  }, [isAuthenticated]);
+
   if (isCheckingAuth) {
     return <Spinner />;
   }
 
-  // If not authenticated and no userEmail in localStorage, navigate to login
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
   return <Outlet />;
 };
 

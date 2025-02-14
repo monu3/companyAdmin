@@ -12,6 +12,7 @@ import {
   useState,
   type ReactNode,
   useEffect,
+  useLayoutEffect,
 } from "react";
 import type { AuthContextType } from "../types/types";
 
@@ -29,12 +30,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [userEmail, setUserEmail] = useState<string | null>(null); // Stores the user's email
 
   // Check authentication status on initial load
+  const checkAuth = () => {
+    const email = localStorage.getItem("userEmail"); // Retrieve email from localStorage
+    setIsAuthenticated(!!email); // Set authentication status
+    setUserEmail(email); // Set the user's email
+  };
   useEffect(() => {
-    const checkAuth = () => {
-      const email = localStorage.getItem("userEmail"); // Retrieve email from localStorage
-      setIsAuthenticated(!!email); // Set authentication status
-      setUserEmail(email); // Set the user's email
-    };
     checkAuth();
   }, []);
 

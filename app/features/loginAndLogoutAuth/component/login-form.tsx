@@ -7,8 +7,7 @@
  * It handles the login process, including error handling, loading state, and redirects upon successful login.
  */
 
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useState } from "react";
 import { login } from "../service/loginAuthService"; // Import the login function from authService
 import { Label } from "@/components/ui/label"; // UI component for labeling inputs
 import { Button } from "@/components/ui/button"; // UI component for the button
@@ -16,17 +15,10 @@ import ToastService from "~/common/utils/toastService";
 import { useAuth } from "../context/authContext";
 
 export default function LoginForm() {
-  const { isAuthenticated, authlogin } = useAuth();
+  const { authlogin } = useAuth();
   const [email, setEmail] = useState(""); // State to store email input
   const [password, setPassword] = useState(""); // State to store password input
   const [isLoading, setIsLoading] = useState(false); // State to indicate if login is in progress
-  const navigate = useNavigate(); // Hook for navigation after successful login
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/");
-    }
-  }, [isAuthenticated, navigate]); // Run this effect once when the component mounts
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Prevent form submission from reloading the page
@@ -42,9 +34,6 @@ export default function LoginForm() {
         if (result === "Login successful") {
           authlogin(email);
           ToastService.success("Login success");
-          setTimeout(() => {
-            navigate("/"); // Navigate after auth state updates
-          }, 100); // Small delay to ensure state updates
         } else if (result === "Invalid password") {
           // setError(result); // If login fails, display error message
           ToastService.warning("Invalid password");
