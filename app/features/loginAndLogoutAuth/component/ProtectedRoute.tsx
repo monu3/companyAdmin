@@ -1,53 +1,33 @@
-/**
- * ProtectedRoute.tsx
- * Created On : 2025-28-01 21
- * Author : Diwash Pokhrel
- * Description : A higher-order component that protects routes by checking authentication status.
- * Redirects unauthenticated users to the login page and shows a spinner while verifying authentication.
- */
-
 import { useEffect, useState } from "react";
-import { Outlet } from "react-router";
 import { useAuth } from "../context/authContext";
+import { checkAuthStatus } from "../service/loginAuthService";
 import Spinner from "~/common/utils/Spinner";
-
+import { Navigate, Outlet } from "react-router";
+// ProtectedRoute.tsx
 const ProtectedRoute = () => {
   const { isAuthenticated } = useAuth();
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
-    const checkAuth = async () => {
+    const verifyAuth = async () => {
       try {
-        const hasStoredAuth = Boolean(localStorage.getItem("userEmail"));
-
-        if (!hasStoredAuth) {
-          window.location.href = "/login";
-          return;
+        if (!isAuthenticated) {
+          const status = await checkAuthStatus();
+          if (!status) {
+            window.location.href = "/login";
+          }
         }
-
-        if (!isAuthenticated && hasStoredAuth) {
-          // Keep checking auth state until it's initialized
-          return;
-        }
-
-        // Only set checking to false when we have a definitive auth state
-        if (isAuthenticated || !hasStoredAuth) {
-          setIsCheckingAuth(false);
-        }
-      } catch (error) {
-        console.error("Auth check failed:", error);
-        window.location.href = "/login";
+      } finally {
+        setAuthChecked(true);
       }
     };
 
-    checkAuth();
+    verifyAuth();
   }, [isAuthenticated]);
 
-  if (isCheckingAuth) {
-    return <Spinner />;
-  }
+  if (!authChecked) return <Spinner />;
 
-  return <Outlet />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
 export default ProtectedRoute;

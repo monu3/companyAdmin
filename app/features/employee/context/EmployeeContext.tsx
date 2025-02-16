@@ -85,7 +85,7 @@ export const EmployeeProvider: React.FC<{ children: React.ReactNode }> = ({
     if (isAuthenticated) {
       fetchAndSetEmployees();
     }
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <EmployeeContext.Provider

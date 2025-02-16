@@ -75,7 +75,7 @@ const ProjectContextProvider = ({
     if (isAuthenticated) {
       fetchProject();
     }
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <ProjectContext.Provider
