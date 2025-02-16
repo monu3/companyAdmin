@@ -91,7 +91,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
     if (isAuthenticated) {
       loadTasks();
     }
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <TaskContext.Provider

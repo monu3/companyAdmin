@@ -14,6 +14,8 @@ export const TaskHistoryProvider: React.FC<{ children: React.ReactNode }> = ({
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const { isAuthenticated } = useAuth();
+
+  console.log("task history : ", isAuthenticated);
   const loadTaskHistory = async () => {
     try {
       setLoading(true);
@@ -30,7 +32,7 @@ export const TaskHistoryProvider: React.FC<{ children: React.ReactNode }> = ({
     if (isAuthenticated) {
       loadTaskHistory();
     }
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <TaskHistoryContext.Provider

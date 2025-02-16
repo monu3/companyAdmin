@@ -73,7 +73,7 @@ export const ClientProvider: React.FC<{ children: React.ReactNode }> = ({
     if (isAuthenticated) {
       fetchAndSetClients();
     }
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <ClientContext.Provider

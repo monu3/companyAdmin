@@ -1,7 +1,7 @@
 import { apiRequest } from "@/common/api/backendApi";
 
 // Login function - Calls backend and expects a cookie to be set
-export const login = async (
+export const loginService = async (
   email: string,
   password: string
 ): Promise<string> => {
@@ -18,7 +18,7 @@ export const login = async (
 };
 
 // Logout function - Calls backend to clear authentication cookie
-export const logout = async (): Promise<void> => {
+export const logoutService = async (): Promise<void> => {
   try {
     await apiRequest("/auth/logout", {
       method: "POST",
