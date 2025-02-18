@@ -16,6 +16,6 @@ export const fetchNotification = async (): Promise<Notification[]> => {
   }
 };
 
-export const resendEmail =async ():Promise<Notification[]> =>{
+// export const resendEmail =async ():Promise<Notification[]> =>{
     
-}
+// }
