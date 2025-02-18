@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Sidebar } from "flowbite-react";
+import { Button, Sidebar } from "flowbite-react";
 import { NavLink, useLocation } from "react-router";
 import type { MainNavbarLayoutProps, NavItem } from "../types";
 import {
@@ -8,6 +8,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { FaBell } from "react-icons/fa";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "~/components/ui/sheet";
+import NotificationList from "~/features/notification/component/NotificationList";
 
 const MainNavbarLayout: React.FC<MainNavbarLayoutProps> = ({
   items,
@@ -60,6 +70,25 @@ const MainNavbarLayout: React.FC<MainNavbarLayoutProps> = ({
                     {item.label}
                   </Sidebar.Item>
                 ))}
+                {/* Static Notification Icon */}
+                {/* Static Notification Item Styled Like Other Nav Items */}
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <Sidebar.Item
+                      icon={FaBell}
+                      className="text-gray-600 hover:bg-orange-200 dark:hover:bg-orange-200 transition-colors duration-200 cursor-pointer"
+                    >
+                      Notifications
+                    </Sidebar.Item>
+                  </SheetTrigger>
+                  <SheetContent side="top">
+                    <SheetHeader>
+                      <SheetTitle>Notifications</SheetTitle>
+                      <SheetDescription>Your latest updates</SheetDescription>
+                    </SheetHeader>
+                    <NotificationList />
+                  </SheetContent>
+                </Sheet>
               </div>
             </Sidebar.ItemGroup>
           </Sidebar.Items>
@@ -100,6 +129,26 @@ const MainNavbarLayout: React.FC<MainNavbarLayoutProps> = ({
                 </Tooltip>
               </TooltipProvider>
             ))}
+            {/* Static Notification Icon Styled Like Other Mobile Icons */}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger className="bg-transparent p-0 border-none">
+                  <Sheet>
+                    <SheetTrigger asChild>
+                      <FaBell className="w-6 h-6 mt-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-300" />
+                    </SheetTrigger>
+                    <SheetContent side="bottom">
+                      <SheetHeader>
+                        <SheetTitle>Notifications</SheetTitle>
+                        <SheetDescription>Your latest updates</SheetDescription>
+                      </SheetHeader>
+                      <NotificationList />
+                    </SheetContent>
+                  </Sheet>
+                </TooltipTrigger>
+                <TooltipContent>Notifications</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
       </div>
