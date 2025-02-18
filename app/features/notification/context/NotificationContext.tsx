@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { NotificationProps,Notification } from "../types/notification";
 import { fetchNotification } from "../service/notificationService";
+import { useAuth } from "~/features/loginAndLogoutAuth/context/authContext";
 
 
 const NotificationContext=createContext<NotificationProps | undefined>(undefined);
@@ -12,6 +13,7 @@ const defaultNotificationDetails:Notification[]=[];
 const [notification,setNotification]=useState<Notification[]>(
     defaultNotificationDetails
 );
+const {isAuthenticated}=useAuth();
  const fetchAndSetNotification = async () => {
     try {
       const storedData = await fetchNotification(); // Assuming this is an API call
@@ -22,9 +24,11 @@ const [notification,setNotification]=useState<Notification[]>(
       console.error("Failed to fetch notifications:", error);
     }
   };
-  useEffect(()=>{
-    fetchAndSetNotification();
-  },[]);
+useEffect(() => {
+    if (isAuthenticated) {
+      fetchAndSetNotification();
+    }
+  }, [isAuthenticated]);
 
   return (
     <NotificationContext.Provider
