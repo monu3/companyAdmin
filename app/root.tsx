@@ -26,6 +26,7 @@ import { CompanyProvider } from "./features/profile/context/companyContext";
 import { LanguageProvider } from "./features/LanguageTranslation/context/LanguageContext";
 import { TaskHistoryProvider } from "./features/projectReport/context/taskHistoryContext";
 import { AuthProvider } from "./features/loginAndLogoutAuth/context/authContext";
+import { NotificationContextProvider } from "./features/notification/context/NotificationContext";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -66,23 +67,25 @@ export default function App() {
         <Provider store={store}>
           <ToastContainer />
           <ThemeProvider>
-            <CompanyProvider>
-              {/* <TaskProvider> */}
-              <TaskHistoryProvider>
-                <EmployeeProvider>
-                  <ProjectContextProvider>
-                    <TaskProvider>
-                      <ClientProvider>
-                        <QueryClientProvider client={queryClient}>
-                          <Outlet />
-                        </QueryClientProvider>
-                      </ClientProvider>
-                    </TaskProvider>
-                  </ProjectContextProvider>
-                </EmployeeProvider>
-              </TaskHistoryProvider>
-            </CompanyProvider>
-            {/* </TaskProvider> */}
+            <NotificationContextProvider>
+              <CompanyProvider>
+                {/* <TaskProvider> */}
+                <TaskHistoryProvider>
+                  <EmployeeProvider>
+                    <ProjectContextProvider>
+                      <TaskProvider>
+                        <ClientProvider>
+                          <QueryClientProvider client={queryClient}>
+                            <Outlet />
+                          </QueryClientProvider>
+                        </ClientProvider>
+                      </TaskProvider>
+                    </ProjectContextProvider>
+                  </EmployeeProvider>
+                </TaskHistoryProvider>
+              </CompanyProvider>
+              {/* </TaskProvider> */}
+            </NotificationContextProvider>
           </ThemeProvider>
         </Provider>
       </LanguageProvider>

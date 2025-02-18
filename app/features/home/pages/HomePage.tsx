@@ -22,6 +22,16 @@ import LanguageSelect from "../components/languageSelect"; // Language selection
 import { useLanguage } from "~/features/LanguageTranslation/context/LanguageContext";
 import translations from "~/features/LanguageTranslation/Languagetranslations/navItem/navItemTranslation";
 import { FaEllipsisH } from "react-icons/fa";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "~/components/ui/sheet";
+import { Button } from "~/components/ui/button";
+import NotificationList from "~/features/notification/component/NotificationList";
 
 // Array of navigation items for the sidebar/menu
 
@@ -56,6 +66,20 @@ export function HomePage() {
         {/* Normal view for larger screens */}
         <div className="hidden md:flex gap-6">
           <LanguageSelect />
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost">
+                <Chat />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="top">
+              <SheetHeader>
+                <SheetTitle>Notification</SheetTitle>
+                <SheetDescription>this is my name</SheetDescription>
+              </SheetHeader>
+              <NotificationList/>
+            </SheetContent>
+          </Sheet>
           <CompanyProfile />
         </div>
 
